@@ -247,6 +247,12 @@ a{color:var(--accent);}
 
 .nav-subpanel a:hover{color:var(--bone);background:var(--ground-3);}
 
+@media (hover:hover) and (pointer:fine){
+  .nav-subpanel{display:none;}
+  .nav-item-group:hover .nav-subpanel,
+  .nav-item-group:focus-within .nav-subpanel{display:flex;}
+}
+
 .nav-panel-more{
   margin-top:2px;
   padding-top:10px !important;
