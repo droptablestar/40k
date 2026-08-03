@@ -1,0 +1,25 @@
+{
+  "name": "40k",
+  "version": "1.0.0",
+  "description": "A plain-language Warhammer 40,000 (11th edition) and miniature painting reference for our group. Built with Eleventy.",
+  "scripts": {
+    "build": "eleventy",
+    "serve": "eleventy --serve",
+    "preview": "eleventy --serve"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/droptablestar/40k.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/droptablestar/40k/issues"
+  },
+  "homepage": "https://github.com/droptablestar/40k#readme",
+  "devDependencies": {
+    "@11ty/eleventy": "^3.1.6"
+  }
+}

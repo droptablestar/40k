@@ -1,0 +1,216 @@
+.lead{padding:34px 0 26px;}
+
+.lead h1{
+  font-family:var(--display);font-weight:800;
+  font-size:clamp(32px,6vw,54px);line-height:.96;
+  letter-spacing:-.03em;margin:0 0 10px;
+}
+
+.lead p{margin:0;color:var(--bone-dim);font-size:14.5px;}
+
+.warn{
+  margin:0 0 18px;padding:12px 16px;
+  background:rgba(168,69,47,.12);
+  border-left:2px solid var(--rust);
+  font-size:13.5px;color:var(--bone-dim);
+}
+
+.warn[hidden]{display:none;}
+
+/* ---- round bar: the shared, non-partisan state ---- */
+
+.roundbar{
+  display:grid;
+  grid-template-columns:auto minmax(0,1fr) auto;
+  gap:18px;align-items:center;
+  background:var(--ground-2);
+  border:1px solid var(--line);
+  padding:14px 16px;
+}
+
+.rlabel{
+  font-family:var(--mono);font-size:10px;letter-spacing:.18em;
+  text-transform:uppercase;color:var(--bone-dim);
+}
+
+.pips{display:flex;gap:6px;justify-content:center;}
+
+.pip{
+  width:38px;height:38px;border:1px solid var(--line);
+  background:transparent;color:var(--bone-dim);
+  font-family:var(--mono);font-size:14px;cursor:pointer;
+  transition:all .15s ease;
+}
+
+.pip[aria-pressed="true"]{
+  background:var(--accent);border-color:var(--accent);
+  color:#17181C;font-weight:600;
+}
+
+/* ---- army panels ---- */
+
+.armies{
+  display:grid;grid-template-columns:repeat(2,minmax(0,1fr));
+  gap:2px;margin-top:2px;
+}
+
+.army{
+  background:var(--ground-2);
+  border:1px solid var(--line);
+  padding:18px 16px 20px;
+}
+
+.army.turn{border-color:var(--accent);}
+
+.army-head{
+  display:flex;align-items:center;gap:10px;
+  padding-bottom:14px;border-bottom:1px solid var(--line);
+}
+
+.army-head input{
+  flex:1;min-width:0;background:transparent;border:0;
+  color:var(--bone);font-family:var(--display);font-weight:700;
+  font-size:20px;letter-spacing:-.015em;padding:2px 0;
+}
+
+.army-head input:focus{outline:none;border-bottom:1px solid var(--accent);}
+
+.turnflag{
+  display:inline-flex;align-items:center;justify-content:center;
+  min-height:34px;
+  font-family:var(--mono);font-size:9px;letter-spacing:.16em;
+  text-transform:uppercase;color:var(--accent);
+  border:1px solid var(--accent);padding:3px 7px;
+  background:transparent;cursor:pointer;white-space:nowrap;
+}
+
+.army.turn .turnflag{background:var(--accent);color:#17181C;}
+
+/* counters */
+
+.counters{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:2px;margin:14px 0 4px;}
+
+.counter{background:var(--ground-3);padding:12px 10px;text-align:center;}
+
+.counter .cname{
+  font-family:var(--mono);font-size:9px;letter-spacing:.18em;
+  text-transform:uppercase;color:var(--bone-dim);margin-bottom:6px;
+}
+
+.counter .row{display:flex;align-items:center;justify-content:center;gap:6px;}
+
+.counter output{
+  font-family:var(--mono);font-weight:600;font-size:30px;
+  color:var(--accent);min-width:2.4ch;line-height:1;
+}
+
+.step{
+  width:38px;height:38px;flex:0 0 auto;
+  background:transparent;border:1px solid var(--line);
+  color:var(--bone);font-size:19px;line-height:1;cursor:pointer;
+  transition:background .14s ease,border-color .14s ease;
+}
+
+.step:hover{background:var(--ground-2);border-color:var(--accent);}
+.step:active{background:var(--accent);color:#17181C;}
+
+/* units */
+
+.uhead{
+  display:flex;justify-content:space-between;align-items:baseline;
+  margin:22px 0 8px;
+}
+
+.uhead h3{
+  font-family:var(--mono);font-size:10px;letter-spacing:.18em;
+  text-transform:uppercase;color:var(--bone-dim);margin:0;font-weight:500;
+}
+
+.units{list-style:none;margin:0;padding:0;}
+
+.unit{
+  display:grid;
+  grid-template-columns:minmax(0,1fr) auto auto auto auto;
+  gap:8px;align-items:center;
+  padding:9px 0;border-top:1px solid var(--line);
+}
+
+.unit:last-child{border-bottom:1px solid var(--line);}
+
+.uname{min-width:0;}
+.uname b{display:block;font-weight:500;font-size:14.5px;
+  overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+.uname span{font-family:var(--mono);font-size:10px;color:var(--bone-dim);
+  letter-spacing:.1em;text-transform:uppercase;}
+
+.ucount{
+  font-family:var(--mono);font-weight:600;font-size:17px;
+  min-width:4.6ch;text-align:right;
+}
+
+.unit.dead{opacity:.38;}
+.unit.dead .uname b{text-decoration:line-through;}
+.unit.hurt .ucount{color:var(--rust);}
+
+.icon{
+  width:34px;height:34px;flex:0 0 auto;
+  background:transparent;border:1px solid var(--line);
+  color:var(--bone-dim);font-size:15px;line-height:1;cursor:pointer;
+}
+
+.icon:hover{color:var(--bone);border-color:var(--accent);}
+
+.empty{
+  padding:16px 0;font-size:13.5px;color:var(--bone-dim);
+  border-top:1px solid var(--line);border-bottom:1px solid var(--line);
+}
+
+/* add unit form */
+
+.addrow{display:grid;grid-template-columns:minmax(0,1fr) 74px 92px 44px;
+  gap:6px;margin-top:10px;}
+
+.addrow input,.addrow select{
+  background:var(--ground-3);border:1px solid var(--line);
+  color:var(--bone);font-family:var(--body);font-size:13.5px;
+  padding:9px 10px;min-width:0;height:40px;
+}
+
+.addrow input:focus,.addrow select:focus{outline:none;border-color:var(--accent);}
+.addrow input::placeholder{color:var(--bone-dim);}
+
+.addrow button{
+  background:var(--accent);border:0;color:#17181C;
+  font-size:20px;line-height:1;cursor:pointer;height:40px;
+}
+
+/* footer actions */
+
+.actions{display:flex;flex-wrap:wrap;gap:8px;margin-top:26px;}
+
+.btn{
+  font-family:var(--mono);font-size:11px;letter-spacing:.14em;
+  text-transform:uppercase;background:transparent;
+  border:1px solid var(--line);color:var(--bone-dim);
+  padding:11px 16px;cursor:pointer;
+}
+
+.btn:hover{color:var(--bone);border-color:var(--accent);}
+.btn.danger:hover{color:var(--rust);border-color:var(--rust);}
+
+.saved{
+  font-family:var(--mono);font-size:10px;letter-spacing:.14em;
+  text-transform:uppercase;color:var(--bone-dim);
+  align-self:center;margin-left:auto;
+}
+
+@media (max-width:760px){
+  .armies{grid-template-columns:minmax(0,1fr);}
+  .roundbar{grid-template-columns:1fr;gap:12px;text-align:center;}
+  .pips{flex-wrap:wrap;}
+}
+
+@media (max-width:420px){
+  .addrow{grid-template-columns:minmax(0,1fr) 64px 44px;}
+  .addrow select{grid-column:1 / -1;}
+}

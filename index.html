@@ -1,257 +1,99 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Bench &amp; Table — a 40k reference</title>
-<meta name="description" content="A plain-language reference for Warhammer 40,000 11th edition and
-      miniature painting, written for people who just started.">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,700;12..96,800&family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="assets/style.css">
-<style>
-  .hero{padding:72px 0 56px;border-bottom:1px solid var(--line);}
+---
+layout: base.njk
+permalink: /index.html
+title: "Bench & Table — a 40k reference"
+description: A plain-language reference for Warhammer 40,000 11th edition and
+      miniature painting, written for people who just started.
+bodyClass: s-painting
+pageCss: css/index.css
+extraFooter: |
+  <p>Rules text belongs to GW — go read the free PDF.</p>
+---
+<section class="hero">
+  <p class="eyebrow">40k 11th edition · house reference</p>
+  <h1>You don't need to know <em>all of it</em> yet.</h1>
+  <p class="hero-lede">Everything here is written for someone who started this year.
+    No meta talk, no assumed vocabulary. <b>The official rules are free</b> — this
+    site is the plain-language layer on top, plus the hobby side nobody puts in
+    the rulebook.</p>
+</section>
 
-  .hero h1{
-    font-family:var(--display);
-    font-weight:800;
-    font-size:clamp(40px,7.2vw,82px);
-    line-height:.94;
-    letter-spacing:-.035em;
-    margin:0 0 22px;
-    max-width:15ch;
-  }
+<div class="shelf">
 
-  .hero h1 em{font-style:normal;color:var(--accent);}
-
-  .hero-lede{
-    max-width:52ch;
-    font-size:17px;
-    color:var(--bone-dim);
-    margin:0;
-  }
-
-  .hero-lede b{color:var(--bone);font-weight:500;}
-
-  /* signature: the shelf — entries grouped by when you reach for them */
-
-  .shelf{margin-top:14px;}
-
-  .shelf-group{
-    display:grid;
-    grid-template-columns:190px minmax(0,1fr);
-    gap:32px;
-    padding:30px 0;
-    border-top:1px solid var(--line);
-  }
-
-  .shelf-group:last-of-type{border-bottom:1px solid var(--line);}
-
-  .when{
-    font-family:var(--mono);
-    font-size:11px;
-    letter-spacing:.16em;
-    text-transform:uppercase;
-    color:var(--accent);
-    padding-top:3px;
-  }
-
-  .when span{
-    display:block;
-    color:var(--bone-dim);
-    letter-spacing:.04em;
-    text-transform:none;
-    font-size:12px;
-    margin-top:7px;
-    line-height:1.4;
-  }
-
-  .entries{display:flex;flex-direction:column;gap:2px;}
-
-  .entry{
-    display:block;
-    text-decoration:none;
-    color:inherit;
-    background:var(--ground-2);
-    padding:16px 18px;
-    border-left:2px solid transparent;
-    transition:background .16s ease,border-color .16s ease;
-  }
-
-  .entry:hover,
-  .entry:focus-visible{background:var(--ground-3);border-left-color:var(--accent);}
-
-  .entry b{
-    display:block;
-    font-family:var(--display);
-    font-weight:700;
-    font-size:19px;
-    letter-spacing:-.01em;
-    margin-bottom:3px;
-  }
-
-  .entry span{font-size:13.5px;color:var(--bone-dim);line-height:1.45;}
-
-  .entry.pending{
-    background:transparent;
-    border:1px dashed var(--line);
-    border-left:1px dashed var(--line);
-    cursor:default;
-  }
-
-  .entry.pending:hover{background:transparent;border-left-color:var(--line);}
-  .entry.pending b{color:var(--bone-dim);}
-  .entry.pending b::after{
-    content:"not written yet";
-    font-family:var(--mono);
-    font-size:9px;
-    letter-spacing:.16em;
-    text-transform:uppercase;
-    color:var(--accent-lo);
-    margin-left:10px;
-    vertical-align:2px;
-  }
-
-  .note{
-    margin-top:44px;
-    padding:22px 24px;
-    background:var(--ground-2);
-    border-left:2px solid var(--rust);
-  }
-
-  .note h2{
-    font-family:var(--body);
-    font-size:14px;
-    font-weight:600;
-    margin:0 0 8px;
-  }
-
-  .note p{margin:0 0 10px;font-size:14px;color:var(--bone-dim);max-width:70ch;}
-  .note p:last-child{margin-bottom:0;}
-
-  @media (max-width:720px){
-    .shelf-group{grid-template-columns:1fr;gap:16px;}
-    .hero{padding:44px 0 40px;}
-  }
-</style>
-</head>
-<body class="s-painting">
-
-<header class="sitebar">
-  <div class="wrap">
-    <a class="mark" href="index.html">Bench <b>&amp;</b> Table</a>
-    <nav class="sitenav" aria-label="Sections">
-      <a href="index.html" aria-current="page">Start</a>
-      <a href="painting.html">Painting</a>
-      <a href="tracker.html">Tracker</a>
-      <a href="#" class="soon">Turn order</a>
-      <a href="#" class="soon">Charts</a>
-    </nav>
-  </div>
-</header>
-
-<main>
-  <div class="wrap">
-
-    <section class="hero">
-      <p class="eyebrow">40k 11th edition · house reference</p>
-      <h1>You don't need to know <em>all of it</em> yet.</h1>
-      <p class="hero-lede">Everything here is written for someone who started this year.
-        No meta talk, no assumed vocabulary. <b>The official rules are free</b> — this
-        site is the plain-language layer on top, plus the hobby side nobody puts in
-        the rulebook.</p>
-    </section>
-
-    <div class="shelf">
-
-      <div class="shelf-group">
-        <div class="when">At the desk
-          <span>Paint on your hands, model in a clamp.</span>
-        </div>
-        <div class="entries">
-          <a class="entry" href="painting.html">
-            <b>Painting, start to finish</b>
-            <span>What to buy and how to get your first model painted, end to end.
-              Start here if you have never painted a model.</span>
-          </a>
-          <a class="entry" href="painting-reference.html">
-            <b>Technique reference</b>
-            <span>Thinning ratios, brush load, order of work, and a symptom-first
-              troubleshooting table.</span>
-          </a>
-          <div class="entry pending">
-            <b>Basing</b>
-            <span>Texture, rims, static grass. The step that makes a table-quality
-              model look finished.</span>
-          </div>
-        </div>
-      </div>
-
-      <div class="shelf-group">
-        <div class="when">At the table
-          <span>Mid-game, someone has a question, dice are waiting.</span>
-        </div>
-        <div class="entries">
-          <a class="entry" href="tracker.html">
-            <b>Battle tracker</b>
-            <span>Command points, victory points, battle round, and what is left of
-              each unit. Saves to your phone as you play.</span>
-          </a>
-          <div class="entry pending">
-            <b>Turn order</b>
-            <span>The five phases, what you may do in each, and the order operations
-              resolve in.</span>
-          </div>
-          <div class="entry pending">
-            <b>Charts</b>
-            <span>To-hit, strength against toughness, saves, cover. The numbers you
-              look up twenty times a game.</span>
-          </div>
-          <div class="entry pending">
-            <b>Keywords</b>
-            <span>Every ability that shows up on a datasheet, in one searchable list.</span>
-          </div>
-        </div>
-      </div>
-
-      <div class="shelf-group">
-        <div class="when">Before a game
-          <span>Kitchen table, army list open, nobody rolling yet.</span>
-        </div>
-        <div class="entries">
-          <div class="entry pending">
-            <b>Building a list</b>
-            <span>Detachments, points, what a legal army actually requires.</span>
-          </div>
-          <div class="entry pending">
-            <b>House rulings</b>
-            <span>Calls we have made, so we make the same one twice.</span>
-          </div>
-        </div>
-      </div>
-
+  <div class="shelf-group">
+    <div class="when">At the desk
+      <span>Paint on your hands, model in a clamp.</span>
     </div>
-
-    <div class="note">
-      <h2>Where the real rules live</h2>
-      <p>Games Workshop publishes the 11th edition Core Rules as a free PDF and in
-        the Warhammer 40,000 app. Download them. This site summarises and explains;
-        it does not replace them, and when the two disagree, the PDF wins.</p>
-      <p>Datasheets for every unit are also free in the app. If a page here is out of
-        date after an errata, fix it in the repo rather than arguing about it at the
-        table.</p>
+    <div class="entries">
+      <a class="entry" href="painting.html">
+        <b>Painting, start to finish</b>
+        <span>What to buy and how to get your first model painted, end to end.
+          Start here if you have never painted a model.</span>
+      </a>
+      <a class="entry" href="painting-reference.html">
+        <b>Technique reference</b>
+        <span>Thinning ratios, brush load, order of work, and a symptom-first
+          troubleshooting table.</span>
+      </a>
+      <div class="entry pending">
+        <b>Basing</b>
+        <span>Texture, rims, static grass. The step that makes a table-quality
+          model look finished.</span>
+      </div>
     </div>
-
   </div>
-</main>
 
-<footer class="sitefoot">
-  <div class="wrap">
-    <p>Unofficial fan reference. Not affiliated with Games Workshop.</p>
-    <p>Rules text belongs to GW — go read the free PDF.</p>
+  <div class="shelf-group">
+    <div class="when">At the table
+      <span>Mid-game, someone has a question, dice are waiting.</span>
+    </div>
+    <div class="entries">
+      <a class="entry" href="tracker.html">
+        <b>Battle tracker</b>
+        <span>Command points, victory points, battle round, and what is left of
+          each unit. Saves to your phone as you play.</span>
+      </a>
+      <div class="entry pending">
+        <b>Turn order</b>
+        <span>The five phases, what you may do in each, and the order operations
+          resolve in.</span>
+      </div>
+      <div class="entry pending">
+        <b>Charts</b>
+        <span>To-hit, strength against toughness, saves, cover. The numbers you
+          look up twenty times a game.</span>
+      </div>
+      <div class="entry pending">
+        <b>Keywords</b>
+        <span>Every ability that shows up on a datasheet, in one searchable list.</span>
+      </div>
+    </div>
   </div>
-</footer>
 
-</body>
-</html>
+  <div class="shelf-group">
+    <div class="when">Before a game
+      <span>Kitchen table, army list open, nobody rolling yet.</span>
+    </div>
+    <div class="entries">
+      <div class="entry pending">
+        <b>Building a list</b>
+        <span>Detachments, points, what a legal army actually requires.</span>
+      </div>
+      <div class="entry pending">
+        <b>House rulings</b>
+        <span>Calls we have made, so we make the same one twice.</span>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<div class="note">
+  <h2>Where the real rules live</h2>
+  <p>Games Workshop publishes the 11th edition Core Rules as a free PDF and in
+    the Warhammer 40,000 app. Download them. This site summarises and explains;
+    it does not replace them, and when the two disagree, the PDF wins.</p>
+  <p>Datasheets for every unit are also free in the app. If a page here is out of
+    date after an errata, fix it in the repo rather than arguing about it at the
+    table.</p>
+</div>

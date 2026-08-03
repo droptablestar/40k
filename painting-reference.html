@@ -1,392 +1,229 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Technique reference — Bench &amp; Table</title>
-<meta name="description" content="Thinning ratios, brush load, order of work, and a symptom-first
-      troubleshooting table for painting Warhammer 40,000 miniatures.">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,700;12..96,800&family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="assets/style.css">
-<style>
-  .hero{
-    display:grid;
-    grid-template-columns:minmax(0,.85fr) minmax(0,1.15fr);
-    gap:44px;
-    align-items:end;
-    padding:56px 0 44px;
-    border-bottom:1px solid var(--line);
-  }
+---
+layout: base.njk
+permalink: /painting-reference.html
+title: "Technique reference — Bench & Table"
+description: Thinning ratios, brush load, order of work, and a symptom-first
+      troubleshooting table for painting Warhammer 40,000 miniatures.
+bodyClass: s-painting
+pageCss: css/painting-reference.css
+---
+<header class="hero">
+  <div>
+    <a class="crumb" href="painting.html">&larr; Painting guide</a>
+    <p class="eyebrow">Technique reference</p>
+    <h1>Thinning is<br><em>the whole</em><br>game.</h1>
+    <p>Almost every problem on a miniature traces back to paint that was too
+      thick, or a brush carrying too much of it. If you read one thing here,
+      read the ratios.</p>
+  </div>
 
-  .hero h1{
-    font-family:var(--display);
-    font-weight:800;
-    font-size:clamp(42px,7vw,80px);
-    line-height:.92;
-    letter-spacing:-.035em;
-    margin:0 0 16px;
-  }
-
-  .hero h1 em{font-style:normal;color:var(--accent);}
-  .hero p{margin:0;max-width:36ch;color:var(--bone-dim);font-size:15px;}
-
-  /* signature: the dilution ladder */
-
-  .ladder{border:1px solid var(--line);background:var(--ground-2);padding:14px;}
-
-  .ladder-head{
-    display:flex;justify-content:space-between;gap:12px;
-    font-family:var(--mono);font-size:10px;letter-spacing:.16em;
-    text-transform:uppercase;color:var(--bone-dim);margin-bottom:10px;
-  }
-
-  .ladder-stack{
-    background:linear-gradient(90deg,#0C0D10 0%,#3A3E47 34%,#8B8E95 66%,#DCD9D2 100%);
-    display:flex;flex-direction:column;gap:2px;padding:2px;
-  }
-
-  .rung{
-    height:34px;display:flex;align-items:center;padding-left:12px;
-    transform-origin:left center;
-    animation:flow .5s cubic-bezier(.2,.7,.3,1) backwards;
-  }
-
-  .rung span{
-    font-family:var(--mono);font-size:11px;font-weight:500;color:#F0EDE6;
-    text-shadow:0 1px 3px rgba(0,0,0,.85);
-  }
-
-  .r1{background:rgba(132,101,172,.92);animation-delay:.05s;}
-  .r2{background:rgba(132,101,172,.58);animation-delay:.13s;}
-  .r3{background:rgba(132,101,172,.30);animation-delay:.21s;}
-  .r4{background:rgba(132,101,172,.13);animation-delay:.29s;}
-  .r5{background:rgba(132,101,172,.055);animation-delay:.37s;}
-
-  @keyframes flow{
-    from{transform:scaleX(0);opacity:0;}
-    to{transform:scaleX(1);opacity:1;}
-  }
-
-  .ladder-foot{
-    font-family:var(--mono);font-size:10px;letter-spacing:.1em;
-    text-transform:uppercase;color:var(--bone-dim);margin-top:10px;
-  }
-
-  /* in-page nav */
-
-  .jump{
-    display:flex;flex-wrap:wrap;gap:2px;margin-top:28px;
-  }
-
-  .jump a{
-    font-family:var(--mono);font-size:11px;letter-spacing:.12em;
-    text-transform:uppercase;text-decoration:none;color:var(--bone-dim);
-    background:var(--ground-2);padding:9px 14px;
-    transition:color .16s ease,background .16s ease;
-  }
-
-  .jump a:hover{color:var(--bone);background:var(--ground-3);}
-
-  /* breadcrumb back to the beginner guide */
-
-  .crumb{
-    font-family:var(--mono);font-size:11px;letter-spacing:.12em;
-    text-transform:uppercase;margin:0 0 14px;
-  }
-
-  .crumb a{color:var(--bone-dim);text-decoration:none;}
-  .crumb a:hover{color:var(--bone);}
-
-  .ratio{
-    font-family:var(--mono);font-weight:600;font-size:26px;
-    letter-spacing:-.02em;color:var(--accent);line-height:1;margin-bottom:4px;
-  }
-
-  .ratio small{
-    display:block;font-size:10px;font-weight:400;letter-spacing:.14em;
-    text-transform:uppercase;color:var(--bone-dim);margin-top:7px;
-  }
-
-  .states{list-style:none;margin:0;padding:0;}
-  .states li{border-top:1px solid var(--line);padding:15px 0;}
-  .states li:last-child{border-bottom:1px solid var(--line);}
-
-  .state-name{
-    font-family:var(--mono);font-size:11px;letter-spacing:.16em;
-    text-transform:uppercase;color:var(--accent);margin-bottom:5px;
-  }
-
-  .states p{margin:0;font-size:14px;color:var(--bone-dim);line-height:1.5;}
-  .states p b{color:var(--bone);font-weight:500;}
-
-  .vocab{
-    display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));
-    gap:1px;background:var(--line);border:1px solid var(--line);margin:0;
-  }
-
-  .vocab > div{background:var(--ground-2);padding:16px;}
-
-  .vocab dt{
-    font-family:var(--mono);font-size:11px;letter-spacing:.14em;
-    text-transform:uppercase;color:var(--accent);margin-bottom:7px;
-  }
-
-  .vocab dd{margin:0;font-size:13.5px;color:var(--bone-dim);line-height:1.45;}
-
-  @media (max-width:820px){
-    .hero{grid-template-columns:1fr;gap:30px;align-items:start;padding-top:36px;}
-  }
-</style>
-</head>
-<body class="s-painting">
-
-<header class="sitebar">
-  <div class="wrap">
-    <a class="mark" href="index.html">Bench <b>&amp;</b> Table</a>
-    <nav class="sitenav" aria-label="Sections">
-      <a href="index.html">Start</a>
-      <a href="painting.html" aria-current="page">Painting</a>
-      <a href="tracker.html">Tracker</a>
-      <a href="#" class="soon">Turn order</a>
-      <a href="#" class="soon">Charts</a>
-    </nav>
+  <div class="ladder">
+    <div class="ladder-head">
+      <span>One pigment, five dilutions</span>
+      <span>Dark ground → light ground</span>
+    </div>
+    <div class="ladder-stack">
+      <div class="rung r1"><span>2 : 1 &nbsp;basecoat</span></div>
+      <div class="rung r2"><span>1 : 1 &nbsp;layer</span></div>
+      <div class="rung r3"><span>1 : 2 &nbsp;thin layer</span></div>
+      <div class="rung r4"><span>1 : 6 &nbsp;glaze</span></div>
+      <div class="rung r5"><span>1 : 10 &nbsp;tint</span></div>
+    </div>
+    <p class="ladder-foot">Thin paint barely shifts a dark surface but strongly
+      shifts a light one. That asymmetry is the whole trick behind shading.</p>
   </div>
 </header>
 
-<main>
-  <div class="wrap">
+<nav class="jump" aria-label="On this page">
+  <a href="#ratios">Ratios</a>
+  <a href="#brush">Brush load</a>
+  <a href="#order">Order of work</a>
+  <a href="#wrong">Troubleshooting</a>
+  <a href="#words">Consistency words</a>
+  <a href="#thumb">Rules of thumb</a>
+</nav>
 
-    <header class="hero">
-      <div>
-        <p class="crumb"><a href="painting.html">&larr; Painting guide</a></p>
-        <p class="eyebrow">Technique reference</p>
-        <h1>Thinning is<br><em>the whole</em><br>game.</h1>
-        <p>Almost every problem on a miniature traces back to paint that was too
-          thick, or a brush carrying too much of it. If you read one thing here,
-          read the ratios.</p>
-      </div>
+<section class="section" id="ratios">
+  <h2>Dilution by job</h2>
+  <p class="sub">Ratios are paint : thinner by volume, straight from the pot.
+    A starting point, not a law — pigment load varies by brand and by colour, so
+    judge what you see on the palette.</p>
 
-      <div class="ladder">
-        <div class="ladder-head">
-          <span>One pigment, five dilutions</span>
-          <span>Dark ground → light ground</span>
-        </div>
-        <div class="ladder-stack">
-          <div class="rung r1"><span>2 : 1 &nbsp;basecoat</span></div>
-          <div class="rung r2"><span>1 : 1 &nbsp;layer</span></div>
-          <div class="rung r3"><span>1 : 2 &nbsp;thin layer</span></div>
-          <div class="rung r4"><span>1 : 6 &nbsp;glaze</span></div>
-          <div class="rung r5"><span>1 : 10 &nbsp;tint</span></div>
-        </div>
-        <p class="ladder-foot">Thin paint barely shifts a dark surface but strongly
-          shifts a light one. That asymmetry is the whole trick behind shading.</p>
-      </div>
-    </header>
-
-    <nav class="jump" aria-label="On this page">
-      <a href="#ratios">Ratios</a>
-      <a href="#brush">Brush load</a>
-      <a href="#order">Order of work</a>
-      <a href="#wrong">Troubleshooting</a>
-      <a href="#words">Consistency words</a>
-      <a href="#thumb">Rules of thumb</a>
-    </nav>
-
-    <section class="section" id="ratios">
-      <h2>Dilution by job</h2>
-      <p class="sub">Ratios are paint : thinner by volume, straight from the pot.
-        A starting point, not a law — pigment load varies by brand and by colour, so
-        judge what you see on the palette.</p>
-
-      <div class="cards">
-        <div class="card">
-          <h3>Basecoat</h3>
-          <div class="ratio">2:1<small>Water or medium</small></div>
-          <p>Consistency of <b>whole milk</b>. Two thin coats always beat one thick
-            one — the second evens out what the first missed.</p>
-        </div>
-        <div class="card">
-          <h3>Layer / highlight</h3>
-          <div class="ratio">1:1<small>Water or medium</small></div>
-          <p>Consistency of <b>skim milk</b>. Expect 2–4 passes, each smaller than
-            the last and kept off the recesses.</p>
-        </div>
-        <div class="card">
-          <h3>Glaze</h3>
-          <div class="ratio">1:6<small>Medium, not water</small></div>
-          <p><b>Tinted water.</b> Medium keeps pigment suspended and stops beading on
-            semi-gloss surfaces. Dry fully between passes.</p>
-        </div>
-        <div class="card">
-          <h3>Wash / shade</h3>
-          <div class="ratio">1:10<small>Water + flow aid</small></div>
-          <p>Shop-bought shades come ready to use. <b>Control the load</b> — a
-            targeted recess wash reads far better than a flood.</p>
-        </div>
-        <div class="card">
-          <h3>Drybrush</h3>
-          <div class="ratio">1:0<small>Undiluted</small></div>
-          <p>Straight from the pot, then <b>remove nearly all of it</b>. Thinned
-            paint on a drybrush is how you get chalky streaks.</p>
-        </div>
-      </div>
-    </section>
-
-    <section class="section split" id="brush">
-      <div>
-        <h2>Brush load</h2>
-        <p class="sub">Three states, judged on a paper towel before the brush touches
-          the model.</p>
-        <ul class="states">
-          <li>
-            <div class="state-name">Loaded</div>
-            <p>Paint fills about <b>one third</b> of the bristle length. No bulge at
-              the ferrule, tip still holds a point. Paint driven into the ferrule is
-              what kills good brushes.</p>
-          </li>
-          <li>
-            <div class="state-name">Damp</div>
-            <p>Touch the tip once to the towel. If a bead forms where you set the
-              brush down, it is still too wet for glazing or blending.</p>
-          </li>
-          <li>
-            <div class="state-name">Dry</div>
-            <p>Wipe until the towel takes <b>almost no pigment</b> — streaks barely
-              visible. That faint mark is correct, not a sign to keep wiping.</p>
-          </li>
-        </ul>
-      </div>
-
-      <div id="order">
-        <h2>Order of work</h2>
-        <p class="sub">This one really is a sequence. Jumping ahead costs more time
-          than doing it in order.</p>
-        <ol class="steps">
-          <li><div><b>Clean and assemble</b><span>Mould release, seam lines, fit.</span></div></li>
-          <li><div><b>Prime</b><span>Light passes. Primer colour is a decision about
-            value, not a neutral step.</span></div></li>
-          <li><div><b>Set values</b><span>Zenithal spray or drybrush. Establish light
-            and shadow before any colour goes down.</span></div></li>
-          <li><div><b>Colour</b><span>Thinned, multiple coats. Over a value
-            underpainting this means glazes, not opaque basecoats.</span></div></li>
-          <li><div><b>Shade</b><span>Recesses unless you want the tint everywhere.
-            Pull excess with a clean damp tip while wet.</span></div></li>
-          <li><div><b>Highlight</b><span>Up the ridges, each pass tighter than the
-            one before.</span></div></li>
-          <li><div><b>Details</b><span>Eyes, lenses, teeth, metals.</span></div></li>
-          <li><div><b>Base and rim</b><span>Texture, then a solid rim.</span></div></li>
-          <li><div><b>Seal</b><span>Matt overall, gloss only where you want
-            shine.</span></div></li>
-        </ol>
-      </div>
-    </section>
-
-    <section class="section" id="wrong">
-      <h2>When it goes wrong</h2>
-      <p class="sub">Symptom first — that is how you will actually look it up.</p>
-      <table class="diag">
-        <thead>
-          <tr><th>Symptom</th><th>Cause</th><th>Fix</th></tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td>Chalky, streaky drybrush</td>
-            <td>Too much paint left on the brush, or the paint was thinned</td>
-            <td>Wipe further, use undiluted paint, lighter pressure. A larger stiffer
-              brush deposits more evenly than a small soft one.</td>
-          </tr>
-          <tr>
-            <td>Hard tide lines after a glaze</td>
-            <td>Glaze too thick, or the edge dried before it was feathered</td>
-            <td>Thin further with medium, work a smaller area, soften the outer edge
-              with a clean damp brush while still wet.</td>
-          </tr>
-          <tr>
-            <td>Paint beads up or crawls</td>
-            <td>Surface is semi-gloss — contrast paints, varnish, or skin oils</td>
-            <td>Thin with medium instead of water. Handle the model by its base. A
-              matt varnish coat resets the surface.</td>
-          </tr>
-          <tr>
-            <td>Wash pools on flat panels</td>
-            <td>Too much wash on the brush</td>
-            <td>Load less, then wick the excess away with a dry brush tip or a towel
-              corner before it sets.</td>
-          </tr>
-          <tr>
-            <td>Detail disappearing</td>
-            <td>Paint too thick — the classic one</td>
-            <td>Thin and build coats. Once filled, the only real fix is stripping the
-              model back down.</td>
-          </tr>
-          <tr>
-            <td>Paint drying mid-stroke</td>
-            <td>Dry palette, warm room, too large an area at once</td>
-            <td>Wet palette, smaller sections. Retarder helps but slows everything
-              else too.</td>
-          </tr>
-          <tr>
-            <td>Gritty texture</td>
-            <td>Paint separated in the pot, or skinning on the palette</td>
-            <td>Shake properly — a minute or two, with an agitator. Discard palette
-              paint that has started to skin.</td>
-          </tr>
-          <tr>
-            <td>Brush tip splits or hooks</td>
-            <td>Paint dried in the ferrule</td>
-            <td>Never load past a third of the bristles, rinse often, reshape the tip
-              after every clean.</td>
-          </tr>
-          <tr>
-            <td>Chalky, gritty finish after priming</td>
-            <td>Sprayed in high humidity, cold, or from too far away</td>
-            <td>Prime between roughly 10–27°C on a dry day, about a foot from the
-              model. A heavy coat of paint will not rescue it; strip and redo.</td>
-          </tr>
-        </tbody>
-      </table>
-    </section>
-
-    <section class="section split">
-      <div id="words">
-        <h2>Consistency words</h2>
-        <p class="sub">What people mean when they skip the ratio.</p>
-        <dl class="vocab">
-          <div><dt>Cream</dt><dd>Pot paint, unthinned. Drybrush and texture work
-            only.</dd></div>
-          <div><dt>Whole milk</dt><dd>Basecoats. Covers in two passes without
-            pooling.</dd></div>
-          <div><dt>Skim milk</dt><dd>Layers and highlights. Slight translucency on
-            the first pass is correct.</dd></div>
-          <div><dt>Ink</dt><dd>Glazes and washes. Colour visible in the mix, no body
-            to it at all.</dd></div>
-        </dl>
-      </div>
-
-      <div id="thumb">
-        <h2>Rules of thumb</h2>
-        <p class="sub">The short list worth memorising.</p>
-        <ul class="rules-list">
-          <li>Value does the work. Colour gets the credit.</li>
-          <li>Two thin coats. Then a third if needed.</li>
-          <li>Contrast comes from keeping shadows dark, not from adding highlights.</li>
-          <li>Let each pass dry. Most blotching is impatience.</li>
-          <li>Fix mistakes with the surrounding colour, not by scraping.</li>
-          <li>Finish the model in front of you before starting the next one.</li>
-        </ul>
-      </div>
-    </section>
-
+  <div class="cards">
+    <div class="card">
+      <h3>Basecoat</h3>
+      <div class="ratio">2:1<small>Water or medium</small></div>
+      <p>Consistency of <b>whole milk</b>. Two thin coats always beat one thick
+        one — the second evens out what the first missed.</p>
+    </div>
+    <div class="card">
+      <h3>Layer / highlight</h3>
+      <div class="ratio">1:1<small>Water or medium</small></div>
+      <p>Consistency of <b>skim milk</b>. Expect 2–4 passes, each smaller than
+        the last and kept off the recesses.</p>
+    </div>
+    <div class="card">
+      <h3>Glaze</h3>
+      <div class="ratio">1:6<small>Medium, not water</small></div>
+      <p><b>Tinted water.</b> Medium keeps pigment suspended and stops beading on
+        semi-gloss surfaces. Dry fully between passes.</p>
+    </div>
+    <div class="card">
+      <h3>Wash / shade</h3>
+      <div class="ratio">1:10<small>Water + flow aid</small></div>
+      <p>Shop-bought shades come ready to use. <b>Control the load</b> — a
+        targeted recess wash reads far better than a flood.</p>
+    </div>
+    <div class="card">
+      <h3>Drybrush</h3>
+      <div class="ratio">1:0<small>Undiluted</small></div>
+      <p>Straight from the pot, then <b>remove nearly all of it</b>. Thinned
+        paint on a drybrush is how you get chalky streaks.</p>
+    </div>
   </div>
-</main>
+</section>
 
-<footer class="sitefoot">
-  <div class="wrap">
-    <p>Unofficial fan reference. Not affiliated with Games Workshop.</p>
+<section class="section split" id="brush">
+  <div>
+    <h2>Brush load</h2>
+    <p class="sub">Three states, judged on a paper towel before the brush touches
+      the model.</p>
+    <ul class="states">
+      <li>
+        <div class="state-name">Loaded</div>
+        <p>Paint fills about <b>one third</b> of the bristle length. No bulge at
+          the ferrule, tip still holds a point. Paint driven into the ferrule is
+          what kills good brushes.</p>
+      </li>
+      <li>
+        <div class="state-name">Damp</div>
+        <p>Touch the tip once to the towel. If a bead forms where you set the
+          brush down, it is still too wet for glazing or blending.</p>
+      </li>
+      <li>
+        <div class="state-name">Dry</div>
+        <p>Wipe until the towel takes <b>almost no pigment</b> — streaks barely
+          visible. That faint mark is correct, not a sign to keep wiping.</p>
+      </li>
+    </ul>
   </div>
-</footer>
 
-</body>
-</html>
+  <div id="order">
+    <h2>Order of work</h2>
+    <p class="sub">This one really is a sequence. Jumping ahead costs more time
+      than doing it in order.</p>
+    <ol class="steps">
+      <li><div><b>Clean and assemble</b><span>Mould release, seam lines, fit.</span></div></li>
+      <li><div><b>Prime</b><span>Light passes. Primer colour is a decision about
+        value, not a neutral step.</span></div></li>
+      <li><div><b>Set values</b><span>Zenithal spray or drybrush. Establish light
+        and shadow before any colour goes down.</span></div></li>
+      <li><div><b>Colour</b><span>Thinned, multiple coats. Over a value
+        underpainting this means glazes, not opaque basecoats.</span></div></li>
+      <li><div><b>Shade</b><span>Recesses unless you want the tint everywhere.
+        Pull excess with a clean damp tip while wet.</span></div></li>
+      <li><div><b>Highlight</b><span>Up the ridges, each pass tighter than the
+        one before.</span></div></li>
+      <li><div><b>Details</b><span>Eyes, lenses, teeth, metals.</span></div></li>
+      <li><div><b>Base and rim</b><span>Texture, then a solid rim.</span></div></li>
+      <li><div><b>Seal</b><span>Matt overall, gloss only where you want
+        shine.</span></div></li>
+    </ol>
+  </div>
+</section>
+
+<section class="section" id="wrong">
+  <h2>When it goes wrong</h2>
+  <p class="sub">Symptom first — that is how you will actually look it up.</p>
+  <table class="diag">
+    <thead>
+      <tr><th>Symptom</th><th>Cause</th><th>Fix</th></tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>Chalky, streaky drybrush</td>
+        <td>Too much paint left on the brush, or the paint was thinned</td>
+        <td>Wipe further, use undiluted paint, lighter pressure. A larger stiffer
+          brush deposits more evenly than a small soft one.</td>
+      </tr>
+      <tr>
+        <td>Hard tide lines after a glaze</td>
+        <td>Glaze too thick, or the edge dried before it was feathered</td>
+        <td>Thin further with medium, work a smaller area, soften the outer edge
+          with a clean damp brush while still wet.</td>
+      </tr>
+      <tr>
+        <td>Paint beads up or crawls</td>
+        <td>Surface is semi-gloss — contrast paints, varnish, or skin oils</td>
+        <td>Thin with medium instead of water. Handle the model by its base. A
+          matt varnish coat resets the surface.</td>
+      </tr>
+      <tr>
+        <td>Wash pools on flat panels</td>
+        <td>Too much wash on the brush</td>
+        <td>Load less, then wick the excess away with a dry brush tip or a towel
+          corner before it sets.</td>
+      </tr>
+      <tr>
+        <td>Detail disappearing</td>
+        <td>Paint too thick — the classic one</td>
+        <td>Thin and build coats. Once filled, the only real fix is stripping the
+          model back down.</td>
+      </tr>
+      <tr>
+        <td>Paint drying mid-stroke</td>
+        <td>Dry palette, warm room, too large an area at once</td>
+        <td>Wet palette, smaller sections. Retarder helps but slows everything
+          else too.</td>
+      </tr>
+      <tr>
+        <td>Gritty texture</td>
+        <td>Paint separated in the pot, or skinning on the palette</td>
+        <td>Shake properly — a minute or two, with an agitator. Discard palette
+          paint that has started to skin.</td>
+      </tr>
+      <tr>
+        <td>Brush tip splits or hooks</td>
+        <td>Paint dried in the ferrule</td>
+        <td>Never load past a third of the bristles, rinse often, reshape the tip
+          after every clean.</td>
+      </tr>
+      <tr>
+        <td>Chalky, gritty finish after priming</td>
+        <td>Sprayed in high humidity, cold, or from too far away</td>
+        <td>Prime between roughly 10–27°C on a dry day, about a foot from the
+          model. A heavy coat of paint will not rescue it; strip and redo.</td>
+      </tr>
+    </tbody>
+  </table>
+</section>
+
+<section class="section split">
+  <div id="words">
+    <h2>Consistency words</h2>
+    <p class="sub">What people mean when they skip the ratio.</p>
+    <dl class="vocab">
+      <div><dt>Cream</dt><dd>Pot paint, unthinned. Drybrush and texture work
+        only.</dd></div>
+      <div><dt>Whole milk</dt><dd>Basecoats. Covers in two passes without
+        pooling.</dd></div>
+      <div><dt>Skim milk</dt><dd>Layers and highlights. Slight translucency on
+        the first pass is correct.</dd></div>
+      <div><dt>Ink</dt><dd>Glazes and washes. Colour visible in the mix, no body
+        to it at all.</dd></div>
+    </dl>
+  </div>
+
+  <div id="thumb">
+    <h2>Rules of thumb</h2>
+    <p class="sub">The short list worth memorising.</p>
+    <ul class="rules-list">
+      <li>Value does the work. Colour gets the credit.</li>
+      <li>Two thin coats. Then a third if needed.</li>
+      <li>Contrast comes from keeping shadows dark, not from adding highlights.</li>
+      <li>Let each pass dry. Most blotching is impatience.</li>
+      <li>Fix mistakes with the surrounding colour, not by scraping.</li>
+      <li>Finish the model in front of you before starting the next one.</li>
+    </ul>
+  </div>
+</section>

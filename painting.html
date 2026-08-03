@@ -1,283 +1,193 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Painting — Bench &amp; Table</title>
-<meta name="description" content="What to buy and how to get your first model painted, end to end,
-      plus the mistakes that cost beginners the most time.">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,700;12..96,800&family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="assets/style.css">
-<style>
-  .hero{
-    padding:56px 0 44px;
-    border-bottom:1px solid var(--line);
-  }
-
-  .hero h1{
-    font-family:var(--display);
-    font-weight:800;
-    font-size:clamp(42px,7vw,80px);
-    line-height:.92;
-    letter-spacing:-.035em;
-    margin:0 0 16px;
-  }
-
-  .hero h1 em{font-style:normal;color:var(--accent);}
-  .hero p{margin:0;max-width:52ch;color:var(--bone-dim);font-size:15px;}
-
-  /* in-page nav */
-
-  .jump{
-    display:flex;flex-wrap:wrap;gap:2px;margin-top:28px;
-  }
-
-  .jump a{
-    font-family:var(--mono);font-size:11px;letter-spacing:.12em;
-    text-transform:uppercase;text-decoration:none;color:var(--bone-dim);
-    background:var(--ground-2);padding:9px 14px;
-    transition:color .16s ease,background .16s ease;
-  }
-
-  .jump a:hover{color:var(--bone);background:var(--ground-3);}
-
-  /* kit list */
-
-  .kit{list-style:none;margin:0;padding:0;}
-
-  .kit li{
-    display:grid;grid-template-columns:minmax(0,1fr) auto;
-    gap:16px;align-items:baseline;
-    padding:12px 0;border-top:1px solid var(--line);
-  }
-
-  .kit li:last-child{border-bottom:1px solid var(--line);}
-  .kit b{font-weight:600;font-size:14.5px;display:block;margin-bottom:2px;}
-  .kit span{font-size:13.5px;color:var(--bone-dim);line-height:1.45;}
-
-  .kit em{
-    font-style:normal;font-family:var(--mono);font-size:11px;
-    color:var(--accent);white-space:nowrap;
-  }
-
-  @media (max-width:820px){
-    .hero{padding-top:36px;}
-  }
-</style>
-</head>
-<body class="s-painting">
-
-<header class="sitebar">
-  <div class="wrap">
-    <a class="mark" href="index.html">Bench <b>&amp;</b> Table</a>
-    <nav class="sitenav" aria-label="Sections">
-      <a href="index.html">Start</a>
-      <a href="painting.html" aria-current="page">Painting</a>
-      <a href="tracker.html">Tracker</a>
-      <a href="#" class="soon">Turn order</a>
-      <a href="#" class="soon">Charts</a>
-    </nav>
-  </div>
+---
+layout: base.njk
+permalink: /painting.html
+title: "Painting — Bench & Table"
+description: What to buy and how to get your first model painted, end to end,
+      plus the mistakes that cost beginners the most time.
+bodyClass: s-painting
+pageCss: css/painting.css
+---
+<header class="hero">
+  <p class="eyebrow">At the desk</p>
+  <h1>Get your first <em>model</em> painted.</h1>
+  <p>What to buy, how to go from a bare sprue to a finished model, and the
+    mistakes that cost beginners the most time.</p>
 </header>
 
-<main>
-  <div class="wrap">
+<nav class="jump" aria-label="On this page">
+  <a href="#kit">Buy this</a>
+  <a href="#basics">Absolute basics</a>
+  <a href="#first">First model</a>
+  <a href="#traps">Beginner traps</a>
+  <a href="painting-reference.html">Technique reference</a>
+</nav>
 
-    <header class="hero">
-      <p class="eyebrow">At the desk</p>
-      <h1>Get your first<br><em>model</em> painted.</h1>
-      <p>What to buy, how to go from a bare sprue to a finished model, and the
-        mistakes that cost beginners the most time.</p>
-    </header>
+<section class="section" id="kit">
+  <h2>What to actually buy</h2>
+  <p class="sub">Roughly $70–90 gets you painting properly. The single most
+    common beginner mistake is spending that on forty paints and one bad brush
+    instead. Buy few things, buy them decent.</p>
 
-    <nav class="jump" aria-label="On this page">
-      <a href="#kit">Buy this</a>
-      <a href="#basics">Absolute basics</a>
-      <a href="#first">First model</a>
-      <a href="#traps">Beginner traps</a>
-      <a href="painting-reference.html">Technique reference</a>
-    </nav>
+  <ul class="kit">
+    <li>
+      <div><b>Primer, one can</b>
+        <span>Black hides mistakes and makes colours richer. Grey or bone makes
+          colours brighter and is more forgiving for a first model. Pick one.</span></div>
+      <em>~$18</em>
+    </li>
+    <li>
+      <div><b>Three brushes</b>
+        <span>A size 1 round for most work, a size 0 for detail, and a cheap
+          stiff brush for drybrushing. Buy synthetic now. Sable is better but
+          punishes bad habits and costs five times as much.</span></div>
+      <em>~$20</em>
+    </li>
+    <li>
+      <div><b>Six to eight paints</b>
+        <span>Your main armour colour, a metal, a flesh or bone, a black, a
+          white, and one wash. Add colours when a model demands one, not before.</span></div>
+      <em>~$30</em>
+    </li>
+    <li>
+      <div><b>Two water pots</b>
+        <span>One to rinse, one clean for thinning. Old jars are fine. Using one
+          pot for both is why your colours go muddy.</span></div>
+      <em>$0</em>
+    </li>
+    <li>
+      <div><b>A palette</b>
+        <span>A white ceramic tile from a hardware store beats the plastic tray
+          in the starter set. A wet palette is a later upgrade, not a
+          requirement.</span></div>
+      <em>~$3</em>
+    </li>
+    <li>
+      <div><b>Clippers and a hobby knife</b>
+        <span>For getting parts off the sprue and cleaning up. A cheap file or
+          the back of the knife blade handles mould lines.</span></div>
+      <em>~$18</em>
+    </li>
+    <li>
+      <div><b>Plastic cement</b>
+        <span>Not superglue. Plastic cement melts the two surfaces together and
+          makes a far stronger joint on GW plastic kits.</span></div>
+      <em>~$6</em>
+    </li>
+  </ul>
+</section>
 
-    <section class="section" id="kit">
-      <h2>What to actually buy</h2>
-      <p class="sub">Roughly $70–90 gets you painting properly. The single most
-        common beginner mistake is spending that on forty paints and one bad brush
-        instead. Buy few things, buy them decent.</p>
+<section class="section" id="basics">
+  <h2>Before you touch a model</h2>
+  <p class="sub">The part nobody explains because everyone around you already
+    knows it. If you're teaching someone in person, this is what you'd show
+    them with your hands before either of you says a word about technique.</p>
 
-      <ul class="kit">
-        <li>
-          <div><b>Primer, one can</b>
-            <span>Black hides mistakes and makes colours richer. Grey or bone makes
-              colours brighter and is more forgiving for a first model. Pick one.</span></div>
-          <em>~$18</em>
-        </li>
-        <li>
-          <div><b>Three brushes</b>
-            <span>A size 1 round for most work, a size 0 for detail, and a cheap
-              stiff brush for drybrushing. Buy synthetic now. Sable is better but
-              punishes bad habits and costs five times as much.</span></div>
-          <em>~$20</em>
-        </li>
-        <li>
-          <div><b>Six to eight paints</b>
-            <span>Your main armour colour, a metal, a flesh or bone, a black, a
-              white, and one wash. Add colours when a model demands one, not before.</span></div>
-          <em>~$30</em>
-        </li>
-        <li>
-          <div><b>Two water pots</b>
-            <span>One to rinse, one clean for thinning. Old jars are fine. Using one
-              pot for both is why your colours go muddy.</span></div>
-          <em>$0</em>
-        </li>
-        <li>
-          <div><b>A palette</b>
-            <span>A white ceramic tile from a hardware store beats the plastic tray
-              in the starter set. A wet palette is a later upgrade, not a
-              requirement.</span></div>
-          <em>~$3</em>
-        </li>
-        <li>
-          <div><b>Clippers and a hobby knife</b>
-            <span>For getting parts off the sprue and cleaning up. A cheap file or
-              the back of the knife blade handles mould lines.</span></div>
-          <em>~$18</em>
-        </li>
-        <li>
-          <div><b>Plastic cement</b>
-            <span>Not superglue. Plastic cement melts the two surfaces together and
-              makes a far stronger joint on GW plastic kits.</span></div>
-          <em>~$6</em>
-        </li>
-      </ul>
-    </section>
-
-    <section class="section" id="basics">
-      <h2>Before you touch a model</h2>
-      <p class="sub">The part nobody explains because everyone around you already
-        knows it. If you're teaching someone in person, this is what you'd show
-        them with your hands before either of you says a word about technique.</p>
-
-      <div class="cards">
-        <div class="card">
-          <h3>Dry palette</h3>
-          <p>A tile, or the plastic tray from a starter set. Paint sits on the
-            surface and starts drying in a few minutes, so <b>mix small amounts and
-            refresh often</b>. This is what you use for basecoats and drybrushing,
-            and it's completely fine to stay here for a long time.</p>
-        </div>
-        <div class="card">
-          <h3>Wet palette</h3>
-          <p>A damp sponge under a sheet of parchment paper, sealed with a lid.
-            Keeps the same mix workable for an hour or more. Worth setting up once
-            you're layering or blending and keep returning to one colour.</p>
-        </div>
-      </div>
-    </section>
-
-    <section class="section split">
-      <div>
-        <h2>Loading a brush</h2>
-        <p class="sub">The same four moves, every time, before the brush ever
-          reaches the model.</p>
-        <ol class="steps">
-          <li><div><b>Wet the tip</b><span>Dip it in the water pot, then wipe once
-            on the rim — damp, not dripping.</span></div></li>
-          <li><div><b>Pick up paint</b><span>A small blob on the palette. You can
-            always add more.</span></div></li>
-          <li><div><b>Work it in</b><span>Drag the brush through the blob in one
-            direction until the bristle holds an even coat, not a lump at the
-            tip.</span></div></li>
-          <li><div><b>Test it</b><span>One stroke on a clean part of the palette.
-            Smooth and opaque, it's ready. Beading up or feeling gluey, add more
-            water and mix again.</span></div></li>
-        </ol>
-      </div>
-
-      <div>
-        <h2>Water and rinsing</h2>
-        <p class="sub">Bad habits here are the quiet cause of a lot of muddy,
-          streaky paint.</p>
-        <ul class="rules-list">
-          <li>Two pots: one to rinse the brush, one clean for thinning paint. One
-            pot doing both is why colours go muddy.</li>
-          <li>Swirl the brush gently against the side of the pot. Jabbing bristles
-            into the bottom splays and wrecks the tip.</li>
-          <li>Change the rinse water once it goes cloudy or feels gritty.</li>
-          <li>Wipe the brush on a towel before loading new paint — a wet brush thins
-            whatever it picks up next, whether you meant it to or not.</li>
-        </ul>
-      </div>
-    </section>
-
-    <section class="section" id="first">
-      <h2>Your first model, end to end</h2>
-      <p class="sub">Pick a single infantry model you do not care much about. Not the
-        character, not the tank. The first one is practice and you should expect to
-        be mildly disappointed by it.</p>
-
-      <ol class="steps">
-        <li><div><b>Clip the parts off the sprue</b><span>Cut leaving a small nub
-          rather than flush against the model — clipping tight can tear the
-          plastic. Trim the nub away afterwards with the knife.</span></div></li>
-        <li><div><b>Scrape the mould lines</b><span>Thin raised seams run down arms
-          and legs. Drag the knife edge sideways along them. Paint magnifies a
-          mould line, it never hides one.</span></div></li>
-        <li><div><b>Glue it together</b><span>Plastic cement, a small amount, hold
-          for thirty seconds. Leave it a few hours before painting.</span></div></li>
-        <li><div><b>Prime it</b><span>Outdoors or in a garage. Hold the can about a
-          foot away and use several light passes from different angles. Do not try
-          to cover it in one go — that is how you fill detail. Skip it entirely if
-          it is humid or below about 10°C, or you get a chalky finish.</span></div></li>
-        <li><div><b>Basecoat the big areas</b><span>Thinned paint, two coats. Armour,
-          cloth, skin. Do not worry about neatness at the boundaries yet; you will
-          tidy them later.</span></div></li>
-        <li><div><b>Wash it</b><span>A dark wash over the whole model, or just into
-          the recesses if you want more control. This one step does more for a
-          first model than anything else you can do.</span></div></li>
-        <li><div><b>Bring the raised areas back up</b><span>Either drybrush the
-          original colour over the top, or repaint the raised surfaces leaving the
-          wash in the crevices. Both work.</span></div></li>
-        <li><div><b>Details</b><span>Eyes, weapons, pouches, purity seals. Last,
-          because they are most likely to need a second attempt.</span></div></li>
-        <li><div><b>Base and rim</b><span>Texture or sand, then paint the rim of the
-          base a solid dark colour. A clean rim reads as "finished" more than
-          almost anything else on the model.</span></div></li>
-        <li><div><b>Varnish</b><span>A matt spray protects it from handling. Worth
-          doing on anything you intend to actually play with.</span></div></li>
-      </ol>
-    </section>
-
-    <section class="section" id="traps">
-      <h2>Beginner traps</h2>
-      <p class="sub">The mistakes that cost people the most time, in the order they
-        usually happen.</p>
-      <ul class="rules-list">
-        <li>Painting straight from the pot. Unthinned paint fills detail and dries
-          glossy and streaky. Thin everything.</li>
-        <li>Buying a huge paint set. You will use six of them and the rest will dry
-          out over two years.</li>
-        <li>Priming too close or too heavy, and burying the detail before you start.</li>
-        <li>Spending eight hours on model one, hating it, and stopping. Give the
-          first three models two hours each and move on — you improve faster across
-          five models than within one.</li>
-        <li>Not shaking the paint. Two minutes, properly. Pigment settles hard.</li>
-        <li>Comparing your work to Instagram. Those are display pieces shot under
-          studio light at 10x magnification. Yours will be seen at arm's length on a
-          table.</li>
-      </ul>
-    </section>
-
+  <div class="cards">
+    <div class="card">
+      <h3>Dry palette</h3>
+      <p>A tile, or the plastic tray from a starter set. Paint sits on the
+        surface and starts drying in a few minutes, so <b>mix small amounts and
+        refresh often</b>. This is what you use for basecoats and drybrushing,
+        and it's completely fine to stay here for a long time.</p>
+    </div>
+    <div class="card">
+      <h3>Wet palette</h3>
+      <p>A damp sponge under a sheet of parchment paper, sealed with a lid.
+        Keeps the same mix workable for an hour or more. Worth setting up once
+        you're layering or blending and keep returning to one colour.</p>
+    </div>
   </div>
-</main>
+</section>
 
-<footer class="sitefoot">
-  <div class="wrap">
-    <p>Unofficial fan reference. Not affiliated with Games Workshop.</p>
+<section class="section split">
+  <div>
+    <h2>Loading a brush</h2>
+    <p class="sub">The same four moves, every time, before the brush ever
+      reaches the model.</p>
+    <ol class="steps">
+      <li><div><b>Wet the tip</b><span>Dip it in the water pot, then wipe once
+        on the rim — damp, not dripping.</span></div></li>
+      <li><div><b>Pick up paint</b><span>A small blob on the palette. You can
+        always add more.</span></div></li>
+      <li><div><b>Work it in</b><span>Drag the brush through the blob in one
+        direction until the bristle holds an even coat, not a lump at the
+        tip.</span></div></li>
+      <li><div><b>Test it</b><span>One stroke on a clean part of the palette.
+        Smooth and opaque, it's ready. Beading up or feeling gluey, add more
+        water and mix again.</span></div></li>
+    </ol>
   </div>
-</footer>
 
-</body>
-</html>
+  <div>
+    <h2>Water and rinsing</h2>
+    <p class="sub">Bad habits here are the quiet cause of a lot of muddy,
+      streaky paint.</p>
+    <ul class="rules-list">
+      <li>Two pots: one to rinse the brush, one clean for thinning paint. One
+        pot doing both is why colours go muddy.</li>
+      <li>Swirl the brush gently against the side of the pot. Jabbing bristles
+        into the bottom splays and wrecks the tip.</li>
+      <li>Change the rinse water once it goes cloudy or feels gritty.</li>
+      <li>Wipe the brush on a towel before loading new paint — a wet brush thins
+        whatever it picks up next, whether you meant it to or not.</li>
+    </ul>
+  </div>
+</section>
+
+<section class="section" id="first">
+  <h2>Your first model, end to end</h2>
+  <p class="sub">Pick a single infantry model you do not care much about. Not the
+    character, not the tank. The first one is practice and you should expect to
+    be mildly disappointed by it.</p>
+
+  <ol class="steps">
+    <li><div><b>Clip the parts off the sprue</b><span>Cut leaving a small nub
+      rather than flush against the model — clipping tight can tear the
+      plastic. Trim the nub away afterwards with the knife.</span></div></li>
+    <li><div><b>Scrape the mould lines</b><span>Thin raised seams run down arms
+      and legs. Drag the knife edge sideways along them. Paint magnifies a
+      mould line, it never hides one.</span></div></li>
+    <li><div><b>Glue it together</b><span>Plastic cement, a small amount, hold
+      for thirty seconds. Leave it a few hours before painting.</span></div></li>
+    <li><div><b>Prime it</b><span>Outdoors or in a garage. Hold the can about a
+      foot away and use several light passes from different angles. Do not try
+      to cover it in one go — that is how you fill detail. Skip it entirely if
+      it is humid or below about 10°C, or you get a chalky finish.</span></div></li>
+    <li><div><b>Basecoat the big areas</b><span>Thinned paint, two coats. Armour,
+      cloth, skin. Do not worry about neatness at the boundaries yet; you will
+      tidy them later.</span></div></li>
+    <li><div><b>Wash it</b><span>A dark wash over the whole model, or just into
+      the recesses if you want more control. This one step does more for a
+      first model than anything else you can do.</span></div></li>
+    <li><div><b>Bring the raised areas back up</b><span>Either drybrush the
+      original colour over the top, or repaint the raised surfaces leaving the
+      wash in the crevices. Both work.</span></div></li>
+    <li><div><b>Details</b><span>Eyes, weapons, pouches, purity seals. Last,
+      because they are most likely to need a second attempt.</span></div></li>
+    <li><div><b>Base and rim</b><span>Texture or sand, then paint the rim of the
+      base a solid dark colour. A clean rim reads as "finished" more than
+      almost anything else on the model.</span></div></li>
+    <li><div><b>Varnish</b><span>A matt spray protects it from handling. Worth
+      doing on anything you intend to actually play with.</span></div></li>
+  </ol>
+</section>
+
+<section class="section" id="traps">
+  <h2>Beginner traps</h2>
+  <p class="sub">The mistakes that cost people the most time, in the order they
+    usually happen.</p>
+  <ul class="rules-list">
+    <li>Painting straight from the pot. Unthinned paint fills detail and dries
+      glossy and streaky. Thin everything.</li>
+    <li>Buying a huge paint set. You will use six of them and the rest will dry
+      out over two years.</li>
+    <li>Priming too close or too heavy, and burying the detail before you start.</li>
+    <li>Spending eight hours on model one, hating it, and stopping. Give the
+      first three models two hours each and move on — you improve faster across
+      five models than within one.</li>
+    <li>Not shaking the paint. Two minutes, properly. Pigment settles hard.</li>
+    <li>Comparing your work to Instagram. Those are display pieces shot under
+      studio light at 10x magnification. Yours will be seen at arm's length on a
+      table.</li>
+  </ul>
+</section>

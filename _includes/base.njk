@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>{{ title }}</title>
+<meta name="description" content="{{ description }}">
+{% if themeColor %}<meta name="theme-color" content="{{ themeColor }}">
+{% endif %}<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,700;12..96,800&family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/style.css">
+{% if pageCss %}<link rel="stylesheet" href="assets/{{ pageCss }}">
+{% endif %}</head>
+<body class="{{ bodyClass }}">
+
+<header class="sitebar">
+  <div class="wrap">
+    <a class="mark" href="index.html">Bench <b>&amp;</b> Table</a>
+    <nav class="sitenav" aria-label="Sections">
+      <a href="index.html"{% if page.url == "/" %} aria-current="page"{% endif %}>Start</a>
+      <a href="painting.html"{% if page.url == "/painting.html" or page.url == "/painting-reference.html" %} aria-current="page"{% endif %}>Painting</a>
+      <a href="tracker.html"{% if page.url == "/tracker.html" %} aria-current="page"{% endif %}>Tracker</a>
+      <a href="#" class="soon">Turn order</a>
+      <a href="#" class="soon">Charts</a>
+    </nav>
+  </div>
+</header>
+
+<main>
+  <div class="wrap">
+
+    {{ content | safe }}
+
+  </div>
+</main>
+
+<footer class="sitefoot">
+  <div class="wrap">
+    <p>Unofficial fan reference. Not affiliated with Games Workshop.</p>
+    {% if extraFooter %}{{ extraFooter | safe }}
+    {% endif %}</div>
+</footer>
+
+{% if pageJs %}<script src="assets/{{ pageJs }}" defer></script>
+{% endif %}</body>
+</html>

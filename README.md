@@ -1,24 +1,41 @@
 # Bench & Table
 
 A plain-language Warhammer 40,000 (11th edition) and miniature painting reference
-for our group. Static HTML, no build step, no dependencies.
+for our group. Built with Eleventy (11ty): plain HTML/Nunjucks templates and a
+shared layout, compiled to static HTML/CSS/JS.
+
+Live at `40k.middleearth.rocks` and `40k.droptablestar.workers.dev`.
 
 ## Structure
 
 ```
-index.html        Landing page, grouped by when you'd reach for a page
-painting.html     Painting guide: beginner track + technique reference
-tracker.html      Battle tracker: CP, VP, round, per-unit damage
-assets/style.css  Shared design tokens and components
-CNAME             Custom domain for GitHub Pages
+index.html                 Landing page, grouped by when you'd reach for a page
+painting.html               Painting guide: beginner track
+painting-reference.html     Painting guide: technique reference
+tracker.html                 Battle tracker: CP, VP, round, per-unit damage
+_includes/base.njk          Shared layout: head, nav, footer
+assets/style.css             Shared design tokens and components
+assets/css/{page}.css        Per-page CSS
+assets/js/tracker.js         Tracker's vanilla JS
+```
+
+Each `.html` file at the root is front matter + body content only. See
+CLAUDE.md for the full front matter field reference and design system.
+
+## Build
+
+```bash
+npm install
+npx @11ty/eleventy          # one-off build → _site/
+npx @11ty/eleventy --serve  # local dev server with live reload
 ```
 
 ## Tracker
 
-Vanilla JS, no framework, state in `localStorage` under `benchtable:battle:v1`.
-If storage is unavailable (private mode, blocked cookies) it falls back to
-in-memory state and shows a banner — the game still works, it just resets on
-reload.
+Vanilla JS (`assets/js/tracker.js`), state in `localStorage` under
+`benchtable:battle:v1`. If storage is unavailable (private mode, blocked
+cookies) it falls back to in-memory state and shows a banner — the game still
+works, it just resets on reload.
 
 State shape:
 
@@ -31,56 +48,23 @@ State shape:
 and monsters track wounds.
 
 **It is per-device.** Two phones do not sync. Either one person tracks the whole
-game, or each player tracks their own army and you compare VP at the end. Real
-sync needs a backend, which would end the "static site" property.
+game, or each player tracks their own army and you compare VP at the end.
 
-Each page sets a section class on `<body>` which swaps the accent colour:
+Each page sets a section class on `<body>` (the `bodyClass` front matter field)
+which swaps the accent colour:
 
 - `s-painting` — violet
 - `s-rules` — brass
 
-Add a new section by copying `painting.html`, changing the body class, and adding
-the link to the two `.sitenav` blocks.
+Add a new page by copying `painting.html`'s front matter block, changing
+`bodyClass`/`permalink`/`title`, and writing the body content — the header,
+nav, and footer come from `_includes/base.njk` automatically.
 
-## Deploy to GitHub Pages
+## Deploy
 
-```bash
-git init
-git add .
-git commit -m "Initial reference site"
-git branch -M main
-git remote add origin git@github.com:<user>/wh40k-ref.git
-git push -u origin main
-```
-
-Then in the repo: **Settings → Pages → Source: Deploy from a branch →
-`main` / `(root)`**.
-
-For the custom domain, add a `CNAME` file containing only the hostname:
-
-```bash
-echo 'wh40k.example.com' > CNAME
-git add CNAME && git commit -m "Add custom domain" && git push
-```
-
-DNS record — CNAME `wh40k` pointing at `<user>.github.io.`
-
-Then set the same hostname under Settings → Pages → Custom domain, and tick
-**Enforce HTTPS** once the cert provisions (usually under an hour).
-
-## Alternative: self-host behind nginx-proxy-manager
-
-Only worth it if you want this LAN-only.
-
-```bash
-docker run -d --name wh40k-ref --restart unless-stopped \
-  -v /path/to/wh40k-ref:/usr/share/nginx/html:ro \
-  -p 8090:80 \
-  nginx:alpine
-```
-
-Then add a Proxy Host in NPM pointing at `<server-ip>:8090`, request a Let's
-Encrypt cert, and point DNS at the server.
+Cloudflare Workers Builds, connected to this GitHub repo. Push to `main`
+triggers a build. See CLAUDE.md's Deploying section for the exact Build
+command and gotchas.
 
 ## Content rules
 

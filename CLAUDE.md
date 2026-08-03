@@ -5,8 +5,10 @@ Context for Claude Code working in this repo.
 ## What this is
 
 A Warhammer 40,000 (11th edition) and miniature-painting reference site for a
-small group of friends who started playing in 2026. Static HTML and CSS, no
-build step, no framework, no dependencies.
+small group of friends who started playing in 2026. Built with Eleventy
+(11ty) — plain HTML/Nunjucks templates and a shared layout, compiled to
+static HTML/CSS/JS. No client-side framework, no bundler beyond Eleventy
+itself.
 
 Audience is beginners. Write for someone who has never played and never painted.
 No meta discussion, no assumed vocabulary, no jargon without a definition.
@@ -16,22 +18,65 @@ Live at `40k.middleearth.rocks` and `40k.droptablestar.workers.dev`.
 ## Layout
 
 ```
-index.html        Landing page
-painting.html     Painting guide: beginner track, then technique reference
-tracker.html      Battle tracker: CP, VP, round, per-unit damage
-assets/style.css  Shared design tokens and components
-wrangler.jsonc    Cloudflare Worker config
-.assetsignore     Files excluded from the public asset upload
+index.html                    Landing page (content + front matter, no <head>/nav/footer)
+painting.html                 Painting guide: beginner track
+painting-reference.html       Painting guide: technique reference
+tracker.html                  Battle tracker: CP, VP, round, per-unit damage
+_includes/base.njk            Shared layout: <head>, sitebar/nav, main/wrap, footer
+assets/style.css               Shared design tokens and components (loaded on every page)
+assets/css/{page}.css          Per-page CSS, one file per top-level page
+assets/js/tracker.js           Tracker's vanilla JS logic
+.eleventy.js                   Eleventy config (passthrough copy, template engine)
+wrangler.jsonc                 Cloudflare Worker config (assets.directory: _site)
 ```
 
-Page-specific CSS goes in a `<style>` block in that page. Anything reused goes
-in `assets/style.css`. There is no bundler — keep it that way unless there's a
-real reason.
+Each top-level `.html` file at the repo root is front matter + body content
+only — no `<head>`, header, or footer. Those live once in `_includes/base.njk`.
+Front matter fields a page can set:
+
+```
+layout: base.njk        always this
+permalink: /foo.html     explicit, so output filenames never drift from routes
+title / description      <title> and meta description
+bodyClass                s-painting or s-rules (sets the section accent)
+pageCss                  path under assets/, e.g. css/painting.css
+pageJs                   path under assets/, e.g. js/tracker.js (optional)
+extraFooter               raw HTML appended to the shared footer (optional)
+themeColor                sets <meta name="theme-color"> (optional)
+```
+
+Page-specific CSS goes in `assets/css/{page}.css`, one file per page. Anything
+reused across more than one page (e.g. the in-page jump nav) goes in
+`assets/style.css` instead of being duplicated — duplicated per-page CSS
+drifting out of sync was the direct cause of several bugs before this
+structure existed.
+
+## Building
+
+```bash
+npm install
+npx @11ty/eleventy          # one-off build, output in _site/
+npx @11ty/eleventy --serve  # local dev server with live reload
+```
+
+Nunjucks (`.njk`) is the template engine for both `_includes/base.njk` and the
+`.html` content files (configured via `htmlTemplateEngine` in `.eleventy.js`).
+`assets/` is passthrough-copied into `_site/assets/` unchanged.
 
 ## Deploying
 
-Cloudflare Worker with static assets, connected to this GitHub repo. Push to
-`main` triggers a build. `npx wrangler deploy` deploys from local.
+Cloudflare Workers Builds, connected to this GitHub repo. Push to `main`
+triggers a build using the **Build command** configured in the Cloudflare
+dashboard (Workers & Pages → this worker → Settings → Build), which must be:
+
+```
+npm install && npx @11ty/eleventy
+```
+
+The **Deploy command** (`npx wrangler deploy`) then reads `wrangler.jsonc`'s
+`assets.directory` (`_site`) and uploads the built output. `npx wrangler
+deploy` also works from local for a one-off deploy, as long as `_site/` has
+been built first.
 
 Verify a deploy actually served the file, not just that the build went green:
 
@@ -44,15 +89,15 @@ while after a missing file starts existing.
 
 ### Gotchas already hit
 
-- `.assetsignore` uses gitignore syntax and silently drops matching files from
-  the upload. A bare `assets` line will exclude the entire stylesheet directory
-  and the site will render as unstyled HTML. Check this file first when styling
-  disappears.
 - `assets/` is plural everywhere. A rename to `asset/` breaks every page.
 - If a file isn't in `git ls-files`, it was never committed and Cloudflare never
   saw it. Check this before debugging the deploy.
-- Config lives partly in the Cloudflare dashboard. If a setting seems to come
-  from nowhere, look there before assuming it's in the repo.
+- Config lives partly in the Cloudflare dashboard (the Build command above). If
+  a setting seems to come from nowhere, look there before assuming it's in the
+  repo.
+- `wrangler.jsonc`'s `assets.directory` must point at `_site` (the build
+  output), not `.` — pointing it at the repo root serves source templates
+  instead of built HTML.
 
 ## Design system
 
@@ -79,13 +124,25 @@ sequences only — the painting order of operations is one, a list of tips is no
 
 ### Quality floor
 
-Responsive to 360px. Visible keyboard focus. `prefers-reduced-motion` respected.
-Print styles on reference pages. Touch targets at least 34px, since these pages
-get used on a phone at a table.
+Mobile is the primary target, not a fallback — design and test for phone
+first; desktop is secondary. Every new page/feature gets checked at 360px
+width before being considered done (not just "responsive in theory" — actually
+render it, e.g. with a Playwright screenshot and a `scrollWidth`/`clientWidth`
+overflow check).
+
+Touch targets, tap-ability, and one-handed/thumb reachability matter more than
+desktop mouse-hover interactions — hover-only affordances are a trap here.
+Painting means wet or paint-covered hands, and gaming means one-handed phone
+use at a table, so favor large tap targets (34px minimum), minimal typing, and
+glanceable layouts over dense information.
+
+Visible keyboard focus. `prefers-reduced-motion` respected. Print styles on
+reference pages.
 
 ## Tracker
 
-Vanilla JS in `tracker.html`. State in `localStorage` under
+Vanilla JS in `assets/js/tracker.js`, loaded by `tracker.html` via its
+`pageJs` front matter field. State in `localStorage` under
 `benchtable:battle:v1`, with an in-memory fallback and a visible banner when
 storage is blocked.
 
