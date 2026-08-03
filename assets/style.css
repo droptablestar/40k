@@ -456,9 +456,9 @@ a.card:hover::before{border-color:transparent var(--accent) transparent transpar
 
 .strat-list{list-style:none;margin:0;padding:0;border-top:1px solid var(--line);}
 
-.strat-list details{border-bottom:1px solid var(--line);}
+.strat-list > li > details{border-bottom:1px solid var(--line);}
 
-.strat-list summary{
+.strat-list > li > details > summary{
   display:flex;
   flex-wrap:wrap;
   align-items:baseline;
@@ -470,9 +470,9 @@ a.card:hover::before{border-color:transparent var(--accent) transparent transpar
   min-height:34px;
 }
 
-.strat-list summary::-webkit-details-marker{display:none;}
+.strat-list > li > details > summary::-webkit-details-marker{display:none;}
 
-.strat-list summary::before{
+.strat-list > li > details > summary::before{
   content:"+";
   font-family:var(--mono);
   color:var(--accent);
@@ -480,7 +480,7 @@ a.card:hover::before{border-color:transparent var(--accent) transparent transpar
   flex-shrink:0;
 }
 
-.strat-list details[open] summary::before{content:"–";}
+.strat-list > li > details[open] > summary::before{content:"–";}
 
 .strat-list .strat-name{font-weight:600;font-size:var(--fs-md);flex:1;min-width:120px;}
 
@@ -646,6 +646,52 @@ a.card:hover::before{border-color:transparent var(--accent) transparent transpar
   color:var(--bone-dim);
   background:var(--ground-3);
   padding:4px 8px;
+}
+
+/* ---------- inline tooltips: ability/weapon keywords ----------
+   Tap to open on any device (native <details>, zero JS) — on devices
+   with a real mouse, also open on hover so you don't need to tap at
+   all. Never hover-only: this site is touch-first. */
+
+.tip{display:inline-block;position:relative;}
+
+.tip summary{
+  display:inline;
+  cursor:help;
+  list-style:none;
+}
+
+.tip summary::-webkit-details-marker{display:none;}
+
+/* accent color alone marks a term as having a tooltip — no underline,
+   which reads as clutter once several tags sit close together (kw-list
+   chips already have a pill background; wpn-tags already uses accent
+   for all its text). */
+.kw-list .tip summary{color:var(--accent);}
+
+.tip-panel{
+  position:absolute;
+  bottom:100%;
+  left:0;
+  margin-bottom:8px;
+  z-index:25;
+  width:max-content;
+  max-width:240px;
+  background:var(--ground-3);
+  border:1px solid var(--line);
+  box-shadow:0 8px 20px rgba(0,0,0,.35);
+  padding:10px 12px;
+  font-family:var(--body);
+  font-size:var(--fs-sm);
+  font-weight:400;
+  text-transform:none;
+  letter-spacing:normal;
+  color:var(--bone);
+  line-height:1.4;
+}
+
+@media (hover:hover) and (pointer:fine){
+  .tip:hover .tip-panel{display:block;}
 }
 
 /* ---------- weapon profile table ---------- */
