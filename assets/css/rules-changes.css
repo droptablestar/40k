@@ -56,6 +56,78 @@
 .change-body p{margin:0;color:var(--bone-dim);font-size:14px;line-height:1.55;}
 .change-body p + p{margin-top:10px;}
 
+/* ---------- rule reference: jumps into the official PDF ----------
+   A real tap target, not an inline link — this gets used at a table with one
+   hand, and the whole point of the page is being able to check the source. */
+
+.rule-ref{
+  display:flex;
+  align-items:center;
+  flex-wrap:wrap;
+  gap:4px 10px;
+  min-height:38px;
+  margin-top:12px;
+  padding:8px 12px;
+  background:var(--ground-2);
+  border:1px solid var(--line);
+  text-decoration:none;
+  transition:background .16s ease,border-color .16s ease;
+}
+
+.rule-ref:hover{background:var(--ground-3);border-color:var(--accent-lo);}
+
+.rule-num{
+  font-family:var(--mono);
+  font-size:var(--fs-2xs);
+  font-variant-numeric:tabular-nums;
+  letter-spacing:.1em;
+  color:var(--accent);
+  flex:none;
+}
+
+.rule-title{
+  font-size:var(--fs-sm);
+  color:var(--bone);
+  flex:1;
+  min-width:0;
+}
+
+.rule-go{
+  font-family:var(--mono);
+  font-size:var(--fs-2xs);
+  font-variant-numeric:tabular-nums;
+  letter-spacing:.08em;
+  text-transform:uppercase;
+  color:var(--bone-dim);
+  flex:none;
+}
+
+/* consecutive refs read as one stack rather than separate buttons */
+.rule-ref + .rule-ref{margin-top:-1px;}
+
+/* claims that are an inference from two or more rules rather than a
+   sentence you can point at. Say so — the links below it are the premises,
+   not a quotation. */
+.rule-derived{
+  margin-top:10px !important;
+  padding-left:12px;
+  border-left:2px solid var(--accent-lo);
+  font-size:var(--fs-sm) !important;
+  color:var(--bone-dim);
+}
+
+/* changes we could not trace to the core rules — deliberately not a link */
+.rule-none{
+  margin-top:12px !important;
+  padding:8px 12px;
+  border:1px dashed var(--line);
+  font-family:var(--mono);
+  font-size:var(--fs-2xs) !important;
+  letter-spacing:.06em;
+  text-transform:uppercase;
+  color:var(--bone-dim);
+}
+
 /* ---------- note box ---------- */
 
 .note-box{
@@ -70,4 +142,11 @@
 @media (max-width:560px){
   .change-list summary{padding:14px 0;gap:10px;}
   .change-body{padding:0 0 16px 26px;}
+
+  /* on a phone the rule number and page sit on one line and the title gets
+     the full width below them — sharing a row squeezes the title into a
+     four-word-per-line column */
+  .rule-ref{padding:10px 12px;}
+  .rule-go{margin-left:auto;}
+  .rule-title{flex:1 0 100%;order:3;}
 }
