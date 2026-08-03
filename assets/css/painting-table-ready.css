@@ -1,0 +1,23 @@
+.hero{
+  padding:56px 0 44px;
+  border-bottom:1px solid var(--line);
+}
+
+.hero h1{
+  font-family:var(--display);
+  font-weight:800;
+  font-size:clamp(42px,7vw,80px);
+  line-height:.92;
+  letter-spacing:-.035em;
+  margin:0 0 16px;
+}
+
+.hero h1 em{font-style:normal;color:var(--accent);}
+.hero p{margin:0;color:var(--bone-dim);font-size:15px;}
+
+.section p{color:var(--bone-dim);font-size:14.5px;line-height:1.6;}
+.section p + p{margin-top:16px;}
+
+@media (max-width:820px){
+  .hero{padding-top:36px;}
+}
