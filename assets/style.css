@@ -227,6 +227,26 @@ a{color:var(--accent);}
 
 .nav-panel a:hover{background:var(--ground-3);}
 
+.nav-subpanel{
+  display:flex;
+  flex-direction:column;
+  margin:0 0 2px;
+  padding-left:8px;
+  border-left:1px solid var(--line);
+}
+
+.nav-subpanel a{
+  min-height:34px;
+  font-family:var(--mono);
+  font-size:var(--fs-xs);
+  letter-spacing:.06em;
+  text-transform:uppercase;
+  font-weight:400;
+  color:var(--bone-dim);
+}
+
+.nav-subpanel a:hover{color:var(--bone);background:var(--ground-3);}
+
 .nav-panel-more{
   margin-top:2px;
   padding-top:10px !important;
