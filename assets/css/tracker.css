@@ -101,6 +101,7 @@
 
 .counter output{
   font-family:var(--mono);font-weight:600;font-size:30px;
+  font-variant-numeric:tabular-nums;
   color:var(--accent);min-width:2.4ch;line-height:1;
 }
 

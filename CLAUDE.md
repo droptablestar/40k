@@ -98,6 +98,11 @@ while after a missing file starts existing.
 - `wrangler.jsonc`'s `assets.directory` must point at `_site` (the build
   output), not `.` — pointing it at the repo root serves source templates
   instead of built HTML.
+- `npx @11ty/eleventy` does not clean `_site/` before writing — deleted or
+  renamed pages/assets stay in the output directory indefinitely. The build
+  command has no clean step, so a removed page can keep serving in
+  production. Run `rm -rf _site` before a build when a page/permalink was
+  deleted or renamed, and verify locally that the old URL now 404s.
 
 ## Design system
 
@@ -117,7 +122,34 @@ gold. New sections either reuse one or add a class.
 
 Typefaces: Bricolage Grotesque for display, IBM Plex Sans for body, IBM Plex
 Mono for data, labels, and eyebrows. Loaded from Google Fonts. Ratios, counters,
-and anything numeric uses the mono face so figures align.
+and anything numeric uses the mono face so figures align — apply
+`font-variant-numeric: tabular-nums` explicitly wherever digits sit in a
+column or a stat line (weapon profiles, M/T/Sv/W/Ld/OC lines, tracker
+counters), even in mono contexts, so it's correct by declaration and not
+just by accident of the typeface.
+
+Type scale: six sizes, defined as `--fs-micro` (9px) through `--fs-base`
+(16px) in `assets/style.css`. Every `font-size` on the site should be one of
+these — new sizes don't get invented ad hoc. Fluid `clamp()` is its own tier
+for display headings (hero `h1`, `.section > h2`) and stays outside this
+scale. `.mark`'s 12px is the one deliberate one-off (the brand mark sits a
+half-step above `--fs-xs`); don't add others without a real reason.
+
+```
+--fs-micro:9px    decorative tags — "not written yet", pending marks
+--fs-2xs:10px     small mono labels — table headers, stat-line meta
+--fs-xs:11px      ui mono — eyebrow, nav, jump, crumb, footer
+--fs-sm:13.5px    support/secondary body text
+--fs-md:15px      component labels — card titles, list item names
+--fs-base:16px    primary reading text
+```
+
+Interactive `.card` links get a folded top-right corner (`a.card::before`,
+a CSS border-triangle) instead of a hover-only cue or a generic accent
+rail down the side — the latter is a recognizable "AI-generated design"
+tell (accent bar/rail on a rounded card) and this site is touch-first, so
+affordances need to read without a hover state anyway. Static/pending
+cards get neither.
 
 Structural devices should encode something true. Numbered lists are for real
 sequences only — the painting order of operations is one, a list of tips is not.

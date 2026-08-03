@@ -7,7 +7,6 @@
   line-height:.94;
   letter-spacing:-.035em;
   margin:0 0 22px;
-  max-width:24ch;
 }
 
 .hero h1 em{font-style:normal;color:var(--accent);}
@@ -93,7 +92,7 @@
   content:"not written yet";
   display:block;
   font-family:var(--mono);
-  font-size:9px;
+  font-size:var(--fs-micro);
   letter-spacing:.16em;
   text-transform:uppercase;
   color:var(--bone-dim);
@@ -114,7 +113,7 @@
   margin:0 0 8px;
 }
 
-.note p{margin:0 0 10px;font-size:14px;color:var(--bone-dim);max-width:70ch;}
+.note p{margin:0 0 10px;font-size:14px;color:var(--bone-dim);}
 .note p:last-child{margin-bottom:0;}
 
 @media (max-width:720px){

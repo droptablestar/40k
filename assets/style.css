@@ -18,6 +18,16 @@
   --display:"Bricolage Grotesque",system-ui,sans-serif;
   --body:"IBM Plex Sans",system-ui,sans-serif;
   --mono:"IBM Plex Mono",ui-monospace,monospace;
+
+  /* Type scale — every font-size on the site is one of these six steps
+     (plus fluid clamp() for display headings, and .mark's 12px brand
+     exception). Collapsing what used to be ~15 near-arbitrary sizes. */
+  --fs-micro:9px;   /* decorative tags: "not written yet", pending marks */
+  --fs-2xs:10px;    /* small mono labels: table headers, stat-line meta */
+  --fs-xs:11px;     /* ui mono: eyebrow, nav, jump, crumb, footer */
+  --fs-sm:13.5px;   /* support/secondary body text */
+  --fs-md:15px;     /* component labels: card titles, list item names */
+  --fs-base:16px;   /* primary reading text */
 }
 
 body.s-painting{--accent:#8465AC;--accent-lo:#5B4478;}
@@ -38,6 +48,8 @@ input, button, textarea, select{font:inherit;}
 
 p, h1, h2, h3, h4, h5, h6{overflow-wrap:break-word;}
 
+h1, h2, h3{text-wrap:balance;}
+
 ul[class], ol[class]{list-style:none;margin:0;padding:0;}
 
 /* ---------- base ---------- */
@@ -51,11 +63,11 @@ body{
   background-position:0 0, 3px 4px;
   color:var(--bone);
   font-family:var(--body);
-  font-size:16px;
+  font-size:var(--fs-base);
   line-height:1.5;
 }
 
-.wrap{max-width:1080px;margin:0 auto;padding:0 20px;}
+.wrap{max-width:min(1600px, 94vw);margin:0 auto;padding:0 20px;}
 
 a{color:var(--accent);}
 
@@ -63,7 +75,7 @@ a{color:var(--accent);}
 
 .eyebrow{
   font-family:var(--mono);
-  font-size:11px;
+  font-size:var(--fs-xs);
   letter-spacing:.22em;
   text-transform:uppercase;
   color:var(--bone-dim);
@@ -91,7 +103,7 @@ a{color:var(--accent);}
 
 .mark{
   font-family:var(--mono);
-  font-size:12px;
+  font-size:12px; /* deliberate one-off: sits a step above --fs-xs as the brand mark */
   letter-spacing:.2em;
   text-transform:uppercase;
   color:var(--bone);
@@ -101,27 +113,46 @@ a{color:var(--accent);}
 
 .mark b{color:var(--accent);font-weight:500;}
 
+.sitenav-wrap{
+  position:relative;
+  min-width:0;
+}
+
+.sitenav-wrap::after{
+  content:"";
+  position:absolute;
+  top:0;
+  right:0;
+  bottom:0;
+  width:28px;
+  background:linear-gradient(to right, transparent, rgba(45,49,58,.94));
+  pointer-events:none;
+}
+
 .sitenav{
   display:flex;
   gap:22px;
   font-family:var(--mono);
-  font-size:11px;
+  font-size:var(--fs-xs);
   letter-spacing:.14em;
   text-transform:uppercase;
   overflow-x:auto;
+  padding-right:20px;
 }
 
-.sitenav a{
+.sitenav a, .sitenav .soon{
+  display:inline-flex;
+  align-items:center;
   color:var(--bone-dim);
   text-decoration:none;
-  padding:4px 0;
+  padding:9px 0;
   border-bottom:1px solid transparent;
   white-space:nowrap;
 }
 
 .sitenav a:hover{color:var(--bone);}
 .sitenav a[aria-current="page"]{color:var(--bone);border-bottom-color:var(--accent);}
-.sitenav a.soon{opacity:.4;pointer-events:none;}
+.sitenav .soon{opacity:.4;}
 
 /* ---------- in-page jump nav ---------- */
 
@@ -130,7 +161,7 @@ a{color:var(--accent);}
 }
 
 .jump a{
-  font-family:var(--mono);font-size:11px;letter-spacing:.12em;
+  font-family:var(--mono);font-size:var(--fs-xs);letter-spacing:.12em;
   text-transform:uppercase;text-decoration:none;color:var(--bone-dim);
   background:var(--ground-2);padding:9px 14px;
   transition:color .16s ease,background .16s ease;
@@ -142,7 +173,7 @@ a{color:var(--accent);}
 
 .crumb{
   display:inline-flex;align-items:center;gap:6px;
-  font-family:var(--mono);font-size:11px;letter-spacing:.12em;
+  font-family:var(--mono);font-size:var(--fs-xs);letter-spacing:.12em;
   text-transform:uppercase;text-decoration:none;color:var(--bone-dim);
   background:var(--ground-2);border:1px solid var(--line);
   padding:8px 14px;margin-bottom:22px;
@@ -166,7 +197,7 @@ a{color:var(--accent);}
 .section > .sub{
   margin:0 0 24px;
   color:var(--bone-dim);
-  font-size:14px;
+  font-size:var(--fs-sm);
   max-width:none;
 }
 
@@ -187,9 +218,12 @@ a{color:var(--accent);}
 }
 
 .card{
+  display:block;
   background:var(--ground-2);
   padding:18px 16px 20px;
   transition:background .18s ease;
+  color:inherit;
+  text-decoration:none;
 }
 
 .card:hover{background:var(--ground-3);}
@@ -197,13 +231,35 @@ a{color:var(--accent);}
 .card h3{
   font-family:var(--body);
   font-weight:600;
-  font-size:14px;
+  font-size:var(--fs-md);
   margin:0 0 12px;
 }
 
+/* interactive cards get a folded corner, like a tagged requisition card,
+   instead of a generic accent rail — a distinguishing mark that reads
+   without a hover state, since this is a touch-first site */
+a.card{
+  position:relative;
+}
+
+a.card::before{
+  content:"";
+  position:absolute;
+  top:0;
+  right:0;
+  width:0;
+  height:0;
+  border-style:solid;
+  border-width:0 16px 16px 0;
+  border-color:transparent var(--accent-lo) transparent transparent;
+  transition:border-color .16s ease;
+}
+
+a.card:hover::before{border-color:transparent var(--accent) transparent transparent;}
+
 .card p{
   margin:12px 0 0;
-  font-size:13.5px;
+  font-size:var(--fs-sm);
   color:var(--bone-dim);
   line-height:1.45;
 }
@@ -222,7 +278,7 @@ a{color:var(--accent);}
   content:"not written yet";
   display:block;
   font-family:var(--mono);
-  font-size:9px;
+  font-size:var(--fs-micro);
   letter-spacing:.16em;
   text-transform:uppercase;
   color:var(--bone-dim);
@@ -247,13 +303,14 @@ a{color:var(--accent);}
 .steps li::before{
   content:counter(step,decimal-leading-zero);
   font-family:var(--mono);
-  font-size:12px;
+  font-size:var(--fs-xs);
+  font-variant-numeric:tabular-nums;
   color:var(--accent-lo);
   padding-top:2px;
 }
 
-.steps b{display:block;font-weight:600;font-size:14.5px;margin-bottom:2px;}
-.steps span{font-size:13.5px;color:var(--bone-dim);line-height:1.45;}
+.steps b{display:block;font-weight:600;font-size:var(--fs-md);margin-bottom:2px;}
+.steps span{font-size:var(--fs-sm);color:var(--bone-dim);line-height:1.45;}
 
 /* ---------- dash list ---------- */
 
@@ -264,7 +321,7 @@ a{color:var(--accent);}
   grid-template-columns:18px minmax(0,1fr);
   gap:12px;
   padding:10px 0;
-  font-size:14.5px;
+  font-size:var(--fs-sm);
   border-top:1px solid var(--line);
 }
 
@@ -274,18 +331,18 @@ a{color:var(--accent);}
   content:"—";
   font-family:var(--mono);
   color:var(--rust);
-  font-size:13px;
+  font-size:var(--fs-sm);
   line-height:1.55;
 }
 
 /* ---------- table ---------- */
 
-.diag{width:100%;border-collapse:collapse;font-size:14px;}
+.diag{width:100%;border-collapse:collapse;font-size:var(--fs-sm);}
 
 .diag th{
   text-align:left;
   font-family:var(--mono);
-  font-size:10px;
+  font-size:var(--fs-2xs);
   font-weight:500;
   letter-spacing:.16em;
   text-transform:uppercase;
@@ -306,6 +363,163 @@ a{color:var(--accent);}
 .diag td:last-child{color:var(--bone-dim);}
 .diag tr:hover td{background:rgba(230,224,208,.03);}
 
+/* ---------- disclosure list: stratagems, expandable entries ---------- */
+
+.strat-group{margin-bottom:36px;}
+
+.strat-group:last-child{margin-bottom:0;}
+
+.strat-group h2{
+  font-family:var(--mono);
+  font-size:var(--fs-xs);
+  letter-spacing:.16em;
+  text-transform:uppercase;
+  color:var(--accent);
+  margin:0 0 10px;
+}
+
+.strat-list{list-style:none;margin:0;padding:0;border-top:1px solid var(--line);}
+
+.strat-list details{border-bottom:1px solid var(--line);}
+
+.strat-list summary{
+  display:flex;
+  flex-wrap:wrap;
+  align-items:baseline;
+  justify-content:space-between;
+  gap:4px 12px;
+  padding:14px 2px;
+  cursor:pointer;
+  list-style:none;
+  min-height:34px;
+}
+
+.strat-list summary::-webkit-details-marker{display:none;}
+
+.strat-list summary::before{
+  content:"+";
+  font-family:var(--mono);
+  color:var(--accent);
+  margin-right:10px;
+  flex-shrink:0;
+}
+
+.strat-list details[open] summary::before{content:"–";}
+
+.strat-list .strat-name{font-weight:600;font-size:var(--fs-md);flex:1;min-width:120px;}
+
+.strat-list .strat-meta{
+  font-family:var(--mono);
+  font-size:var(--fs-2xs);
+  font-variant-numeric:tabular-nums;
+  letter-spacing:.08em;
+  text-transform:uppercase;
+  color:var(--bone-dim);
+}
+
+.strat-list .strat-body{
+  padding:0 2px 16px 22px;
+  font-size:var(--fs-sm);
+  color:var(--bone-dim);
+  line-height:1.5;
+}
+
+.strat-list .strat-body a{color:var(--accent);}
+
+/* ---------- datasheet reference table ---------- */
+
+.datasheet-table{width:100%;border-collapse:collapse;font-size:var(--fs-sm);}
+
+.datasheet-table th{
+  text-align:left;
+  font-family:var(--mono);
+  font-size:var(--fs-2xs);
+  font-weight:500;
+  letter-spacing:.14em;
+  text-transform:uppercase;
+  color:var(--bone-dim);
+  padding:0 12px 10px 0;
+  border-bottom:1px solid var(--line);
+}
+
+.datasheet-table td{
+  padding:12px 12px 12px 0;
+  border-bottom:1px solid var(--line);
+  vertical-align:top;
+  font-variant-numeric:tabular-nums;
+}
+
+.datasheet-table td:first-child{font-weight:500;}
+.datasheet-table td:not(:first-child){color:var(--bone-dim);}
+.datasheet-table tr:hover td{background:rgba(230,224,208,.03);}
+
+@media (max-width:560px){
+  .datasheet-table thead{display:none;}
+  .datasheet-table, .datasheet-table tbody, .datasheet-table tr, .datasheet-table td{
+    display:block;width:100%;
+  }
+  .datasheet-table tr{padding:12px 0;border-bottom:1px solid var(--line);}
+  .datasheet-table td{border:0;padding:2px 0;}
+  .datasheet-table td:first-child{font-size:var(--fs-md);margin-bottom:2px;}
+}
+
+/* ---------- painting log ---------- */
+
+.paint-log{list-style:none;margin:0;padding:0;border-top:1px solid var(--line);}
+
+.paint-log li{
+  display:grid;
+  grid-template-columns:minmax(0,1fr) minmax(0,1.4fr);
+  gap:14px;
+  padding:12px 0;
+  border-bottom:1px solid var(--line);
+  font-size:var(--fs-sm);
+}
+
+.paint-log b{display:block;font-weight:600;font-size:var(--fs-md);}
+.paint-log .status{
+  font-family:var(--mono);
+  font-size:var(--fs-2xs);
+  letter-spacing:.1em;
+  text-transform:uppercase;
+  color:var(--accent);
+}
+.paint-log .paints{color:var(--bone-dim);font-size:var(--fs-sm);}
+
+@media (max-width:560px){
+  .paint-log li{grid-template-columns:1fr;gap:4px;}
+}
+
+.note-block{
+  border:1px dashed var(--line);
+  padding:16px 18px;
+  margin-top:20px;
+  font-size:var(--fs-sm);
+  color:var(--bone-dim);
+}
+
+.note-block b{color:var(--bone);}
+
+/* ---------- reference search/filter ---------- */
+
+.ref-search{
+  display:block;
+  width:100%;
+  background:var(--ground-2);
+  border:1px solid var(--line);
+  color:var(--bone);
+  font-family:var(--body);
+  font-size:var(--fs-md);
+  padding:12px 14px;
+  min-height:44px;
+  margin:24px 0 4px;
+}
+
+.ref-search::placeholder{color:var(--bone-dim);}
+.ref-search:focus{outline:none;border-color:var(--accent);}
+
+.ref-empty{padding:20px 2px;color:var(--bone-dim);font-size:var(--fs-sm);}
+
 /* ---------- footer ---------- */
 
 .sitefoot{
@@ -313,13 +527,17 @@ a{color:var(--accent);}
   padding:20px 0 60px;
   border-top:1px solid var(--line);
   font-family:var(--mono);
-  font-size:11px;
+  font-size:var(--fs-xs);
   letter-spacing:.1em;
   text-transform:uppercase;
   color:var(--bone-dim);
 }
 
-.sitefoot p{margin:0 0 6px;}
+.sitefoot .wrap{display:flex;flex-wrap:wrap;column-gap:10px;row-gap:4px;}
+
+.sitefoot p{margin:0;}
+
+.sitefoot p:not(:last-child)::after{content:"·";margin-left:10px;}
 
 /* ---------- responsive ---------- */
 
@@ -333,14 +551,15 @@ a{color:var(--accent);}
   .wrap{padding:0 16px;}
   .sitebar .wrap{height:auto;padding-top:10px;padding-bottom:10px;
     flex-direction:column;align-items:flex-start;gap:8px;}
+  .sitenav-wrap{width:100%;}
   .sitenav{width:100%;gap:16px;}
   .diag,.diag tbody,.diag tr,.diag td{display:block;width:100%;}
   .diag thead{display:none;}
   .diag tr{padding:14px 0;border-bottom:1px solid var(--line);}
   .diag td{border:0;padding:0 0 5px;}
-  .diag td:first-child{font-size:15px;}
-  .diag td:nth-child(2)::before{content:"Cause — ";color:var(--accent-lo);}
-  .diag td:last-child::before{content:"Fix — ";color:var(--accent-lo);}
+  .diag td:first-child{font-size:var(--fs-md);}
+  .diag td:nth-child(2)::before{content:"Cause — ";color:var(--bone-dim);}
+  .diag td:last-child::before{content:"Fix — ";color:var(--bone-dim);}
 }
 
 @media (prefers-reduced-motion:reduce){

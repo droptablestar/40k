@@ -9,23 +9,25 @@
 {% endif %}<link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,700;12..96,800&family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="assets/style.css">
-{% if pageCss %}<link rel="stylesheet" href="assets/{{ pageCss }}">
+<link rel="stylesheet" href="/assets/style.css">
+{% if pageCss %}<link rel="stylesheet" href="/assets/{{ pageCss }}">
 {% endif %}</head>
 <body class="{{ bodyClass }}">
 
 <header class="sitebar">
   <div class="wrap">
-    <a class="mark" href="index.html">Bench <b>&amp;</b> Table</a>
-    <nav class="sitenav" aria-label="Sections">
-      <a href="index.html"{% if page.url == "/" %} aria-current="page"{% endif %}>Start</a>
-      <a href="painting.html"{% if page.url == "/painting.html" or page.url == "/painting-reference.html" or page.url == "/painting-table-ready.html" %} aria-current="page"{% endif %}>Painting</a>
-      <a href="tracker.html"{% if page.url == "/tracker.html" %} aria-current="page"{% endif %}>Tracker</a>
-      <a href="factions.html"{% if page.url == "/factions.html" %} aria-current="page"{% endif %}>Factions</a>
-      <a href="rules-changes.html"{% if page.url == "/rules-changes.html" %} aria-current="page"{% endif %}>10th → 11th</a>
-      <a href="#" class="soon">Turn order</a>
-      <a href="charts.html"{% if page.url == "/charts.html" %} aria-current="page"{% endif %}>Charts</a>
-    </nav>
+    <a class="mark" href="/index.html">Bench <b>&amp;</b> Table</a>
+    <div class="sitenav-wrap">
+      <nav class="sitenav" aria-label="Sections">
+        <a href="/index.html"{% if page.url == "/" %} aria-current="page"{% endif %}>Start</a>
+        <a href="/factions.html"{% if page.url == "/factions.html" or page.url.startsWith("/factions/") %} aria-current="page"{% endif %}>Factions</a>
+        <a href="/painting.html"{% if page.url == "/painting.html" or page.url == "/painting-reference.html" or page.url == "/painting-table-ready.html" %} aria-current="page"{% endif %}>Painting</a>
+        <a href="/tracker.html"{% if page.url == "/tracker.html" %} aria-current="page"{% endif %}>Tracker</a>
+        <a href="/charts.html"{% if page.url == "/charts.html" %} aria-current="page"{% endif %}>Charts</a>
+        <a href="/rules-changes.html"{% if page.url == "/rules-changes.html" %} aria-current="page"{% endif %}>10th → 11th</a>
+        <span class="soon">Turn order</span>
+      </nav>
+    </div>
   </div>
 </header>
 
@@ -44,6 +46,6 @@
     {% endif %}</div>
 </footer>
 
-{% if pageJs %}<script src="assets/{{ pageJs }}" defer></script>
+{% if pageJs %}<script src="/assets/{{ pageJs }}" defer></script>
 {% endif %}</body>
 </html>
