@@ -8,9 +8,31 @@ for our group. Static HTML, no build step, no dependencies.
 ```
 index.html        Landing page, grouped by when you'd reach for a page
 painting.html     Painting guide: beginner track + technique reference
+tracker.html      Battle tracker: CP, VP, round, per-unit damage
 assets/style.css  Shared design tokens and components
 CNAME             Custom domain for GitHub Pages
 ```
+
+## Tracker
+
+Vanilla JS, no framework, state in `localStorage` under `benchtable:battle:v1`.
+If storage is unavailable (private mode, blocked cookies) it falls back to
+in-memory state and shows a banner — the game still works, it just resets on
+reload.
+
+State shape:
+
+```js
+{ round: 1, active: 0,
+  armies: [ { name, cp, vp, units: [ { name, max, cur, kind } ] }, ... ] }
+```
+
+`kind` is `"models"` or `"wounds"` — squads track models remaining, vehicles
+and monsters track wounds.
+
+**It is per-device.** Two phones do not sync. Either one person tracks the whole
+game, or each player tracks their own army and you compare VP at the end. Real
+sync needs a backend, which would end the "static site" property.
 
 Each page sets a section class on `<body>` which swaps the accent colour:
 
