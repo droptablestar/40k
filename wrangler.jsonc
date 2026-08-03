@@ -1,6 +1,6 @@
 {
   "$schema": "node_modules/wrangler/config-schema.json",
-  "name": "interpreters-blog",
+  "name": "40k",
   "compatibility_date": "2026-05-26",
   "observability": {
     "enabled": true
