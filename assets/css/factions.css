@@ -13,6 +13,6 @@
 }
 
 .hero h1 em{font-style:normal;color:var(--accent);}
-.hero p{margin:0;color:var(--bone-dim);font-size:15px;max-width:64ch;}
+.hero p{margin:0;color:var(--bone-dim);font-size:15px;}
 
 .cards{margin-top:32px;}

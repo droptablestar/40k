@@ -91,14 +91,13 @@
 .entry.pending b{color:var(--bone-dim);}
 .entry.pending b::after{
   content:"not written yet";
+  display:block;
   font-family:var(--mono);
   font-size:9px;
   letter-spacing:.16em;
   text-transform:uppercase;
-  color:var(--accent-lo);
-  white-space:nowrap;
-  margin-left:10px;
-  vertical-align:2px;
+  color:var(--bone-dim);
+  margin-top:5px;
 }
 
 .note{
