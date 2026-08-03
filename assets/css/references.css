@@ -1,0 +1,22 @@
+.hero{padding:72px 0 56px;border-bottom:1px solid var(--line);}
+
+.hero h1{
+  font-family:var(--display);
+  font-weight:800;
+  font-size:clamp(40px,7.2vw,82px);
+  line-height:.94;
+  letter-spacing:-.035em;
+  margin:0 0 22px;
+}
+
+.hero h1 em{font-style:normal;color:var(--accent);}
+
+.hero p{
+  margin:0;
+  font-size:17px;
+  color:var(--bone-dim);
+}
+
+/* source cards carry a link and a paragraph but no ratio/figure, so the
+   title needs to sit tighter to its description than .card's default */
+.card h3{margin-bottom:8px;}
