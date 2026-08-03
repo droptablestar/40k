@@ -61,19 +61,6 @@
   text-transform:uppercase;color:var(--bone-dim);margin-top:10px;
 }
 
-/* breadcrumb back to the beginner guide */
-
-.crumb{
-  display:inline-flex;align-items:center;gap:6px;
-  font-family:var(--mono);font-size:11px;letter-spacing:.12em;
-  text-transform:uppercase;text-decoration:none;color:var(--bone-dim);
-  background:var(--ground-2);border:1px solid var(--line);
-  padding:8px 14px;margin-bottom:22px;
-  transition:color .16s ease,background .16s ease,border-color .16s ease;
-}
-
-.crumb:hover{color:var(--bone);background:var(--ground-3);border-color:var(--accent-lo);}
-
 .ratio{
   font-family:var(--mono);font-weight:600;font-size:26px;
   letter-spacing:-.02em;color:var(--accent);line-height:1;margin-bottom:4px;

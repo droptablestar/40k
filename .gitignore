@@ -2,6 +2,9 @@
 node_modules/
 _site/
 
+### Claude Code
+.claude/
+
 ### macOS
 # Finder metadata
 .DS_Store

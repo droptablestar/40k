@@ -15,6 +15,11 @@
 .hero h1 em{font-style:normal;color:var(--accent);}
 .hero p{margin:0;color:var(--bone-dim);font-size:15px;}
 
+/* the crumb linking to the technique reference page reads as a separate
+   affordance from the same-page jump nav above it, not another pill in
+   the same row */
+.jump + .crumb{margin-top:14px;}
+
 /* kit list */
 
 .kit{list-style:none;margin:0;padding:0;}
