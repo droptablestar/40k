@@ -2,7 +2,7 @@
 layout: base.njk
 permalink: /tracker.html
 title: "Battle tracker — Bench & Table"
-description: Track command points, victory points, battle round and unit damage
+description: Track command points, victory points, and battle round
       for a game of Warhammer 40,000.
 bodyClass: s-rules
 pageCss: css/tracker.css
@@ -12,7 +12,7 @@ themeColor: "#2D313A"
 <section class="lead">
   <p class="eyebrow">At the table</p>
   <h1>Battle tracker</h1>
-  <p>Command points, victory points, battle round, and what is left of each unit.
+  <p>Command points, victory points, and battle round.
     Saves to this device automatically — close the tab mid-game and it will still
     be here.</p>
 </section>
@@ -31,7 +31,6 @@ themeColor: "#2D313A"
 <div class="armies" id="armies"></div>
 
 <div class="actions">
-  <button class="btn" id="fullheal">Reset all damage</button>
   <button class="btn danger" id="newgame">New game</button>
   <span class="saved" id="saved">Saved locally</span>
 </div>

@@ -148,11 +148,13 @@ storage is blocked.
 
 ```js
 { round: 1, active: 0,
-  armies: [ { name, cp, vp, units: [ { name, max, cur, kind } ] }, ... ] }
+  armies: [ { name, cp, vp }, ... ] }
 ```
 
-`kind` is `"models"` or `"wounds"`. Squads track models remaining, vehicles and
-monsters track wounds.
+Command points, victory points, battle round, and whose turn it is — that's
+the whole surface. Per-unit damage tracking was tried and removed; the
+models-vs-wounds distinction was more confusing than useful, so use a
+physical damage tracker (dice, tokens) at the table instead.
 
 Per-device. Two phones do not sync. If sync gets built, the plan is per-army
 write ownership — each phone writes only its own army, reads the other — over

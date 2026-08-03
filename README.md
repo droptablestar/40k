@@ -41,11 +41,12 @@ State shape:
 
 ```js
 { round: 1, active: 0,
-  armies: [ { name, cp, vp, units: [ { name, max, cur, kind } ] }, ... ] }
+  armies: [ { name, cp, vp }, ... ] }
 ```
 
-`kind` is `"models"` or `"wounds"` — squads track models remaining, vehicles
-and monsters track wounds.
+Command points, victory points, battle round, whose turn it is — that's it.
+Per-unit damage tracking was tried and removed (models-vs-wounds was more
+confusing than useful); track that on the table instead.
 
 **It is per-device.** Two phones do not sync. Either one person tracks the whole
 game, or each player tracks their own army and you compare VP at the end.
