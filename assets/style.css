@@ -194,7 +194,7 @@ a{color:var(--accent);}
   margin:0 0 6px;
 }
 
-.section > .sub{
+.sub{
   margin:0 0 24px;
   color:var(--bone-dim);
   font-size:var(--fs-sm);
@@ -410,11 +410,29 @@ a.card:hover::before{border-color:transparent var(--accent) transparent transpar
 
 .strat-list .strat-meta{
   font-family:var(--mono);
-  font-size:var(--fs-2xs);
+  font-size:var(--fs-xs);
   font-variant-numeric:tabular-nums;
-  letter-spacing:.08em;
-  text-transform:uppercase;
+  letter-spacing:.02em;
   color:var(--bone-dim);
+}
+
+/* stat-line groups (M12" T5 Sv4+ ...): dim label, bright value, real
+   spacing between groups — letters and numbers in one flat run of text
+   at a single weight/color are hard to parse at a glance, and this needs
+   to hold up small on a phone screen, not just in a zoomed-in check */
+.strat-meta .stat{
+  display:inline-block;
+  margin-right:14px;
+  padding:2px 0;
+  color:var(--bone);
+  font-weight:700;
+}
+.strat-meta .stat:last-child{margin-right:0;}
+.strat-meta .stat .k{
+  color:var(--bone-dim);
+  font-weight:500;
+  text-transform:uppercase;
+  margin-right:1px;
 }
 
 .strat-list .strat-body{
@@ -425,6 +443,7 @@ a.card:hover::before{border-color:transparent var(--accent) transparent transpar
 }
 
 .strat-list .strat-body a{color:var(--accent);}
+.strat-list .strat-body > p{margin:0 0 12px;}
 
 /* ---------- datasheet reference table ---------- */
 
@@ -519,6 +538,132 @@ a.card:hover::before{border-color:transparent var(--accent) transparent transpar
 .ref-search:focus{outline:none;border-color:var(--accent);}
 
 .ref-empty{padding:20px 2px;color:var(--bone-dim);font-size:var(--fs-sm);}
+
+/* ---------- stat/weapon abbreviation glossary ---------- */
+
+.legend{
+  display:flex;
+  flex-wrap:wrap;
+  gap:6px 16px;
+  margin:20px 0 28px;
+  padding:0;
+  list-style:none;
+}
+
+.legend li{
+  font-family:var(--mono);
+  font-size:var(--fs-2xs);
+  color:var(--bone-dim);
+}
+
+.legend b{color:var(--bone);font-weight:700;letter-spacing:.02em;}
+
+/* ---------- unit keyword tags ---------- */
+
+.kw-list{display:flex;flex-wrap:wrap;gap:6px;margin:0 0 16px;list-style:none;padding:0;}
+
+.kw-list li{
+  font-family:var(--mono);
+  font-size:var(--fs-2xs);
+  letter-spacing:.06em;
+  text-transform:uppercase;
+  color:var(--bone-dim);
+  background:var(--ground-3);
+  padding:4px 8px;
+}
+
+/* ---------- weapon profile table ---------- */
+
+.wpn-table{width:100%;border-collapse:collapse;font-size:var(--fs-sm);margin:0 0 16px;}
+
+.wpn-table th{
+  text-align:right;
+  font-family:var(--mono);
+  font-size:var(--fs-2xs);
+  font-weight:500;
+  letter-spacing:.08em;
+  text-transform:uppercase;
+  color:var(--bone-dim);
+  padding:0 0 8px 10px;
+  border-bottom:1px solid var(--line);
+}
+
+.wpn-table th:first-child{text-align:left;padding-left:0;}
+
+.wpn-table td{
+  padding:9px 0 9px 10px;
+  border-bottom:1px solid var(--line);
+  vertical-align:top;
+  text-align:right;
+  font-variant-numeric:tabular-nums;
+}
+
+.wpn-table td:first-child{
+  text-align:left;
+  padding-left:0;
+  font-weight:500;
+  color:var(--bone);
+}
+
+.wpn-table .wpn-tags{
+  display:block;
+  font-family:var(--mono);
+  font-size:var(--fs-micro);
+  letter-spacing:.04em;
+  text-transform:uppercase;
+  color:var(--accent);
+  font-weight:400;
+  margin-top:2px;
+  white-space:normal;
+}
+
+@media (max-width:560px){
+  .wpn-table thead{display:none;}
+  .wpn-table, .wpn-table tbody{display:block;width:100%;}
+  .wpn-table tr{
+    display:grid;
+    grid-template-columns:repeat(3, 1fr);
+    gap:6px;
+    padding:10px 0;
+    border-bottom:1px solid var(--line);
+  }
+  .wpn-table td{border:0;padding:0;text-align:left;font-variant-numeric:tabular-nums;}
+  .wpn-table td:first-child{grid-column:1 / -1;margin-bottom:2px;}
+  .wpn-table td:not(:first-child){
+    display:flex;
+    flex-direction:column;
+    gap:2px;
+    background:var(--ground-3);
+    padding:5px 7px;
+    font-family:var(--mono);
+    font-size:var(--fs-sm);
+    font-weight:600;
+    color:var(--bone);
+  }
+  .wpn-table td:not(:first-child)::before{
+    font-weight:400;
+    font-size:var(--fs-micro);
+    letter-spacing:.06em;
+    text-transform:uppercase;
+    color:var(--bone-dim);
+  }
+  .wpn-table td:nth-child(2)::before{content:"Rng";}
+  .wpn-table td:nth-child(3)::before{content:"A";}
+  .wpn-table td:nth-child(4)::before{content:"Skill";}
+  .wpn-table td:nth-child(5)::before{content:"S";}
+  .wpn-table td:nth-child(6)::before{content:"AP";}
+  .wpn-table td:nth-child(7)::before{content:"D";}
+}
+
+/* ---------- named ability list ---------- */
+
+.ability-list{margin:0;padding:0;}
+
+.ability-list div{padding:10px 0;border-top:1px solid var(--line);}
+
+.ability-list dt{font-weight:600;font-size:var(--fs-sm);margin-bottom:3px;}
+
+.ability-list dd{margin:0;font-size:var(--fs-sm);color:var(--bone-dim);line-height:1.5;}
 
 /* ---------- footer ---------- */
 

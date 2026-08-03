@@ -20,9 +20,19 @@ pageJs: js/reference-filter.js
 <input type="search" id="ref-search" class="ref-search"
   placeholder="Filter by name, keyword, or ability&hellip;" aria-label="Filter datasheets">
 
-<p class="sub">Stats are M (move) / T (toughness) / Sv (save) / W (wounds) /
-  Ld (leadership) / OC (objective control); weapon lines are A (attacks) /
-  WS or BS (skill) / S (strength) / AP (armour penetration) / D (damage).</p>
+<ul class="legend">
+  <li><b>M</b> move</li>
+  <li><b>T</b> toughness</li>
+  <li><b>Sv</b> save</li>
+  <li><b>W</b> wounds</li>
+  <li><b>Ld</b> leadership</li>
+  <li><b>OC</b> objective control</li>
+  <li><b>A</b> attacks</li>
+  <li><b>WS/BS</b> skill</li>
+  <li><b>S</b> strength</li>
+  <li><b>AP</b> armour pen.</li>
+  <li><b>D</b> damage</li>
+</ul>
 
 <div class="strat-group">
   <h2>Combat Patrol: Tyranid Assault Brood</h2>
@@ -31,17 +41,38 @@ pageJs: js/reference-filter.js
       <details>
         <summary>
           <span class="strat-name">Parasite of Mortrex</span>
-          <span class="strat-meta">M12&Prime; T5 Sv4+ W5 Ld6+ OC1</span>
+          <span class="strat-meta"><span class="stat"><span class="k">M</span>12&Prime;</span><span class="stat"><span class="k">T</span>5</span><span class="stat"><span class="k">Sv</span>4+</span><span class="stat"><span class="k">W</span>5</span><span class="stat"><span class="k">Ld</span>6+</span><span class="stat"><span class="k">OC</span>1</span></span>
         </summary>
         <div class="strat-body">
-          <p>Infantry, Character, Fly. Your Warlord and only Combat Patrol
-            Character — flies, deep strikes, and can't be targeted while a
-            closer non-Character unit is around (Lone Operative).</p>
-          <p><b>Barbed ovipositor</b> — Melee A2 WS2+ S3 AP-2 D3, hits
-            Infantry harder and gets extra swings.<br>
-            <b>Clawed limbs</b> — Melee A6 WS2+ S5 AP-1 D1.</p>
-          <p><b>It Itches!</b> — at the start of the Fight phase, force one
-            enemy unit within range to take a battle-shock test.</p>
+          <ul class="kw-list">
+            <li>Infantry</li><li>Character</li><li>Fly</li>
+            <li>Synapse</li><li>Shadow in the Warp</li>
+            <li>Deep Strike</li><li>Lone Operative</li><li>Stealth</li>
+          </ul>
+
+          <table class="wpn-table">
+            <thead>
+              <tr><th>Weapon</th><th>Range</th><th>A</th><th>Skill</th><th>S</th><th>AP</th><th>D</th></tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Barbed ovipositor<span class="wpn-tags">Anti-Infantry 3+ &middot; Extra Attacks</span></td>
+                <td>Melee</td><td>2</td><td>2+</td><td>3</td><td>-2</td><td>3</td>
+              </tr>
+              <tr>
+                <td>Clawed limbs</td>
+                <td>Melee</td><td>6</td><td>2+</td><td>5</td><td>-1</td><td>1</td>
+              </tr>
+            </tbody>
+          </table>
+
+          <dl class="ability-list">
+            <div>
+              <dt>It Itches!</dt>
+              <dd>At the start of the Fight phase, force one enemy unit
+                within range to take a battle-shock test.</dd>
+            </div>
+          </dl>
         </div>
       </details>
     </li>
@@ -49,17 +80,37 @@ pageJs: js/reference-filter.js
       <details>
         <summary>
           <span class="strat-name">Genestealers <em>(x10)</em></span>
-          <span class="strat-meta">M8&Prime; T4 Sv5+ W2 Ld7+ OC1</span>
+          <span class="strat-meta"><span class="stat"><span class="k">M</span>8&Prime;</span><span class="stat"><span class="k">T</span>4</span><span class="stat"><span class="k">Sv</span>5+</span><span class="stat"><span class="k">W</span>2</span><span class="stat"><span class="k">Ld</span>7+</span><span class="stat"><span class="k">OC</span>1</span></span>
         </summary>
         <div class="strat-body">
-          <p>Infantry. 5+ invulnerable save. Can be split into two 5-model
-            units before the battle starts (Patrol Squads) and Scouts 8"
-            ahead at deployment.</p>
-          <p><b>Genestealer claws and talons</b> — Melee A4 WS2+ S4 AP-2
-            D1.</p>
-          <p><b>Vanguard Predator</b> — re-roll a Hit roll of 1; also
-            re-roll a Wound roll of 1 when attacking near an objective
-            marker.</p>
+          <ul class="kw-list">
+            <li>Infantry</li><li>Synapse</li><li>5+ Invulnerable save</li>
+          </ul>
+
+          <table class="wpn-table">
+            <thead>
+              <tr><th>Weapon</th><th>Range</th><th>A</th><th>Skill</th><th>S</th><th>AP</th><th>D</th></tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Genestealer claws and talons</td>
+                <td>Melee</td><td>4</td><td>2+</td><td>4</td><td>-2</td><td>1</td>
+              </tr>
+            </tbody>
+          </table>
+
+          <dl class="ability-list">
+            <div>
+              <dt>Patrol Squads</dt>
+              <dd>Can split into two 5-model units before the battle, and
+                Scouts 8&Prime; ahead at deployment.</dd>
+            </div>
+            <div>
+              <dt>Vanguard Predator</dt>
+              <dd>Re-roll a Hit roll of 1; also re-roll a Wound roll of 1
+                when attacking near an objective marker.</dd>
+            </div>
+          </dl>
         </div>
       </details>
     </li>
@@ -67,16 +118,36 @@ pageJs: js/reference-filter.js
       <details>
         <summary>
           <span class="strat-name">Biovore</span>
-          <span class="strat-meta">M5&Prime; T6 Sv3+ W5 Ld8+ OC1</span>
+          <span class="strat-meta"><span class="stat"><span class="k">M</span>5&Prime;</span><span class="stat"><span class="k">T</span>6</span><span class="stat"><span class="k">Sv</span>3+</span><span class="stat"><span class="k">W</span>5</span><span class="stat"><span class="k">Ld</span>8+</span><span class="stat"><span class="k">OC</span>1</span></span>
         </summary>
         <div class="strat-body">
-          <p>Infantry. Explodes on death and can hurt nearby units (Deadly
-            Demise 1) — don't stand your other models too close when it
-            dies.</p>
-          <p><b>Spore Mine launcher</b> — Ranged, 48&Prime; A D3 BS4+ S6
-            AP-1 D2, indirect blast fire that ignores some invulnerable
-            saves (Devastating Wounds).<br>
-            <b>Chitin-barbed limbs</b> — Melee A2 WS4+ S5 AP0 D1.</p>
+          <ul class="kw-list">
+            <li>Infantry</li><li>Synapse</li>
+          </ul>
+
+          <table class="wpn-table">
+            <thead>
+              <tr><th>Weapon</th><th>Range</th><th>A</th><th>Skill</th><th>S</th><th>AP</th><th>D</th></tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Spore Mine launcher<span class="wpn-tags">Blast &middot; Devastating Wounds &middot; Heavy</span></td>
+                <td>48&Prime;</td><td>D3</td><td>4+</td><td>6</td><td>-1</td><td>2</td>
+              </tr>
+              <tr>
+                <td>Chitin-barbed limbs</td>
+                <td>Melee</td><td>2</td><td>4+</td><td>5</td><td>0</td><td>1</td>
+              </tr>
+            </tbody>
+          </table>
+
+          <dl class="ability-list">
+            <div>
+              <dt>Deadly Demise 1</dt>
+              <dd>Explodes when destroyed and can damage nearby units —
+                don't cluster your own models around it.</dd>
+            </div>
+          </dl>
         </div>
       </details>
     </li>
@@ -84,18 +155,36 @@ pageJs: js/reference-filter.js
       <details>
         <summary>
           <span class="strat-name">Tyrant Guard <em>(x3)</em></span>
-          <span class="strat-meta">M6&Prime; T8 Sv3+ W4 Ld8+ OC1</span>
+          <span class="strat-meta"><span class="stat"><span class="k">M</span>6&Prime;</span><span class="stat"><span class="k">T</span>8</span><span class="stat"><span class="k">Sv</span>3+</span><span class="stat"><span class="k">W</span>4</span><span class="stat"><span class="k">Ld</span>8+</span><span class="stat"><span class="k">OC</span>1</span></span>
         </summary>
         <div class="strat-body">
-          <p>Infantry. Your durable synapse bodyguards — high toughness and
-            wounds compared to the rest of the box. Each of the three comes
-            with a different melee loadout, fixed per model:</p>
-          <p><b>Bone cleaver, lash whip and rending claws</b> — Melee A3
-            WS3+ S5 AP-1 D2.<br>
-            <b>Crushing claws and rending claws</b> — Melee A2 WS4+ S8
-            AP-2 D2, twin-linked (re-roll wound rolls).<br>
-            <b>Scything talons and rending claws</b> — Melee A5 WS3+ S5
-            AP-1 D1.</p>
+          <ul class="kw-list">
+            <li>Infantry</li><li>Synapse</li>
+          </ul>
+
+          <p>Your durable synapse bodyguards — high toughness and wounds
+            compared to the rest of the box. Each of the three models comes
+            with a different fixed melee loadout:</p>
+
+          <table class="wpn-table">
+            <thead>
+              <tr><th>Weapon</th><th>Range</th><th>A</th><th>Skill</th><th>S</th><th>AP</th><th>D</th></tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Bone cleaver, lash whip and rending claws</td>
+                <td>Melee</td><td>3</td><td>3+</td><td>5</td><td>-1</td><td>2</td>
+              </tr>
+              <tr>
+                <td>Crushing claws and rending claws<span class="wpn-tags">Twin-linked</span></td>
+                <td>Melee</td><td>2</td><td>4+</td><td>8</td><td>-2</td><td>2</td>
+              </tr>
+              <tr>
+                <td>Scything talons and rending claws</td>
+                <td>Melee</td><td>5</td><td>3+</td><td>5</td><td>-1</td><td>1</td>
+              </tr>
+            </tbody>
+          </table>
         </div>
       </details>
     </li>
