@@ -17,11 +17,28 @@
 <header class="sitebar">
   <div class="wrap">
     <a class="mark" href="/index.html">Bench <b>&amp;</b> Table</a>
+
+    <div class="nav-drops">
+      <details class="nav-drop">
+        <summary{% if page.url.startsWith("/factions/") %} class="here"{% endif %}>Factions</summary>
+        <div class="nav-panel">
+          <a href="/factions/tyranids.html">Tyranids</a>
+          <a class="nav-panel-more" href="/factions.html">Browse all factions &rarr;</a>
+        </div>
+      </details>
+      <details class="nav-drop">
+        <summary{% if page.url == "/painting.html" or page.url == "/painting-reference.html" or page.url == "/painting-table-ready.html" %} class="here"{% endif %}>Painting</summary>
+        <div class="nav-panel">
+          <a href="/painting.html">Painting, start to finish</a>
+          <a href="/painting-reference.html">Technique reference</a>
+          <a href="/painting-table-ready.html">Table-ready painting</a>
+        </div>
+      </details>
+    </div>
+
     <div class="sitenav-wrap">
       <nav class="sitenav" aria-label="Sections">
         <a href="/index.html"{% if page.url == "/" %} aria-current="page"{% endif %}>Start</a>
-        <a href="/factions.html"{% if page.url == "/factions.html" or page.url.startsWith("/factions/") %} aria-current="page"{% endif %}>Factions</a>
-        <a href="/painting.html"{% if page.url == "/painting.html" or page.url == "/painting-reference.html" or page.url == "/painting-table-ready.html" %} aria-current="page"{% endif %}>Painting</a>
         <a href="/tracker.html"{% if page.url == "/tracker.html" %} aria-current="page"{% endif %}>Tracker</a>
         <a href="/charts.html"{% if page.url == "/charts.html" %} aria-current="page"{% endif %}>Charts</a>
         <a href="/rules-changes.html"{% if page.url == "/rules-changes.html" %} aria-current="page"{% endif %}>10th → 11th</a>
@@ -46,6 +63,7 @@
     {% endif %}</div>
 </footer>
 
+<script src="/assets/js/nav.js" defer></script>
 {% if pageJs %}<script src="/assets/{{ pageJs }}" defer></script>
 {% endif %}</body>
 </html>

@@ -154,6 +154,82 @@ a{color:var(--accent);}
 .sitenav a[aria-current="page"]{color:var(--bone);border-bottom-color:var(--accent);}
 .sitenav .soon{opacity:.4;}
 
+/* ---------- nav dropdowns (Factions, Painting) ---------- */
+
+.nav-drops{
+  display:flex;
+  gap:22px;
+  font-family:var(--mono);
+  font-size:var(--fs-xs);
+  letter-spacing:.14em;
+  text-transform:uppercase;
+  flex-shrink:0;
+}
+
+.nav-drop{position:relative;}
+
+.nav-drop summary{
+  display:inline-flex;
+  align-items:center;
+  gap:5px;
+  color:var(--bone-dim);
+  cursor:pointer;
+  list-style:none;
+  padding:9px 0;
+  border-bottom:1px solid transparent;
+  white-space:nowrap;
+}
+
+.nav-drop summary::-webkit-details-marker{display:none;}
+.nav-drop summary::after{content:"▾";font-size:9px;}
+.nav-drop summary:hover{color:var(--bone);}
+.nav-drop summary.here{color:var(--bone);border-bottom-color:var(--accent);}
+.nav-drop[open] summary{color:var(--bone);}
+.nav-drop[open] summary::after{content:"▴";}
+
+.nav-panel{
+  position:absolute;
+  top:100%;
+  left:0;
+  margin-top:8px;
+  z-index:19;
+  min-width:230px;
+  background:var(--ground-2);
+  border:1px solid var(--line);
+  box-shadow:0 8px 20px rgba(0,0,0,.35);
+  display:flex;
+  flex-direction:column;
+  padding:6px;
+}
+
+.nav-panel a{
+  display:flex;
+  align-items:center;
+  min-height:44px;
+  padding:0 10px;
+  font-family:var(--body);
+  font-size:var(--fs-sm);
+  font-weight:500;
+  letter-spacing:normal;
+  text-transform:none;
+  color:var(--bone);
+  text-decoration:none;
+}
+
+.nav-panel a:hover{background:var(--ground-3);}
+
+.nav-panel-more{
+  margin-top:2px;
+  padding-top:10px !important;
+  border-top:1px solid var(--line);
+  font-family:var(--mono);
+  font-size:var(--fs-2xs) !important;
+  letter-spacing:.06em;
+  text-transform:uppercase;
+  color:var(--bone-dim) !important;
+  font-weight:400 !important;
+}
+
 /* ---------- in-page jump nav ---------- */
 
 .jump{
