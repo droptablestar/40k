@@ -1,0 +1,73 @@
+.hero{
+  padding:44px 0 40px;
+  border-bottom:1px solid var(--line);
+}
+.hero h1{
+  font-family:var(--display);
+  font-weight:800;
+  font-size:clamp(36px,6vw,64px);
+  line-height:.96;
+  letter-spacing:-.03em;
+  margin:0 0 14px;
+}
+.hero p{margin:0;color:var(--bone-dim);font-size:15px;}
+
+/* ---------- change-list: collapsed name + tag, expandable detail ---------- */
+
+.change-list{list-style:none;margin:0;padding:0;border-top:1px solid var(--line);}
+
+.change-list details{border-bottom:1px solid var(--line);}
+
+.change-list summary{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:16px;
+  padding:16px 0;
+  cursor:pointer;
+  list-style:none;
+}
+
+.change-list summary::-webkit-details-marker{display:none;}
+
+.change-list summary::before{
+  content:"+";
+  font-family:var(--mono);
+  color:var(--accent);
+  font-size:16px;
+  width:16px;
+  flex:none;
+}
+
+.change-list details[open] summary::before{content:"–";}
+
+.change-name{font-weight:600;font-size:14.5px;flex:1;}
+
+.change-tag{
+  font-family:var(--mono);
+  font-size:10px;
+  letter-spacing:.14em;
+  text-transform:uppercase;
+  color:var(--bone-dim);
+  white-space:nowrap;
+}
+
+.change-body{padding:0 0 18px 32px;}
+.change-body p{margin:0;color:var(--bone-dim);font-size:14px;line-height:1.55;max-width:64ch;}
+.change-body p + p{margin-top:10px;}
+
+/* ---------- note box ---------- */
+
+.note-box{
+  margin-top:56px;
+  padding:20px 22px;
+  border:1px dashed var(--line);
+}
+
+.note-box p{margin:0;color:var(--bone-dim);font-size:13.5px;line-height:1.55;}
+.note-box b{color:var(--bone);}
+
+@media (max-width:560px){
+  .change-list summary{padding:14px 0;gap:10px;}
+  .change-body{padding:0 0 16px 26px;}
+}
