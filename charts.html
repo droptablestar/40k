@@ -1,0 +1,66 @@
+---
+layout: base.njk
+permalink: /charts.html
+title: "Charts — Bench & Table"
+description: The numbers you look up mid-game — starting with wound rolls, Strength against Toughness.
+bodyClass: s-rules
+pageCss: css/charts.css
+---
+<header class="hero">
+  <p class="eyebrow">At the table</p>
+  <h1>The numbers you look up mid-game.</h1>
+  <p>Starting with the one that comes up on almost every attack: what you
+    need to roll to wound, based on Strength against Toughness. More charts
+    (to-hit, saves, cover) are coming — this page will grow.</p>
+</header>
+
+<section class="section" id="wounding">
+  <h2>Wounding: Strength vs Toughness</h2>
+  <p class="sub">After a hit roll succeeds, roll to wound. Compare the
+    weapon's Strength (S) to the target's Toughness (T) and find the row
+    that applies — a roll equal to or higher than the number shown is a
+    wound.</p>
+
+  <table class="wound-table">
+    <thead>
+      <tr>
+        <th>Strength vs Toughness</th>
+        <th>Roll needed</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>Strength is double the target's Toughness, or more</td>
+        <td>2+</td>
+      </tr>
+      <tr>
+        <td>Strength is greater than Toughness</td>
+        <td>3+</td>
+      </tr>
+      <tr>
+        <td>Strength is equal to Toughness</td>
+        <td>4+</td>
+      </tr>
+      <tr>
+        <td>Strength is less than Toughness</td>
+        <td>5+</td>
+      </tr>
+      <tr>
+        <td>Strength is half the target's Toughness, or less</td>
+        <td>6+</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <p class="sub">Example: a weapon with Strength 4 shooting at a unit with
+    Toughness 3 needs 3+ to wound, since 4 is greater than 3 but not double
+    it.</p>
+</section>
+
+<div class="note-box">
+  <p><b>Where this disagrees with the official rules, the official rules
+    win.</b> Games Workshop publishes the 11th edition Core Rules as a
+    free PDF and in the Warhammer 40,000 app. If something here looks
+    wrong or out of date, fix it in the repo rather than arguing about it
+    at the table.</p>
+</div>
