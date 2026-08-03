@@ -4,11 +4,11 @@
    ========================================================================== */
 
 :root{
-  --ground:#1B1D22;
-  --ground-2:#24272E;
-  --ground-3:#2E323B;
-  --bone:#E6E0D0;
-  --bone-dim:#9C978A;
+  --ground:#2D313A;
+  --ground-2:#383D47;
+  --ground-3:#454B56;
+  --bone:#FAF7EE;
+  --bone-dim:#DAD5C7;
   --rust:#A8452F;
   --line:rgba(230,224,208,.14);
 
@@ -62,7 +62,7 @@ a{color:var(--accent);}
   position:sticky;
   top:0;
   z-index:20;
-  background:rgba(27,29,34,.94);
+  background:rgba(45,49,58,.94);
   backdrop-filter:blur(8px);
 }
 
