@@ -3,7 +3,8 @@
   "version": "1.0.0",
   "description": "A plain-language Warhammer 40,000 (11th edition) and miniature painting reference for our group. Built with Eleventy.",
   "scripts": {
-    "build": "eleventy",
+    "check": "node scripts/check-layout.mjs",
+    "build": "npm run check && eleventy",
     "serve": "eleventy --serve",
     "preview": "eleventy --serve"
   },

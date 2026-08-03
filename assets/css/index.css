@@ -12,7 +12,6 @@
 .hero h1 em{font-style:normal;color:var(--accent);}
 
 .hero-lede{
-  max-width:none;
   font-size:17px;
   color:var(--bone-dim);
   margin:0;

@@ -55,7 +55,9 @@ structure existed.
 
 ```bash
 npm install
-npx @11ty/eleventy          # one-off build, output in _site/
+npm run build               # layout check, then build into _site/
+npm run check               # layout check on its own
+npx @11ty/eleventy          # build without the check
 npx @11ty/eleventy --serve  # local dev server with live reload
 ```
 
@@ -153,6 +155,24 @@ cards get neither.
 
 Structural devices should encode something true. Numbered lists are for real
 sequences only — the painting order of operations is one, a list of tips is not.
+
+### Text spans the column
+
+`.wrap` is the only thing that decides how wide anything gets. Headings and
+body copy run its full width. **Never put a `max-width` on text** — no `60ch`
+measure caps on a lede, no `14ch` on a heading. This has been introduced and
+removed repeatedly and it is the single most common layout bug on this site.
+
+`assets/style.css` declares `max-width:none` once for `.hero h1`, `.hero p`,
+`.section > h2`, `.sub` and `.hero-lede`; per-page CSS should not re-declare
+it. `npm run check` (which `npm run build` runs first) fails on any
+`max-width` in a stylesheet that is not a media query, not `none`/`100%`, and
+not marked with a trailing `max-width-ok` comment. Add that marker only for a
+genuine non-text cap — a tooltip panel, an image — and say why in the comment.
+
+Note that per-page CSS loads *after* `style.css`, so a page-level cap still
+wins over the shared rule. The check, not the cascade, is what actually
+prevents this.
 
 ### Quality floor
 
