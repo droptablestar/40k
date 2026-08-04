@@ -7,6 +7,13 @@ description: Symptom-first fixes for common miniature painting problems —
 bodyClass: s-painting
 pageCss: css/troubleshooting.css
 pageJs: js/troubleshooting.js
+sections:
+  - { id: assembly, label: "Assembly" }
+  - { id: priming, label: "Priming" }
+  - { id: paint, label: "Paint" }
+  - { id: finishing, label: "Finishing" }
+  - { id: undo, label: "Undo" }
+  - { id: tools, label: "Tools" }
 ---
 <header class="hero">
   <a class="crumb" href="/painting.html">&larr; Painting guide</a>
@@ -17,14 +24,7 @@ pageJs: js/troubleshooting.js
     to strip it and start again.</p>
 </header>
 
-<nav class="jump" aria-label="On this page">
-  <a href="#assembly">Assembly</a>
-  <a href="#priming">Priming</a>
-  <a href="#paint">Paint</a>
-  <a href="#finishing">Finishing</a>
-  <a href="#undo">Undo</a>
-  <a href="#tools">Tools</a>
-</nav>
+{% include "jump.njk" %}
 
 <p class="tag-key">
   <span class="tag t-prevent">preventable</span> next time, not this time ·

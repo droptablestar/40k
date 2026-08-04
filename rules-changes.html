@@ -9,6 +9,14 @@ pageCss: css/rules-changes.css
 # links below append #page=N to jump straight to the page. If GW reissues the
 # PDF this URL changes — check the downloads page and update it here, once.
 coreRules: https://assets.warhammer-community.com/eng_01-06_warhammer40k_new40k_core_rules-was6fbu1ix-hfewhmxyiy.pdf
+sections:
+  - { id: detachments, label: "Detachments" }
+  - { id: stratagems, label: "Stratagems" }
+  - { id: terrain, label: "Terrain & cover" }
+  - { id: objectives, label: "Objectives & missions" }
+  - { id: battle-shock, label: "Battle-shock" }
+  - { id: wounds, label: "Wounds & vehicles" }
+  - { id: psychic, label: "Psychic phase" }
 ---
 <header class="hero">
   <p class="eyebrow">Before a game</p>
@@ -21,15 +29,7 @@ coreRules: https://assets.warhammer-community.com/eng_01-06_warhammer40k_new40k_
     but might still run into 10th-edition advice online.</p>
 </header>
 
-<nav class="jump" aria-label="On this page">
-  <a href="#detachments">Detachments</a>
-  <a href="#stratagems">Stratagems</a>
-  <a href="#terrain">Terrain &amp; cover</a>
-  <a href="#objectives">Objectives &amp; missions</a>
-  <a href="#battle-shock">Battle-shock</a>
-  <a href="#wounds">Wounds &amp; vehicles</a>
-  <a href="#psychic">Psychic phase</a>
-</nav>
+{% include "jump.njk" %}
 
 <section class="section" id="detachments">
   <h2>Detachments &amp; army building</h2>

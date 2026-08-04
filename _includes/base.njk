@@ -1,3 +1,20 @@
+{#- One nav entry: a link to a page, plus a flyout submenu of that page's
+    sections if it declared any. The section list comes from the page's own
+    `sections:` front matter — the same list its in-page jump nav is built
+    from (see jump.njk), so the two cannot drift apart. Pages with no
+    `sections:` (Charts, Tracker) render as a plain link. -#}
+{% macro navitem(url, label, all) %}
+          <div class="nav-item-group">
+            <a href="{{ url }}">{{ label }}</a>
+            {%- for item in all %}{% if item.url == url and item.data.sections %}
+            <div class="nav-subpanel">
+              {%- for s in item.data.sections %}
+              <a href="{{ url }}#{{ s.id }}">{{ s.label }}</a>
+              {%- endfor %}
+            </div>
+            {%- endif %}{% endfor %}
+          </div>
+{% endmacro %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -47,10 +64,18 @@
       <details class="nav-drop">
         <summary{% if page.url == "/painting.html" or page.url == "/painting-reference.html" or page.url == "/painting-table-ready.html" or page.url == "/troubleshooting.html" %} class="here"{% endif %}>Painting</summary>
         <div class="nav-panel">
-          <a href="/painting.html">Painting, start to finish</a>
-          <a href="/painting-reference.html">Technique reference</a>
-          <a href="/painting-table-ready.html">Table-ready painting</a>
-          <a href="/troubleshooting.html">When it goes wrong</a>
+          {{ navitem("/painting.html", "Painting, start to finish", collections.all) }}
+          {{ navitem("/painting-reference.html", "Technique reference", collections.all) }}
+          {{ navitem("/painting-table-ready.html", "Table-ready painting", collections.all) }}
+          {{ navitem("/troubleshooting.html", "When it goes wrong", collections.all) }}
+        </div>
+      </details>
+      <details class="nav-drop">
+        <summary{% if page.url == "/turn-order.html" or page.url == "/charts.html" or page.url == "/rules-changes.html" %} class="here"{% endif %}>Rules</summary>
+        <div class="nav-panel">
+          {{ navitem("/turn-order.html", "Turn order", collections.all) }}
+          {{ navitem("/charts.html", "Charts", collections.all) }}
+          {{ navitem("/rules-changes.html", "What changed in 11th", collections.all) }}
         </div>
       </details>
     </div>
@@ -59,9 +84,6 @@
       <nav class="sitenav" aria-label="Sections">
         <a href="/index.html"{% if page.url == "/" %} aria-current="page"{% endif %}>Start</a>
         <a href="/tracker.html"{% if page.url == "/tracker.html" %} aria-current="page"{% endif %}>Tracker</a>
-        <a href="/turn-order.html"{% if page.url == "/turn-order.html" %} aria-current="page"{% endif %}>Turn order</a>
-        <a href="/charts.html"{% if page.url == "/charts.html" %} aria-current="page"{% endif %}>Charts</a>
-        <a href="/rules-changes.html"{% if page.url == "/rules-changes.html" %} aria-current="page"{% endif %}>10th → 11th</a>
       </nav>
     </div>
   </div>

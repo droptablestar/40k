@@ -232,6 +232,20 @@ a{color:var(--accent);}
   padding:6px;
 }
 
+/* Where submenus stack inline rather than flying out (see below), a panel
+   lists every page's sections and can run past the bottom of the screen —
+   so cap it and let it scroll. This must NOT apply in the flyout case: an
+   overflow value other than visible clips the flyout, which by design hangs
+   outside the panel's own box. Keep this list the exact complement of the
+   flyout query below. */
+@media (max-width:759px), (hover:none), (pointer:coarse){
+  .nav-panel{
+    max-height:calc(100vh - var(--bar-h) - 24px);
+    overflow-y:auto;
+    overscroll-behavior:contain;
+  }
+}
+
 .nav-panel a{
   display:flex;
   align-items:center;
@@ -270,7 +284,11 @@ a{color:var(--accent);}
 
 .nav-subpanel a:hover{color:var(--bone);background:var(--ground-3);}
 
-@media (hover:hover) and (pointer:fine){
+/* Flyout submenus need room to the right of the panel they hang off. In a
+   narrow desktop window there isn't any, and the submenu lands off-screen —
+   so below this width every pointer type gets the stacked, inline submenu
+   that touch devices already use. */
+@media (hover:hover) and (pointer:fine) and (min-width:760px){
   .nav-subpanel{
     display:none;
     position:absolute;

@@ -6,6 +6,13 @@ description: What to buy and how to get your first model painted, end to end,
       plus the mistakes that cost beginners the most time.
 bodyClass: s-painting
 pageCss: css/painting.css
+sections:
+  - { id: kit, label: "What to buy" }
+  - { id: basics, label: "Before you start" }
+  - { id: loading, label: "Loading a brush" }
+  - { id: rinsing, label: "Water and rinsing" }
+  - { id: first, label: "First model" }
+  - { id: traps, label: "Beginner traps" }
 ---
 <header class="hero">
   <p class="eyebrow">At the desk</p>
@@ -14,14 +21,7 @@ pageCss: css/painting.css
     mistakes that cost beginners the most time.</p>
 </header>
 
-<nav class="jump" aria-label="On this page">
-  <a href="#kit">What to buy</a>
-  <a href="#basics">Before you start</a>
-  <a href="#loading">Loading a brush</a>
-  <a href="#rinsing">Water and rinsing</a>
-  <a href="#first">First model</a>
-  <a href="#traps">Beginner traps</a>
-</nav>
+{% include "jump.njk" %}
 
 <section class="section" id="kit">
   <h2>What to actually buy</h2>

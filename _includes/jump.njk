@@ -1,0 +1,11 @@
+{#- In-page jump nav, rendered from the page's `sections:` front matter.
+    That same list feeds the page's submenu in the site nav (see base.njk), so
+    a section is declared once and the two can't drift apart. Include this
+    directly after the page's <header class="hero">. -#}
+{% if sections %}
+<nav class="jump" aria-label="On this page">
+  {%- for s in sections %}
+  <a href="#{{ s.id }}">{{ s.label }}</a>
+  {%- endfor %}
+</nav>
+{% endif %}

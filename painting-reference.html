@@ -6,6 +6,15 @@ description: Thinning ratios, brush load, order of work, and the colours that
       need a different starting point, for painting Warhammer 40,000 miniatures.
 bodyClass: s-painting
 pageCss: css/painting-reference.css
+sections:
+  - { id: ratios, label: "Ratios" }
+  - { id: brush, label: "Brush load" }
+  - { id: order, label: "Order of work" }
+  - { id: colours, label: "Colours" }
+  - { id: highlights, label: "Highlights" }
+  - { id: eyes, label: "Eyes" }
+  - { id: words, label: "Consistency words" }
+  - { id: thumb, label: "Rules of thumb" }
 ---
 <header class="hero">
   <div>
@@ -34,16 +43,7 @@ pageCss: css/painting-reference.css
   </div>
 </header>
 
-<nav class="jump" aria-label="On this page">
-  <a href="#ratios">Ratios</a>
-  <a href="#brush">Brush load</a>
-  <a href="#order">Order of work</a>
-  <a href="#colours">Colours</a>
-  <a href="#highlights">Highlights</a>
-  <a href="#eyes">Eyes</a>
-  <a href="#words">Consistency words</a>
-  <a href="#thumb">Rules of thumb</a>
-</nav>
+{% include "jump.njk" %}
 
 <section class="section" id="ratios">
   <h2>Dilution by job</h2>

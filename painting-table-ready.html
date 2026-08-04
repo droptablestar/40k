@@ -6,6 +6,14 @@ description: Fast, sourced methods for getting a whole army to a playable
       standard quickly — not a showcase piece.
 bodyClass: s-painting
 pageCss: css/painting-table-ready.css
+sections:
+  - { id: standard, label: "What it means" }
+  - { id: contrast, label: "Contrast method" }
+  - { id: contrast-doing, label: "Step by step" }
+  - { id: contrast-fixes, label: "Contrast fixes" }
+  - { id: dip, label: "Dip method" }
+  - { id: slapchop, label: "Slapchop" }
+  - { id: time, label: "Time to expect" }
 ---
 <header class="hero">
   <a class="crumb" href="/painting.html">&larr; Painting guide</a>
@@ -16,15 +24,7 @@ pageCss: css/painting-table-ready.css
     before Saturday.</p>
 </header>
 
-<nav class="jump" aria-label="On this page">
-  <a href="#standard">What it means</a>
-  <a href="#contrast">Contrast method</a>
-  <a href="#contrast-doing">Step by step</a>
-  <a href="#contrast-fixes">Contrast fixes</a>
-  <a href="#dip">Dip method</a>
-  <a href="#slapchop">Slapchop</a>
-  <a href="#time">Time to expect</a>
-</nav>
+{% include "jump.njk" %}
 
 <section class="section" id="standard">
   <h2>What "table-ready" actually means</h2>

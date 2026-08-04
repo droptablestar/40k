@@ -9,6 +9,15 @@ pageCss: css/turn-order.css
 # links below append #page=N to jump straight to the page. If GW reissues the
 # PDF this URL changes — check the downloads page and update it here, once.
 coreRules: https://assets.warhammer-community.com/eng_01-06_warhammer40k_new40k_core_rules-was6fbu1ix-hfewhmxyiy.pdf
+sections:
+  - { id: round, label: "Battle round" }
+  - { id: command, label: "1 Command" }
+  - { id: movement, label: "2 Movement" }
+  - { id: shooting, label: "3 Shooting" }
+  - { id: charge, label: "4 Charge" }
+  - { id: fight, label: "5 Fight" }
+  - { id: end, label: "End of turn" }
+  - { id: their-turn, label: "Their turn" }
 ---
 <header class="hero">
   <p class="eyebrow">At the table</p>
@@ -20,16 +29,7 @@ coreRules: https://assets.warhammer-community.com/eng_01-06_warhammer40k_new40k_
     people forget, and links each step to the official rule.</p>
 </header>
 
-<nav class="jump" aria-label="On this page">
-  <a href="#round">Battle round</a>
-  <a href="#command">1 Command</a>
-  <a href="#movement">2 Movement</a>
-  <a href="#shooting">3 Shooting</a>
-  <a href="#charge">4 Charge</a>
-  <a href="#fight">5 Fight</a>
-  <a href="#end">End of turn</a>
-  <a href="#their-turn">Their turn</a>
-</nav>
+{% include "jump.njk" %}
 
 <section class="section" id="round">
   <h2>The shape of a battle round</h2>
