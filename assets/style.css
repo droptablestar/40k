@@ -171,7 +171,7 @@ a{color:var(--accent);}
   padding-right:20px;
 }
 
-.sitenav a, .sitenav .soon{
+.sitenav a{
   display:inline-flex;
   align-items:center;
   color:var(--bone-dim);
@@ -183,7 +183,6 @@ a{color:var(--accent);}
 
 .sitenav a:hover{color:var(--bone);}
 .sitenav a[aria-current="page"]{color:var(--bone);border-bottom-color:var(--accent);}
-.sitenav .soon{opacity:.4;}
 
 /* ---------- nav dropdowns (Factions, Painting) ---------- */
 
