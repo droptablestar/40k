@@ -40,6 +40,52 @@
   color:var(--accent);white-space:nowrap;
 }
 
+/* collapsed subsection — a build you do once, folded away so it doesn't sit
+   between the reader and the technique that follows it. Native <details>,
+   no JS. The h3 stays inside the summary so it still reads as the heading
+   it was; heading-anchors.js deliberately doesn't reach it, since a link
+   inside a summary fights the toggle on tap. */
+
+.fold{border-top:1px solid var(--line);border-bottom:1px solid var(--line);}
+
+/* grid, not flex: a heading long enough to wrap would otherwise strand the
+   +/– marker on its own line (same reason as .fix on the troubleshooting
+   page) */
+.fold > summary{
+  display:grid;
+  grid-template-columns:16px 1fr auto;
+  align-items:center;
+  gap:8px 14px;
+  min-height:34px; /* touch target floor */
+  padding:15px 0;
+  cursor:pointer;
+  list-style:none;
+}
+
+.fold > summary::-webkit-details-marker{display:none;}
+
+.fold > summary::before{
+  content:"+";
+  font-family:var(--mono);
+  font-size:var(--fs-base);
+  color:var(--accent);
+}
+
+.fold[open] > summary::before{content:"–";}
+
+.fold > summary h3{margin:0;}
+
+.fold > summary > span{
+  grid-column:3;
+  font-family:var(--mono);
+  font-size:var(--fs-xs);
+  color:var(--bone-dim);
+}
+
+.fold > div{padding:0 0 20px 30px;}
+.fold > div > .sub:first-child{margin-top:0;}
+
 @media (max-width:820px){
   .hero{padding-top:36px;}
+  .fold > div{padding-left:0;}
 }
