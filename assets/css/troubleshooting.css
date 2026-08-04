@@ -1,0 +1,114 @@
+.hero{
+  padding:44px 0 40px;
+  border-bottom:1px solid var(--line);
+}
+.hero h1{
+  font-family:var(--display);
+  font-weight:800;
+  font-size:clamp(36px,6vw,64px);
+  line-height:.96;
+  letter-spacing:-.03em;
+  margin:0 0 14px;
+}
+.hero h1 em{font-style:normal;color:var(--accent);}
+.hero p{margin:0;color:var(--bone-dim);font-size:var(--fs-sm);}
+
+/* ---------- outcome tags ----------
+   Every entry says up front whether this is a lesson for next time or a
+   repair you can still make, so nobody reads three paragraphs to find out
+   the model is already a strip job. */
+
+.tag{
+  display:inline-block;
+  font-family:var(--mono);
+  font-size:var(--fs-micro);
+  letter-spacing:.14em;
+  text-transform:uppercase;
+  white-space:nowrap;
+  padding:3px 7px;
+  border:1px solid var(--line);
+  color:var(--bone-dim);
+}
+
+.t-fix{border-color:var(--accent-lo);}
+.t-strip{border-color:var(--rust);}
+
+.tag-key{
+  margin-top:22px;
+  font-family:var(--mono);
+  font-size:var(--fs-2xs);
+  letter-spacing:.06em;
+  text-transform:uppercase;
+  color:var(--bone-dim);
+  line-height:2.2;
+}
+
+/* ---------- fix entries ----------
+   Symptom stays visible and is the tap target; cause and fix are behind the
+   toggle. Long page, wet hands, one thumb — the whole list has to stay
+   scannable without opening anything. */
+
+.fixes{border-top:1px solid var(--line);}
+
+.fix{border-bottom:1px solid var(--line);}
+
+/* Grid rather than flex: a symptom long enough to wrap is an anonymous flex
+   item, and it wraps as a whole block, stranding the +/– marker alone on the
+   line above. Fixed columns keep the marker beside the first line however
+   many lines the symptom runs to. */
+.fix > summary{
+  display:grid;
+  grid-template-columns:16px 1fr auto;
+  align-items:center;
+  gap:8px 14px;
+  min-height:34px; /* touch target floor */
+  padding:15px 0;
+  cursor:pointer;
+  list-style:none;
+  font-size:var(--fs-md);
+  font-weight:600;
+}
+
+.fix > summary::-webkit-details-marker{display:none;}
+
+.fix > summary::before{
+  content:"+";
+  font-family:var(--mono);
+  font-size:var(--fs-base);
+  color:var(--accent);
+}
+
+.fix[open] > summary::before{content:"–";}
+
+/* third column, so the tags line up as a scannable status column */
+.fix > summary .tag{grid-column:3;font-weight:400;}
+
+.fix > summary:hover{color:var(--bone);}
+
+.fix > div{padding:0 0 20px 30px;}
+.fix > div p{margin:0;color:var(--bone-dim);font-size:var(--fs-sm);line-height:1.55;}
+.fix > div p + p{margin-top:11px;}
+.fix > div b{color:var(--bone);}
+
+/* the one procedure on this page that can destroy a model if rushed */
+.fix .warn{
+  padding:10px 12px;
+  border-left:2px solid var(--rust);
+  background:var(--ground-2);
+}
+
+@media (max-width:560px){
+  /* on a phone the symptom takes the full width and the tag drops to a second
+     row under it — sharing a row squeezes the symptom into a
+     three-word-per-line column */
+  .fix > summary{grid-template-columns:16px 1fr;padding:14px 0;}
+  .fix > summary .tag{grid-column:2;justify-self:start;}
+  .fix > div{padding:0 0 18px 26px;}
+  .tag-key{line-height:2.4;}
+}
+
+@media print{
+  /* a troubleshooting page printed with every answer collapsed is useless */
+  .fix > div{display:block !important;}
+  .fix > summary::before{content:"";}
+}

@@ -931,10 +931,6 @@ a.card:hover::before{border-color:transparent var(--accent) transparent transpar
   .diag tr{padding:14px 0;border-bottom:1px solid var(--line);}
   .diag td{border:0;padding:0 0 5px;}
   .diag td:first-child{font-size:var(--fs-md);}
-  /* stacked-row labels are specific to the symptom/cause/fix table, so they
-     live on .diag-scf — plain .diag stays a generic table any page can use */
-  .diag-scf td:nth-child(2)::before{content:"Cause — ";color:var(--bone-dim);}
-  .diag-scf td:last-child::before{content:"Fix — ";color:var(--bone-dim);}
 }
 
 @media (prefers-reduced-motion:reduce){
