@@ -4,16 +4,25 @@
    ========================================================================== */
 
 :root{
-  --ground:#2D313A;
-  --ground-2:#383D47;
-  --ground-3:#454B56;
-  --bone:#FAF7EE;
-  --bone-dim:#DAD5C7;
-  --rust:#A8452F;
-  --line:rgba(230,224,208,.14);
+  --ground:#242220;
+  --ground-2:#302D29;
+  --ground-3:#3C3833;
+  --bone:#F4F0E6;
+  --bone-dim:#BFB8A8;
+  --rust:#E58466;
+  --line:rgba(244,240,230,.14);
 
-  --accent:#8465AC;
-  --accent-lo:#5B4478;
+  /* Three accent steps, not two. Darkening an accent on a dark ground removes
+     contrast instead of softening it — the old two-step scale put both steps
+     below the WCAG floor (1.58:1 and 2.75:1). Roles are now separate:
+       --accent        text and links. Must clear 4.5:1 on --ground.
+       --accent-solid  fills, focus rings, the card corner fold. Pairs with
+                       --ink-on-accent for text sitting on top of it.
+       --accent-lo     borders and rules only. Never text. */
+  --accent:#B99FE0;
+  --accent-solid:#9478D6;
+  --accent-lo:#453458;
+  --ink-on-accent:#1A1815;
 
   --display:"Bricolage Grotesque",system-ui,sans-serif;
   --body:"IBM Plex Sans",system-ui,sans-serif;
@@ -30,8 +39,8 @@
   --fs-base:16px;   /* primary reading text */
 }
 
-body.s-painting{--accent:#8465AC;--accent-lo:#5B4478;}
-body.s-rules{--accent:#B08D45;--accent-lo:#7A5F2C;}
+body.s-painting{--accent:#B99FE0;--accent-solid:#9478D6;--accent-lo:#453458;}
+body.s-rules{--accent:#D8B564;--accent-solid:#B8933F;--accent-lo:#57441F;}
 
 /* ---------- modern reset (Josh Comeau) ---------- */
 
@@ -57,7 +66,7 @@ ul[class], ol[class]{list-style:none;margin:0;padding:0;}
 body{
   background:var(--ground);
   background-image:
-    radial-gradient(rgba(230,224,208,.035) 1px, transparent 1px),
+    radial-gradient(rgba(244,240,230,.035) 1px, transparent 1px),
     radial-gradient(rgba(0,0,0,.4) 1px, transparent 1px);
   background-size:7px 7px, 11px 11px;
   background-position:0 0, 3px 4px;
@@ -98,7 +107,7 @@ a{color:var(--accent);}
   position:sticky;
   top:0;
   z-index:20;
-  background:rgba(45,49,58,.94);
+  background:rgba(36,34,32,.94);
   backdrop-filter:blur(8px);
 }
 
@@ -134,7 +143,7 @@ a{color:var(--accent);}
   right:0;
   bottom:0;
   width:28px;
-  background:linear-gradient(to right, transparent, rgba(45,49,58,.94));
+  background:linear-gradient(to right, transparent, rgba(36,34,32,.94));
   pointer-events:none;
 }
 
@@ -374,7 +383,9 @@ a.card::before{
   height:0;
   border-style:solid;
   border-width:0 16px 16px 0;
-  border-color:transparent var(--accent-lo) transparent transparent;
+  /* --accent-solid, not --accent-lo: this fold is the site's main "this is a
+     link" affordance on a touch-first layout, so it has to read without hover. */
+  border-color:transparent var(--accent-solid) transparent transparent;
   transition:border-color .16s ease;
 }
 
@@ -428,7 +439,7 @@ a.card:hover::before{border-color:transparent var(--accent) transparent transpar
   font-family:var(--mono);
   font-size:var(--fs-xs);
   font-variant-numeric:tabular-nums;
-  color:var(--accent-lo);
+  color:var(--accent); /* text step, not --accent-lo: these ordinals have to be readable */
   padding-top:2px;
 }
 
@@ -484,7 +495,7 @@ a.card:hover::before{border-color:transparent var(--accent) transparent transpar
 .diag td:first-child{font-weight:500;width:27%;}
 .diag td:nth-child(2){color:var(--bone-dim);width:31%;}
 .diag td:last-child{color:var(--bone-dim);}
-.diag tr:hover td{background:rgba(230,224,208,.03);}
+.diag tr:hover td{background:rgba(244,240,230,.03);}
 
 /* ---------- disclosure list: stratagems, expandable entries ---------- */
 
@@ -593,7 +604,7 @@ a.card:hover::before{border-color:transparent var(--accent) transparent transpar
 
 .datasheet-table td:first-child{font-weight:500;}
 .datasheet-table td:not(:first-child){color:var(--bone-dim);}
-.datasheet-table tr:hover td{background:rgba(230,224,208,.03);}
+.datasheet-table tr:hover td{background:rgba(244,240,230,.03);}
 
 @media (max-width:560px){
   .datasheet-table thead{display:none;}
