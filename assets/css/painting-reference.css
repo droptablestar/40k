@@ -30,7 +30,7 @@
 }
 
 .ladder-stack{
-  background:linear-gradient(90deg,#0C0D10 0%,#3A3E47 34%,#8B8E95 66%,#DCD9D2 100%);
+  background:linear-gradient(90deg,#0E0D0B 0%,#3C3833 34%,#918D85 66%,#DEDAD2 100%);
   display:flex;flex-direction:column;gap:2px;padding:2px;
 }
 
@@ -41,15 +41,15 @@
 }
 
 .rung span{
-  font-family:var(--mono);font-size:11px;font-weight:500;color:#F0EDE6;
+  font-family:var(--mono);font-size:11px;font-weight:500;color:var(--bone);
   text-shadow:0 1px 3px rgba(0,0,0,.85);
 }
 
-.r1{background:rgba(132,101,172,.92);animation-delay:.05s;}
-.r2{background:rgba(132,101,172,.58);animation-delay:.13s;}
-.r3{background:rgba(132,101,172,.30);animation-delay:.21s;}
-.r4{background:rgba(132,101,172,.13);animation-delay:.29s;}
-.r5{background:rgba(132,101,172,.055);animation-delay:.37s;}
+.r1{background:rgba(148,120,214,.92);animation-delay:.05s;}
+.r2{background:rgba(148,120,214,.58);animation-delay:.13s;}
+.r3{background:rgba(148,120,214,.30);animation-delay:.21s;}
+.r4{background:rgba(148,120,214,.13);animation-delay:.29s;}
+.r5{background:rgba(148,120,214,.055);animation-delay:.37s;}
 
 @keyframes flow{
   from{transform:scaleX(0);opacity:0;}
