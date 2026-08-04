@@ -412,6 +412,20 @@ a{color:var(--accent);}
   color:var(--bone-dim);
 }
 
+/* ---------- sub-heading inside a section ----------
+   A labelled break within a section, below .section > h2. Mono, so it reads
+   as a label rather than competing with the display heading above it. */
+
+.sub-head{
+  font-family:var(--mono);
+  font-size:var(--fs-2xs);
+  font-weight:500;
+  letter-spacing:.16em;
+  text-transform:uppercase;
+  color:var(--bone-dim);
+  margin:34px 0 10px;
+}
+
 /* ---------- generic section ---------- */
 
 .section{padding-top:56px;}
