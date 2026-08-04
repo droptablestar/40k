@@ -28,6 +28,14 @@
   --fs-sm:13.5px;   /* support/secondary body text */
   --fs-md:15px;     /* component labels: card titles, list item names */
   --fs-base:16px;   /* primary reading text */
+
+  /* Heights of the two sticky bars. Both are measured at runtime by
+     sticky-offsets.js because the sitebar wraps to a variable height on
+     narrow screens and the jump nav wraps to a variable number of rows.
+     These defaults are the desktop values, so everything still lands in
+     roughly the right place with JS disabled. */
+  --bar-h:56px;
+  --jump-h:0px;
 }
 
 body.s-painting{--accent:#8465AC;--accent-lo:#5B4478;}
@@ -38,7 +46,12 @@ body.s-rules{--accent:#B08D45;--accent-lo:#7A5F2C;}
 *, *::before, *::after{box-sizing:border-box;}
 *{margin:0;}
 
-html{-webkit-text-size-adjust:100%;text-size-adjust:100%;scroll-behavior:smooth;}
+html{
+  -webkit-text-size-adjust:100%;text-size-adjust:100%;scroll-behavior:smooth;
+  /* Anchor targets have to clear both sticky bars, or a jump link drops the
+     heading behind them. */
+  scroll-padding-top:calc(var(--bar-h) + var(--jump-h) + 16px);
+}
 
 body{-webkit-font-smoothing:antialiased;}
 
@@ -282,6 +295,18 @@ a{color:var(--accent);}
 
 .jump{
   display:flex;flex-wrap:wrap;gap:2px;margin-top:28px;
+  position:sticky;
+  top:var(--bar-h);
+  z-index:15; /* under .sitebar (20), over page content */
+  padding-block:8px;
+  background:var(--ground);
+  /* The bar lives inside .wrap, so its own box stops short of the viewport
+     edge and content would scroll through the gutters. A 100vw shadow spread
+     paints the background out past both edges without affecting layout (so no
+     horizontal overflow); clip-path keeps that spread from bleeding upward
+     while letting the soft drop shadow show below. */
+  box-shadow:0 6px 12px -8px rgba(0,0,0,.55), 0 0 0 100vw var(--ground);
+  clip-path:inset(0 -100vw -14px -100vw);
 }
 
 .jump a{
@@ -891,6 +916,12 @@ a.card:hover::before{border-color:transparent var(--accent) transparent transpar
 
 @media (max-width:560px){
   .wrap{padding:0 16px;}
+  /* Wrapped, the jump nav is two or three rows tall — stuck under an
+     already-tall mobile sitebar that eats a third of the viewport. One
+     scrolling row instead; a part-cut chip at the edge shows there's more. */
+  .jump{flex-wrap:nowrap;overflow-x:auto;scrollbar-width:none;}
+  .jump::-webkit-scrollbar{display:none;}
+  .jump a{white-space:nowrap;}
   .sitebar .wrap{height:auto;padding-top:10px;padding-bottom:10px;
     flex-direction:column;align-items:flex-start;gap:8px;}
   .sitenav-wrap{width:100%;}
@@ -913,6 +944,7 @@ a.card:hover::before{border-color:transparent var(--accent) transparent transpar
 @media print{
   body{background:#fff;color:#111;}
   .sitebar,.sitefoot{display:none;}
+  .jump{position:static;box-shadow:none;clip-path:none;background:none;}
   .card,.ladder{background:#fff;}
   .section{break-inside:avoid;}
 }
