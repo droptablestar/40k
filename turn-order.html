@@ -1,0 +1,519 @@
+---
+layout: base.njk
+permalink: /turn-order.html
+title: "Turn order — the five phases | Bench & Table"
+description: What happens in each phase of a Warhammer 40,000 11th edition turn, in the order it happens, with the things beginners miss and links to the official rule for each step.
+bodyClass: s-rules
+pageCss: css/turn-order.css
+# The official 11th edition Core Rules PDF, hosted by Games Workshop. Rule
+# links below append #page=N to jump straight to the page. If GW reissues the
+# PDF this URL changes — check the downloads page and update it here, once.
+coreRules: https://assets.warhammer-community.com/eng_01-06_warhammer40k_new40k_core_rules-was6fbu1ix-hfewhmxyiy.pdf
+---
+<header class="hero">
+  <p class="eyebrow">At the table</p>
+  <h1>What happens, in what order.</h1>
+  <p>A game is a stack of battle rounds. Each round, both players take a turn.
+    Each turn is five phases, always in the same order. Most of learning 40k is
+    learning what you may do in each one — and what you gave up by doing
+    something earlier. This page walks the turn top to bottom, flags the things
+    people forget, and links each step to the official rule.</p>
+</header>
+
+<nav class="jump" aria-label="On this page">
+  <a href="#round">Battle round</a>
+  <a href="#command">1 Command</a>
+  <a href="#movement">2 Movement</a>
+  <a href="#shooting">3 Shooting</a>
+  <a href="#charge">4 Charge</a>
+  <a href="#fight">5 Fight</a>
+  <a href="#end">End of turn</a>
+  <a href="#their-turn">Their turn</a>
+</nav>
+
+<section class="section" id="round">
+  <h2>The shape of a battle round</h2>
+  <p class="sub">A battle is usually five battle rounds. One battle round
+    contains two player turns — yours and theirs — and the same player goes
+    first in every round. Your mission tells you who that is and how many
+    rounds you play.</p>
+
+  <ol class="round-map">
+    <li>
+      <span class="rm-step">Start of battle round</span>
+      <span class="rm-note">Anything that says "start of the battle round"
+        happens here.</span>
+    </li>
+    <li>
+      <span class="rm-step">First player's turn</span>
+      <span class="rm-note">Start of turn, then the five phases, then end of
+        turn.</span>
+    </li>
+    <li>
+      <span class="rm-step">Second player's turn</span>
+      <span class="rm-note">The same seven parts, run by the other player.</span>
+    </li>
+    <li>
+      <span class="rm-step">End of battle round</span>
+      <span class="rm-note">Other rules first, then both players check their
+        mission and score.</span>
+    </li>
+  </ol>
+
+  <a class="rule-ref" href="{{ coreRules }}#page=28" rel="noopener"><span class="rule-num">07.01</span><span class="rule-title">The Battle Round — the three steps of a round</span><span class="rule-go">Core Rules p.28 &rarr;</span></a>
+  <a class="rule-ref" href="{{ coreRules }}#page=28" rel="noopener"><span class="rule-num">07.02</span><span class="rule-title">Player Turns — start of turn, five phases, end of turn</span><span class="rule-go">Core Rules p.28 &rarr;</span></a>
+
+  <p class="sub">The five phases, always in this order: <b>Command</b>,
+    <b>Movement</b>, <b>Shooting</b>, <b>Charge</b>, <b>Fight</b>. Only the
+    Fight phase involves both players — in the other four, only the player
+    whose turn it is acts, though the other player can still spend CP on
+    stratagems (see <a href="#their-turn">on their turn</a>).</p>
+</section>
+
+<section class="section" id="command">
+  <p class="phase-eyebrow">Phase 1 of 5 · your turn</p>
+  <h2>Command phase</h2>
+  <p class="sub">Collect CP, then find out which of your units have lost their
+    nerve.</p>
+
+  <ol class="steps">
+    <li>
+      <div><b>Start of Command phase <span class="step-num">08.01</span></b>
+      <span>Anything triggered "at the start of your Command phase" resolves
+        here.</span>
+    </div></li>
+    <li>
+      <div><b>Gain Core CP <span class="step-num">08.02</span></b>
+      <span><b>Both</b> players gain 1 CP — not just the active player. Easy one
+        to forget on your opponent's turn. Bump it on the
+        <a href="/tracker.html">tracker</a> while you remember.</span>
+    </div></li>
+    <li>
+      <div><b>Battle-shock <span class="step-num">08.03</span></b>
+      <span>Roll for every unit of yours that is already battle-shocked, or that
+        is <b>at or below half its starting strength</b> — exactly half counts.
+        A battle-shock roll is a leadership roll: 2D6 against the unit's Ld.
+        Fail and the unit is battle-shocked; a unit that is already shocked
+        and passes shakes it off.</span>
+      <span>Battle-shocked hurts: the unit's OC drops to "–" so it holds no
+        objectives, you can't target it with stratagems, and it can't start
+        actions.</span>
+    </div></li>
+    <li>
+      <div><b>Command abilities <span class="step-num">08.04</span></b>
+      <span>Anything else that says "in your Command phase" — datasheet abilities,
+        detachment rules — happens now.</span>
+    </div></li>
+    <li>
+      <div><b>End of Command phase <span class="step-num">08.05</span></b>
+      <span>Other rules first, then both players check their mission.</span>
+    </div></li>
+  </ol>
+
+  <ul class="watch">
+    <li><b>Insane Bravery</b> (1CP) makes one battle-shock roll pass
+      automatically, but you have to use it <em>before</em> you roll, and only
+      once per battle.</li>
+    <li>A unit that's already battle-shocked can't be targeted by stratagems —
+      including the one that would have saved it. Spend the CP on the roll you
+      care about.</li>
+  </ul>
+
+  <a class="rule-ref" href="{{ coreRules }}#page=30" rel="noopener"><span class="rule-num">08.00</span><span class="rule-title">Command Phase — all five steps</span><span class="rule-go">Core Rules p.30 &rarr;</span></a>
+  <a class="rule-ref" href="{{ coreRules }}#page=9" rel="noopener"><span class="rule-num">01.07</span><span class="rule-title">Battle-shock Rolls — and what being shocked does</span><span class="rule-go">Core Rules p.9 &rarr;</span></a>
+  <a class="rule-ref" href="{{ coreRules }}#page=56" rel="noopener"><span class="rule-num">15.04</span><span class="rule-title">Insane Bravery (core stratagem)</span><span class="rule-go">Core Rules p.56 &rarr;</span></a>
+</section>
+
+<section class="section" id="movement">
+  <p class="phase-eyebrow">Phase 2 of 5 · your turn</p>
+  <h2>Movement phase</h2>
+  <p class="sub">Move your units one at a time. Every unit gets picked, even
+    the ones standing still — and what you pick here decides what that unit
+    can do for the rest of the turn.</p>
+
+  <ol class="steps">
+    <li>
+      <div><b>Start of Movement phase <span class="step-num">09.01</span></b>
+      <span>Start-of-phase triggers.</span>
+    </div></li>
+    <li>
+      <div><b>Move Units <span class="step-num">09.02</span></b>
+      <span>Pick one unit that hasn't moved yet, choose a move type for it, and
+        finish that move before picking the next. You have to select
+        <b>every</b> unit before the phase ends, including units in strategic
+        reserves and units inside transports — "remain stationary" is a
+        choice you make, not a default.</span>
+    </div></li>
+    <li>
+      <div><b>End of Movement phase <span class="step-num">09.03</span></b>
+      <span>End-of-phase triggers — and your opponent's window for Fire Overwatch
+        or Rapid Ingress.</span>
+    </div></li>
+  </ol>
+
+  <h3 class="sub-head">The move types, and what each one costs you</h3>
+  <table class="move-table dist">
+    <thead>
+      <tr>
+        <th scope="col">Move</th>
+        <th scope="col">Distance</th>
+        <th scope="col">What you give up</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><b>Remain stationary</b> <span class="tnum">09.04</span></td>
+        <td>—</td>
+        <td>Nothing. Doesn't count as starting or ending a move.</td>
+      </tr>
+      <tr>
+        <td><b>Normal move</b> <span class="tnum">09.05</span></td>
+        <td>Up to M</td>
+        <td>Nothing, but you must end unengaged.</td>
+      </tr>
+      <tr>
+        <td><b>Advance</b> <span class="tnum">09.06</span></td>
+        <td>M + D6</td>
+        <td>No charge and no actions this turn. Shooting only with
+          [ASSAULT] weapons.</td>
+      </tr>
+      <tr>
+        <td><b>Fall back</b> <span class="tnum">09.07</span></td>
+        <td>Up to M</td>
+        <td>No shooting, no charge, no actions this turn. Must end
+          unengaged.</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <ul class="watch">
+    <li><b>Advancing is not free.</b> It's the most common beginner mistake —
+      you advance a unit up the board and then realise it can't charge, which
+      was the whole plan.</li>
+    <li><b>Falling back has two modes.</b> If the unit isn't battle-shocked you
+      can take an ordered retreat and just leave. If it is, it's a desperate
+      escape: a hazard roll for each model (1-2 costs a mortal wound), and
+      afterwards it tests for battle-shock again.</li>
+    <li><b>Reserves arrive here.</b> A unit in strategic reserves comes on with
+      an ingress move: wholly within 6" of a battlefield edge and more than 8"
+      horizontally from every enemy unit. Not before battle round 2, not into
+      your opponent's deployment zone before round 3, and anything still in
+      reserve at the end of round 3 is destroyed.</li>
+  </ul>
+
+  <a class="rule-ref" href="{{ coreRules }}#page=32" rel="noopener"><span class="rule-num">09.00</span><span class="rule-title">Movement Phase — the three steps</span><span class="rule-go">Core Rules p.32 &rarr;</span></a>
+  <a class="rule-ref" href="{{ coreRules }}#page=33" rel="noopener"><span class="rule-num">09.04–09.07</span><span class="rule-title">Remain stationary, normal, advance, fall back</span><span class="rule-go">Core Rules p.33 &rarr;</span></a>
+  <a class="rule-ref" href="{{ coreRules }}#page=69" rel="noopener"><span class="rule-num">20.03</span><span class="rule-title">Arriving from Strategic Reserves — and the ingress move</span><span class="rule-go">Core Rules p.69 &rarr;</span></a>
+</section>
+
+<section class="section" id="shooting">
+  <p class="phase-eyebrow">Phase 3 of 5 · your turn</p>
+  <h2>Shooting phase</h2>
+  <p class="sub">Shoot with your units one at a time. Finish a unit's attacks
+    completely before picking up the next unit's dice.</p>
+
+  <ol class="steps">
+    <li>
+      <div><b>Start of Shooting phase <span class="step-num">10.01</span></b>
+      <span>Start-of-phase triggers — and your opponent's window for
+        Smokescreen.</span>
+    </div></li>
+    <li>
+      <div><b>Shoot <span class="step-num">10.02</span></b>
+      <span>Select a unit, select which kind of shooting it's doing, resolve all
+        of its attacks, then move on. You choose which units shoot — unlike
+        moving, you don't have to select them all.</span>
+    </div></li>
+    <li>
+      <div><b>End of Shooting phase <span class="step-num">10.03</span></b>
+      <span>End-of-phase triggers.</span>
+    </div></li>
+  </ol>
+
+  <h3 class="sub-head">The shooting types</h3>
+  <table class="move-table">
+    <thead>
+      <tr>
+        <th scope="col">Type</th>
+        <th scope="col">Only if</th>
+        <th scope="col">Catch</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><b>Normal</b> <span class="tnum">10.04</span></td>
+        <td>Unengaged, didn't advance</td>
+        <td>None — this is the default.</td>
+      </tr>
+      <tr>
+        <td><b>Assault</b> <span class="tnum">10.05</span></td>
+        <td>Advanced this turn, has [ASSAULT] weapons</td>
+        <td>Only the [ASSAULT] weapons can fire.</td>
+      </tr>
+      <tr>
+        <td><b>Close-quarters</b> <span class="tnum">10.06</span></td>
+        <td>Engaged, didn't advance, has [CLOSE-QUARTERS] weapons or is a
+          Monster/Vehicle</td>
+        <td>Infantry can only fire [CLOSE-QUARTERS] weapons and only at units
+          they're engaged with. Monsters and vehicles can fire anything, at -1
+          to hit for anything that isn't a [CLOSE-QUARTERS] weapon shooting
+          what they're engaged with.</td>
+      </tr>
+      <tr>
+        <td><b>Indirect</b> <span class="tnum">10.07</span></td>
+        <td>Unengaged, didn't advance, has [INDIRECT FIRE] weapons</td>
+        <td>Can shoot targets it can't see, but the target gets the benefit of
+          cover, no hit re-rolls, and hits only on a 6 — a 4+ if you stayed
+          still and a friendly unit can see the target.</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <p class="sub">Whichever type you pick, the attack itself is the same three
+    steps every time: select weapons, select targets, resolve attacks — hit
+    roll, wound roll, save, damage.</p>
+
+  <a class="crumb" href="/charts.html#wounding">Wound roll chart &rarr;</a>
+
+  <ul class="watch">
+    <li><b>Targets must be visible, in range, and unengaged</b> — you can't
+      shoot into a melee that's already happening, unless a rule specifically
+      lets you.</li>
+    <li>You pick targets weapon by weapon, so one unit can split its fire
+      across several enemy units.</li>
+    <li><b>Cover doesn't improve saves in 11th.</b> It makes you harder to hit.
+      If you learned otherwise from a video, that video is 10th edition —
+      see <a href="/rules-changes.html#terrain">what changed</a>.</li>
+  </ul>
+
+  <a class="rule-ref" href="{{ coreRules }}#page=34" rel="noopener"><span class="rule-num">10.00</span><span class="rule-title">Shooting Phase — steps and normal shooting</span><span class="rule-go">Core Rules p.34 &rarr;</span></a>
+  <a class="rule-ref" href="{{ coreRules }}#page=35" rel="noopener"><span class="rule-num">10.05–10.07</span><span class="rule-title">Assault, close-quarters and indirect shooting</span><span class="rule-go">Core Rules p.35 &rarr;</span></a>
+  <a class="rule-ref" href="{{ coreRules }}#page=16" rel="noopener"><span class="rule-num">04.01</span><span class="rule-title">Making Attacks — select weapons, targets, resolve</span><span class="rule-go">Core Rules p.16 &rarr;</span></a>
+  <a class="rule-ref" href="{{ coreRules }}#page=18" rel="noopener"><span class="rule-num">05.01</span><span class="rule-title">Attack Sequence — hit, wound, save, damage</span><span class="rule-go">Core Rules p.18 &rarr;</span></a>
+</section>
+
+<section class="section" id="charge">
+  <p class="phase-eyebrow">Phase 4 of 5 · your turn</p>
+  <h2>Charge phase</h2>
+  <p class="sub">Close the distance. One unit at a time: declare, roll, move —
+    and you find out whether you made it only after you've committed.</p>
+
+  <ol class="steps">
+    <li>
+      <div><b>Start of Charge phase <span class="step-num">11.01</span></b>
+      <span>Start-of-phase triggers.</span>
+    </div></li>
+    <li>
+      <div><b>Charge <span class="step-num">11.02</span></b>
+      <span>For each unit you want to charge with, in turn:</span>
+      <ol class="substeps">
+        <li><b>Declare.</b> The unit must be on the battlefield, within 12" of
+          an enemy unit, not already engaged, and must not have advanced or
+          fallen back this turn.</li>
+        <li><b>Roll 2D6.</b> That total is the maximum distance for the charge
+          move — there is no re-roll unless a rule gives you one.</li>
+        <li><b>Attempt the charge.</b> If the roll is enough to legally
+          complete the move, make it. If not, the unit doesn't move at all.</li>
+      </ol>
+    </div></li>
+    <li>
+      <div><b>End of Charge phase <span class="step-num">11.03</span></b>
+      <span>End-of-phase triggers — and your opponent's window for Heroic
+        Intervention.</span>
+    </div></li>
+  </ol>
+
+  <ul class="watch">
+    <li><b>Pick your charge targets before you move, and you must reach all of
+      them.</b> Every unit you named has to end up engaged with you, and you
+      can't end up engaged with an enemy unit you didn't name. Naming a second
+      target is a real risk, not a bonus.</li>
+    <li><b>Engagement range is 2".</b> Snake eyes can never be enough, since 2"
+      of the roll is eaten by getting into engagement range.</li>
+    <li><b>A completed charge earns Fights First</b> for the rest of the turn —
+      that unit swings before anything that didn't charge, which is most of
+      why charging is worth the risk.</li>
+    <li>Charging is all-or-nothing: a failed roll means the unit stays exactly
+      where it is, in the open, having done nothing.</li>
+  </ul>
+
+  <a class="rule-ref" href="{{ coreRules }}#page=36" rel="noopener"><span class="rule-num">11.02</span><span class="rule-title">Charge — declare, roll, attempt</span><span class="rule-go">Core Rules p.36 &rarr;</span></a>
+  <a class="rule-ref" href="{{ coreRules }}#page=37" rel="noopener"><span class="rule-num">11.04</span><span class="rule-title">Charge Move — targets, and where models must end up</span><span class="rule-go">Core Rules p.37 &rarr;</span></a>
+  <a class="rule-ref" href="{{ coreRules }}#page=81" rel="noopener"><span class="rule-num">24.13</span><span class="rule-title">Fights First</span><span class="rule-go">Core Rules p.81 &rarr;</span></a>
+</section>
+
+<section class="section" id="fight">
+  <p class="phase-eyebrow">Phase 5 of 5 · both players</p>
+  <h2>Fight phase</h2>
+  <p class="sub">The only phase where both players act. Units take turns
+    fighting, alternating between the players, with everything that charged
+    going first.</p>
+
+  <ol class="steps">
+    <li>
+      <div><b>Start of Fight phase <span class="step-num">12.01</span></b>
+      <span>Start-of-phase triggers.</span>
+    </div></li>
+    <li>
+      <div><b>Pile in <span class="step-num">12.02</span></b>
+      <span>Up to 3" per model, to get more models into the fight. The active
+        player does all of theirs first, then the opponent does all of theirs.
+        Optional — and models already in base contact don't move.</span>
+    </div></li>
+    <li>
+      <div><b>Fight <span class="step-num">12.04</span></b>
+      <span>Players alternate picking one unit to fight with, starting with the
+        active player. All the <b>Fights First</b> units resolve before anything
+        else; once they're done, the alternating continues with everyone
+        remaining. Attacks work exactly like shooting — select weapons, select
+        targets, resolve — but each model swings with one melee weapon at
+        something it's engaged with.</span>
+    </div></li>
+    <li>
+      <div><b>Consolidate <span class="step-num">12.07</span></b>
+      <span>Another 3" move for units that were eligible to fight. Active player
+        first, then the opponent. If you're engaged you must stay engaged; if
+        you're not, you must move toward a nearby enemy unit, or if there
+        isn't one within 3", onto an objective within 3".</span>
+    </div></li>
+    <li>
+      <div><b>End of Fight phase <span class="step-num">12.09</span></b>
+      <span>End-of-phase triggers.</span>
+    </div></li>
+  </ol>
+
+  <ul class="watch">
+    <li><b>You must fight with every unit that can.</b> Piling in and
+      consolidating are optional; fighting is not.</li>
+    <li>Fighting isn't limited to your turn — your units in combat swing on
+      your opponent's turn too, in their Fight phase.</li>
+    <li><b>Consolidating into a fresh enemy unit gives that unit a fight.</b>
+      If you end a consolidation engaged with something that hasn't fought yet,
+      your opponent gets to fight with it immediately. Sometimes that's the
+      point; sometimes it kills your unit.</li>
+    <li>Killing everything you were engaged with doesn't strand you — a unit
+      that was in the fight when the step began can still make an overrun
+      fight, piling in to reach someone new.</li>
+  </ul>
+
+  <a class="rule-ref" href="{{ coreRules }}#page=38" rel="noopener"><span class="rule-num">12.00</span><span class="rule-title">Fight Phase — the five steps, and pile-in moves</span><span class="rule-go">Core Rules p.38 &rarr;</span></a>
+  <a class="rule-ref" href="{{ coreRules }}#page=40" rel="noopener"><span class="rule-num">12.04</span><span class="rule-title">Fight — Fights First, then alternating selection</span><span class="rule-go">Core Rules p.40 &rarr;</span></a>
+  <a class="rule-ref" href="{{ coreRules }}#page=42" rel="noopener"><span class="rule-num">12.08</span><span class="rule-title">Consolidation Move — the three modes</span><span class="rule-go">Core Rules p.42 &rarr;</span></a>
+</section>
+
+<section class="section" id="end">
+  <h2>End of turn, and when you score</h2>
+  <p class="sub">The bit that decides the game, tacked onto the end of the bit
+    everyone remembers.</p>
+
+  <ol class="steps">
+    <li>
+      <div><b>Other rules first</b>
+      <span>Anything triggered at the end of the turn that isn't a mission
+        rule.</span>
+    </div></li>
+    <li>
+      <div><b>Then the mission</b>
+      <span>Both players check their mission and resolve anything they've
+        achieved. Update VP on the <a href="/tracker.html">tracker</a> before
+        you pick the models back up.</span>
+    </div></li>
+  </ol>
+
+  <ul class="watch">
+    <li><b>Objective control is re-checked at the end of every phase and every
+      turn</b>, not just at the end of the turn. Add up the OC of your models
+      within the objective's terrain area; highest total controls it. Tie means
+      nobody controls it, unless one side has secured it.</li>
+    <li><b>There are no objective markers in 11th.</b> The terrain feature
+      itself is the objective, and "within range" means standing in that
+      terrain area.</li>
+    <li>Battle-shocked models have an OC of "–", so a shocked unit sitting on
+      an objective is holding nothing.</li>
+  </ul>
+
+  <a class="rule-ref" href="{{ coreRules }}#page=52" rel="noopener"><span class="rule-num">14.02</span><span class="rule-title">Level of Control — who holds an objective, and when it's checked</span><span class="rule-go">Core Rules p.52 &rarr;</span></a>
+  <a class="rule-ref" href="{{ coreRules }}#page=28" rel="noopener"><span class="rule-num">07.03</span><span class="rule-title">End of Battle Round</span><span class="rule-go">Core Rules p.28 &rarr;</span></a>
+</section>
+
+<section class="section" id="their-turn">
+  <h2>What you can do on their turn</h2>
+  <p class="sub">Your turn isn't the only time you act. These are the core
+    stratagems every army has, listed by the moment they fire — the whole
+    reason to not spend down to 0 CP on your own turn.</p>
+
+  <ul class="react-list">
+    <li>
+      <span class="react-when">Start of their Shooting phase</span>
+      <span class="react-name">Smokescreen — 1CP</span>
+      <p>One of your Smoke units gets the benefit of cover for the phase, and
+        so does anything hiding behind it.</p>
+      <a class="rule-ref" href="{{ coreRules }}#page=57" rel="noopener"><span class="rule-num">15.10</span><span class="rule-title">Smokescreen</span><span class="rule-go">Core Rules p.57 &rarr;</span></a>
+    </li>
+    <li>
+      <span class="react-when">End of their Movement phase</span>
+      <span class="react-name">Fire Overwatch — 1CP</span>
+      <p>One of your unengaged units shoots one visible enemy unit within 24",
+        hitting only on unmodified 6s. Usually pointed at whatever just moved
+        into the open.</p>
+      <a class="rule-ref" href="{{ coreRules }}#page=57" rel="noopener"><span class="rule-num">15.08</span><span class="rule-title">Fire Overwatch</span><span class="rule-go">Core Rules p.57 &rarr;</span></a>
+    </li>
+    <li>
+      <span class="react-when">End of their Movement phase</span>
+      <span class="react-name">Rapid Ingress — 1CP</span>
+      <p>A unit in strategic reserves arrives early, on their turn instead of
+        yours. Not in the first battle round.</p>
+      <a class="rule-ref" href="{{ coreRules }}#page=57" rel="noopener"><span class="rule-num">15.07</span><span class="rule-title">Rapid Ingress</span><span class="rule-go">Core Rules p.57 &rarr;</span></a>
+    </li>
+    <li>
+      <span class="react-when">End of their Charge phase</span>
+      <span class="react-name">Heroic Intervention — 1CP</span>
+      <p>One of your unengaged units within 12" of an enemy resolves a charge
+        of its own — either into something that just charged, or, for an extra
+        CP, into anything within 6".</p>
+      <a class="rule-ref" href="{{ coreRules }}#page=57" rel="noopener"><span class="rule-num">15.11</span><span class="rule-title">Heroic Intervention</span><span class="rule-go">Core Rules p.57 &rarr;</span></a>
+    </li>
+    <li>
+      <span class="react-when">During their Fight phase</span>
+      <span class="react-name">Counteroffensive — 2CP</span>
+      <p>Right after an enemy unit finishes its attacks, one of your units
+        gains Fights First and must be the next unit selected — it cuts in line
+        ahead of the rest of their army.</p>
+      <a class="rule-ref" href="{{ coreRules }}#page=57" rel="noopener"><span class="rule-num">15.12</span><span class="rule-title">Counteroffensive</span><span class="rule-go">Core Rules p.57 &rarr;</span></a>
+    </li>
+    <li>
+      <span class="react-when">Any phase, either turn</span>
+      <span class="react-name">Command Re-roll — 1CP</span>
+      <p>Re-roll one dice you just rolled — a hit, wound, save, damage, advance,
+        hazard or charge roll. Charge rolls re-roll both dice; everything else
+        is one dice of the handful.</p>
+      <a class="rule-ref" href="{{ coreRules }}#page=56" rel="noopener"><span class="rule-num">15.02</span><span class="rule-title">Command Re-roll</span><span class="rule-go">Core Rules p.56 &rarr;</span></a>
+    </li>
+  </ul>
+
+  <ul class="watch">
+    <li><b>Once per phase per stratagem, and one stratagem per unit per
+      phase.</b> You can use the same stratagem again in a later phase, but not
+      twice in the same one.</li>
+    <li>You can't target a battle-shocked unit with a stratagem at all.</li>
+    <li>Your detachments decide which stratagems you have beyond these core
+      ones — see <a href="/rules-changes.html#stratagems">what changed in
+      11th</a>.</li>
+  </ul>
+
+  <a class="rule-ref" href="{{ coreRules }}#page=54" rel="noopener"><span class="rule-num">15.01</span><span class="rule-title">Using Stratagems — costs, timing and restrictions</span><span class="rule-go">Core Rules p.54 &rarr;</span></a>
+</section>
+
+<div class="note-box">
+  <p><b>Where this disagrees with the official rules, the official rules
+    win.</b> Games Workshop publishes the 11th edition Core Rules as a free
+    PDF and in the Warhammer 40,000 app — this page is a summary in our own
+    words, not a replacement, and errata land regularly. If something here
+    looks wrong or out of date, fix it in the repo rather than arguing about
+    it at the table.</p>
+  <p>Each step links to the rule it summarises, by number and page, in GW's own
+    Core Rules PDF. Two warnings: that PDF is <b>about 32 MB</b>, so on phone
+    data it is worth opening once and keeping, and jumping to a page only works
+    in a viewer that honours page links — most desktop browsers do, some mobile
+    ones just open at page 1. The rule numbers work regardless.</p>
+</div>

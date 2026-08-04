@@ -339,6 +339,79 @@ a{color:var(--accent);}
 
 .crumb:hover{color:var(--bone);background:var(--ground-3);border-color:var(--accent-lo);}
 
+/* ---------- rule reference: jumps into the official PDF ----------
+   A real tap target, not an inline link — this gets used at a table with one
+   hand, and the whole point of a rules page is being able to check the
+   source. Shared by every page that cites the Core Rules. */
+
+.rule-ref{
+  display:flex;
+  align-items:center;
+  flex-wrap:wrap;
+  gap:4px 10px;
+  min-height:38px;
+  margin-top:12px;
+  padding:8px 12px;
+  background:var(--ground-2);
+  border:1px solid var(--line);
+  text-decoration:none;
+  transition:background .16s ease,border-color .16s ease;
+}
+
+.rule-ref:hover{background:var(--ground-3);border-color:var(--accent-lo);}
+
+.rule-num{
+  font-family:var(--mono);
+  font-size:var(--fs-2xs);
+  font-variant-numeric:tabular-nums;
+  letter-spacing:.1em;
+  color:var(--accent);
+  flex:none;
+}
+
+.rule-title{
+  font-size:var(--fs-sm);
+  color:var(--bone);
+  flex:1;
+  min-width:0;
+}
+
+.rule-go{
+  font-family:var(--mono);
+  font-size:var(--fs-2xs);
+  font-variant-numeric:tabular-nums;
+  letter-spacing:.08em;
+  text-transform:uppercase;
+  color:var(--bone-dim);
+  flex:none;
+}
+
+/* consecutive refs read as one stack rather than separate buttons */
+.rule-ref + .rule-ref{margin-top:-1px;}
+
+/* claims that are an inference from two or more rules rather than a
+   sentence you can point at. Say so — the links below it are the premises,
+   not a quotation. */
+.rule-derived{
+  margin-top:10px !important;
+  padding-left:12px;
+  border-left:2px solid var(--accent-lo);
+  font-size:var(--fs-sm) !important;
+  color:var(--bone-dim);
+}
+
+/* claims we could not trace to the core rules — deliberately not a link */
+.rule-none{
+  margin-top:12px !important;
+  padding:8px 12px;
+  border:1px dashed var(--line);
+  font-family:var(--mono);
+  font-size:var(--fs-2xs) !important;
+  letter-spacing:.06em;
+  text-transform:uppercase;
+  color:var(--bone-dim);
+}
+
 /* ---------- generic section ---------- */
 
 .section{padding-top:56px;}
@@ -475,7 +548,7 @@ a.card:hover::before{border-color:transparent var(--accent) transparent transpar
 
 .steps{list-style:none;margin:0;padding:0;counter-reset:step;}
 
-.steps li{
+.steps > li{
   counter-increment:step;
   display:grid;
   grid-template-columns:34px minmax(0,1fr);
@@ -484,9 +557,9 @@ a.card:hover::before{border-color:transparent var(--accent) transparent transpar
   border-top:1px solid var(--line);
 }
 
-.steps li:last-child{border-bottom:1px solid var(--line);}
+.steps > li:last-child{border-bottom:1px solid var(--line);}
 
-.steps li::before{
+.steps > li::before{
   content:counter(step,decimal-leading-zero);
   font-family:var(--mono);
   font-size:var(--fs-xs);
@@ -495,8 +568,11 @@ a.card:hover::before{border-color:transparent var(--accent) transparent transpar
   padding-top:2px;
 }
 
-.steps b{display:block;font-weight:600;font-size:var(--fs-md);margin-bottom:2px;}
-.steps span{font-size:var(--fs-sm);color:var(--bone-dim);line-height:1.45;}
+/* Scoped to the item's own name/body, not every descendant — a step can
+   contain bold text or a nested list of its own without picking these up. */
+.steps > li > div > b{display:block;font-weight:600;font-size:var(--fs-md);margin-bottom:2px;}
+.steps > li > div > span{display:block;font-size:var(--fs-sm);color:var(--bone-dim);line-height:1.45;}
+.steps > li > div > span + span{margin-top:8px;}
 
 /* ---------- dash list ---------- */
 
@@ -941,6 +1017,13 @@ a.card:hover::before{border-color:transparent var(--accent) transparent transpar
   .diag tr{padding:14px 0;border-bottom:1px solid var(--line);}
   .diag td{border:0;padding:0 0 5px;}
   .diag td:first-child{font-size:var(--fs-md);}
+
+  /* on a phone the rule number and page sit on one line and the title gets
+     the full width below them — sharing a row squeezes the title into a
+     four-word-per-line column */
+  .rule-ref{padding:10px 12px;}
+  .rule-go{margin-left:auto;}
+  .rule-title{flex:1 0 100%;order:3;}
 }
 
 @media (prefers-reduced-motion:reduce){

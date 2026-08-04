@@ -1,0 +1,229 @@
+.hero{
+  padding:44px 0 40px;
+  border-bottom:1px solid var(--line);
+}
+.hero h1{
+  font-family:var(--display);
+  font-weight:800;
+  font-size:clamp(36px,6vw,64px);
+  line-height:.96;
+  letter-spacing:-.03em;
+  margin:0 0 14px;
+}
+.hero p{margin:0;color:var(--bone-dim);font-size:var(--fs-base);line-height:1.55;}
+
+/* ---------- battle round map: the four steps of a round ---------- */
+
+.round-map{
+  list-style:none;
+  margin:20px 0 0;
+  padding:0;
+  counter-reset:rm;
+  border-top:1px solid var(--line);
+}
+
+.round-map li{
+  counter-increment:rm;
+  display:grid;
+  grid-template-columns:28px 1fr;
+  gap:2px 12px;
+  padding:14px 0;
+  border-bottom:1px solid var(--line);
+}
+
+.round-map li::before{
+  content:counter(rm);
+  grid-row:1 / span 2;
+  font-family:var(--mono);
+  font-size:var(--fs-2xs);
+  font-variant-numeric:tabular-nums;
+  color:var(--accent);
+  padding-top:3px;
+}
+
+.rm-step{font-size:var(--fs-md);font-weight:600;}
+.rm-note{font-size:var(--fs-sm);color:var(--bone-dim);line-height:1.5;}
+
+/* ---------- phase sections ---------- */
+
+.phase-eyebrow{
+  font-family:var(--mono);
+  font-size:var(--fs-xs);
+  font-variant-numeric:tabular-nums;
+  letter-spacing:.16em;
+  text-transform:uppercase;
+  color:var(--bone-dim);
+  margin:0 0 8px;
+}
+
+.sub-head{
+  font-family:var(--mono);
+  font-size:var(--fs-2xs);
+  font-weight:500;
+  letter-spacing:.16em;
+  text-transform:uppercase;
+  color:var(--bone-dim);
+  margin:34px 0 10px;
+}
+
+/* ---------- steps: additions to the shared .steps sequence ----------
+   The numbered sequence itself lives in style.css. A phase step also carries
+   the official rule number and, in the Charge phase, a nested sequence. */
+
+.step-num{
+  font-family:var(--mono);
+  font-size:var(--fs-2xs);
+  font-variant-numeric:tabular-nums;
+  font-weight:400;
+  letter-spacing:.1em;
+  color:var(--bone-dim);
+  white-space:nowrap;
+}
+
+.steps .substeps{
+  margin:8px 0 0;
+  padding-left:18px;
+  list-style:decimal;
+  color:var(--bone-dim);
+  font-size:var(--fs-sm);
+  line-height:1.45;
+}
+.steps .substeps li + li{margin-top:6px;}
+.steps .substeps b{color:var(--bone);}
+
+/* ---------- watch: the things people get wrong ---------- */
+
+.watch{
+  list-style:none;
+  margin:22px 0 0;
+  padding:16px 18px;
+  background:var(--ground-2);
+  border-left:2px solid var(--accent-lo);
+}
+
+.watch li{
+  color:var(--bone-dim);
+  font-size:var(--fs-sm);
+  line-height:1.55;
+  padding-left:16px;
+  position:relative;
+}
+
+.watch li::before{
+  content:"";
+  position:absolute;
+  left:0;
+  top:9px;
+  width:5px;
+  height:5px;
+  background:var(--accent);
+}
+
+.watch li + li{margin-top:10px;}
+.watch b{color:var(--bone);font-weight:600;}
+
+/* ---------- move / shooting type tables ---------- */
+
+.move-table{width:100%;border-collapse:collapse;font-size:var(--fs-sm);}
+
+.move-table th{
+  text-align:left;
+  font-family:var(--mono);
+  font-size:var(--fs-2xs);
+  font-weight:500;
+  letter-spacing:.16em;
+  text-transform:uppercase;
+  color:var(--bone-dim);
+  padding:0 16px 10px 0;
+  border-bottom:1px solid var(--line);
+}
+
+.move-table td{
+  padding:14px 16px 14px 0;
+  border-bottom:1px solid var(--line);
+  vertical-align:top;
+  line-height:1.5;
+  color:var(--bone-dim);
+}
+
+.move-table td:first-child{color:var(--bone);}
+/* only the movement table has a numeric second column */
+.move-table.dist td:nth-child(2){font-family:var(--mono);font-variant-numeric:tabular-nums;white-space:nowrap;}
+.move-table tr:hover td{background:rgba(244,240,230,.03);}
+
+.tnum{
+  display:block;
+  font-family:var(--mono);
+  font-size:var(--fs-2xs);
+  font-variant-numeric:tabular-nums;
+  letter-spacing:.1em;
+  color:var(--bone-dim);
+  margin-top:3px;
+}
+
+/* ---------- reactions: what you can do on their turn ---------- */
+
+.react-list{
+  list-style:none;
+  margin:20px 0 0;
+  padding:0;
+  border-top:1px solid var(--line);
+}
+
+.react-list > li{padding:16px 0;border-bottom:1px solid var(--line);}
+
+.react-when{
+  display:block;
+  font-family:var(--mono);
+  font-size:var(--fs-2xs);
+  letter-spacing:.16em;
+  text-transform:uppercase;
+  color:var(--accent);
+  margin-bottom:5px;
+}
+
+.react-name{display:block;font-size:var(--fs-md);font-weight:600;margin-bottom:5px;}
+
+.react-list p{margin:0;color:var(--bone-dim);font-size:var(--fs-sm);line-height:1.55;}
+
+/* ---------- note box ---------- */
+
+.note-box{
+  margin-top:56px;
+  padding:20px 22px;
+  border:1px dashed var(--line);
+}
+
+.note-box p{margin:0;color:var(--bone-dim);font-size:var(--fs-sm);line-height:1.55;}
+.note-box p + p{margin-top:12px;}
+.note-box b{color:var(--bone);}
+
+@media (max-width:560px){
+  /* three columns of prose in a 360px viewport is four words per line —
+     stack each row into a labelled block instead */
+  .move-table, .move-table tbody, .move-table tr, .move-table td{display:block;width:100%;}
+  .move-table thead{display:none;}
+  .move-table tr{padding:14px 0;border-bottom:1px solid var(--line);}
+  .move-table td{border:0;padding:0 0 6px;}
+  .move-table td:first-child{font-size:var(--fs-md);}
+  /* the column headers are gone, so each cell carries its own label */
+  .move-table.dist td:nth-child(2){white-space:normal;}
+  .move-table.dist td:nth-child(2)::before{content:"Distance: ";}
+  .move-table.dist td:nth-child(3)::before{content:"Gives up: ";}
+  .move-table:not(.dist) td:nth-child(2)::before{content:"Only if: ";}
+  .move-table:not(.dist) td:nth-child(3)::before{content:"Catch: ";}
+  .move-table td::before{
+    font-family:var(--mono);
+    font-size:var(--fs-2xs);
+    letter-spacing:.1em;
+    text-transform:uppercase;
+    color:var(--bone-dim);
+  }
+
+  .watch{padding:14px 16px;}
+}
+
+@media print{
+  .watch{background:none;}
+  .rule-ref{background:none;}
+}
