@@ -49,5 +49,26 @@
         if (e.detail !== 0) e.preventDefault();
       });
     });
+
+    // Submenus (e.g. the Tyranids flyout) sit a few pixels off from their
+    // trigger link, so a diagonal mouse path toward the submenu briefly
+    // crosses dead space with no element under the cursor — a bare :hover
+    // rule drops there and slams the submenu (and via bubbling, the whole
+    // dropdown) shut. Give it the same grace-period pattern as the
+    // top-level dropdown above instead of relying on :hover directly.
+    Array.prototype.slice.call(document.querySelectorAll(".nav-item-group"))
+      .forEach(function (group) {
+        if (!group.querySelector(".nav-subpanel")) return;
+        var closeTimer;
+        group.addEventListener("mouseenter", function () {
+          clearTimeout(closeTimer);
+          group.classList.add("sub-open");
+        });
+        group.addEventListener("mouseleave", function () {
+          closeTimer = setTimeout(function () {
+            group.classList.remove("sub-open");
+          }, 150);
+        });
+      });
   }
 })();

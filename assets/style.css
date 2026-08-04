@@ -262,8 +262,8 @@ a{color:var(--accent);}
     box-shadow:0 8px 20px rgba(0,0,0,.35);
     padding:6px;
   }
-  .nav-item-group:hover .nav-subpanel,
-  .nav-item-group:focus-within .nav-subpanel{display:flex;}
+  .nav-item-group:focus-within .nav-subpanel,
+  .nav-item-group.sub-open .nav-subpanel{display:flex;}
 }
 
 .nav-panel-more{
