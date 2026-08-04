@@ -86,53 +86,144 @@ pageCss: css/painting-reference.css
   </div>
 </section>
 
-<section class="section split" id="brush">
-  <div>
-    <h2>Brush load</h2>
-    <p class="sub">Three states, judged on a paper towel before the brush touches
-      the model.</p>
-    <ul class="states">
-      <li>
-        <div class="state-name">Loaded</div>
-        <p>Paint fills about <b>one third</b> of the bristle length. No bulge at
-          the ferrule, tip still holds a point. Paint driven into the ferrule is
-          what kills good brushes.</p>
-      </li>
-      <li>
-        <div class="state-name">Damp</div>
-        <p>Touch the tip once to the towel. If a bead forms where you set the
-          brush down, it is still too wet for glazing or blending.</p>
-      </li>
-      <li>
-        <div class="state-name">Dry</div>
-        <p>Wipe until the towel takes <b>almost no pigment</b> — streaks barely
-          visible. That faint mark is correct, not a sign to keep wiping.</p>
-      </li>
-    </ul>
-  </div>
+<section class="section" id="brush">
+  <h2>Brush load</h2>
+  <p class="sub">Four states, judged on a paper towel before the brush touches
+    the model. The ratios above decide how thin the paint is; this decides how
+    much of it the brush is carrying, which is a separate control and the one
+    people skip.</p>
+  <ul class="states">
+    <li>
+      <div class="state-name">Charged</div>
+      <p>Paint in the <b>belly</b>, tip still fine. Roll the brush against the
+        palette rather than dragging it, so the belly fills while the tip comes
+        back to a point. A charged brush pulls one continuous edge highlight; a
+        merely loaded one runs out halfway and the join shows.</p>
+    </li>
+    <li>
+      <div class="state-name">Loaded</div>
+      <p>Paint fills about <b>one third</b> of the bristle length. No bulge at
+        the ferrule, tip still holds a point. Paint driven into the ferrule is
+        what kills good brushes.</p>
+    </li>
+    <li>
+      <div class="state-name">Damp</div>
+      <p>Touch the tip once to the towel. If a bead forms where you set the
+        brush down, it is still too wet for glazing or blending.</p>
+    </li>
+    <li>
+      <div class="state-name">Dry</div>
+      <p>Wipe until the towel takes <b>almost no pigment</b> — streaks barely
+        visible. That faint mark is correct, not a sign to keep wiping. The
+        second tell is the bristles: a dry brush <b>splays under light pressure
+        and springs back</b>. If it stays clumped there is still wet paint in
+        the belly, and it will dump on the first raised edge you touch.</p>
+    </li>
+  </ul>
 
-  <div id="order">
-    <h2>Order of work</h2>
-    <p class="sub">This one really is a sequence. Jumping ahead costs more time
-      than doing it in order.</p>
-    <ol class="steps">
-      <li><div><b>Clean and assemble</b><span>Mould release, seam lines, fit.</span></div></li>
-      <li><div><b>Prime</b><span>Light passes. Primer colour is a decision about
-        value, not a neutral step.</span></div></li>
-      <li><div><b>Set values</b><span>Zenithal spray or drybrush. Establish light
-        and shadow before any colour goes down.</span></div></li>
-      <li><div><b>Colour</b><span>Thinned, multiple coats. Over a value
-        underpainting this means glazes, not opaque basecoats.</span></div></li>
-      <li><div><b>Shade</b><span>Recesses unless you want the tint everywhere.
-        Pull excess with a clean damp tip while wet.</span></div></li>
-      <li><div><b>Highlight</b><span>Up the ridges, each pass tighter than the
-        one before.</span></div></li>
-      <li><div><b>Details</b><span>Eyes, lenses, teeth, metals.</span></div></li>
-      <li><div><b>Base and rim</b><span>Texture, then a solid rim.</span></div></li>
-      <li><div><b>Seal</b><span>Matt overall, gloss only where you want
-        shine.</span></div></li>
-    </ol>
-  </div>
+  <h3>Load by job</h3>
+  <p class="sub">Same paint, same ratio, different amount on the brush.</p>
+  <table class="diag">
+    <thead>
+      <tr><th>Job</th><th>State</th><th>Note</th></tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>Basecoat</td>
+        <td>Loaded</td>
+        <td>Reload every two or three strokes. A basecoat that fades out as the
+          brush empties leaves tide lines you then have to cover.</td>
+      </tr>
+      <tr>
+        <td>Layer</td>
+        <td>Loaded, tip wiped</td>
+        <td>Belly full, tip clean, so the mark the brush makes is the edge of
+          the tip and nothing wider.</td>
+      </tr>
+      <tr>
+        <td>Glaze</td>
+        <td>Damp</td>
+        <td>A bead on the towel means it will pool in the recesses instead of
+          tinting the surface.</td>
+      </tr>
+      <tr>
+        <td>Wash</td>
+        <td>Damp, or loaded for a full flood</td>
+        <td>Decide which before you start. Pull the excess with a clean damp tip
+          while it is still wet.</td>
+      </tr>
+      <tr>
+        <td>Edge highlight</td>
+        <td>Charged</td>
+        <td>The one job where you want the belly full — see <a
+          href="#highlights">two kinds of highlight</a> for the mark itself.</td>
+      </tr>
+      <tr>
+        <td>Drybrush</td>
+        <td>Dry</td>
+        <td>Undiluted paint first, then wiped. Thinning before wiping is the
+          usual cause of chalky streaks.</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <p class="sub">Size the brush to the paint it has to hold, not to the detail
+    you are painting. A larger brush with a good point holds more and keeps its
+    tip longer than a small one that runs dry every stroke — most people size
+    down too early.</p>
+
+  <h3>When the load is the problem</h3>
+  <table class="diag">
+    <thead>
+      <tr><th>Symptom</th><th>Fix</th></tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>Edge highlight starts crisp and goes fuzzy</td>
+        <td>The tip lost its point partway through. Reshape between strokes,
+          not between colours.</td>
+      </tr>
+      <tr>
+        <td>The brush runs out halfway along a long edge</td>
+        <td>Only the tip was loaded. Charge the belly by rolling on the palette,
+          then start the stroke again from the same end.</td>
+      </tr>
+      <tr>
+        <td>Tip holds a point but almost nothing transfers</td>
+        <td>Over-wiped, or the paint at the tip has started to skin. Go back to
+          the palette rather than pressing harder — pressure splays the tip and
+          does not move more paint.</td>
+      </tr>
+      <tr>
+        <td>Wiping to dry takes forever and the brush is still soggy</td>
+        <td>That is water in the belly, not paint. Squeeze the belly against the
+          towel, not just the tip, before loading.</td>
+      </tr>
+    </tbody>
+  </table>
+</section>
+
+<section class="section" id="order">
+  <h2>Order of work</h2>
+  <p class="sub">This one really is a sequence. Jumping ahead costs more time
+    than doing it in order.</p>
+  <ol class="steps">
+    <li><div><b>Clean and assemble</b><span>Mould release, seam lines, fit.</span></div></li>
+    <li><div><b>Prime</b><span>Light passes. Primer colour is a decision about
+      value, not a neutral step.</span></div></li>
+    <li><div><b>Set values</b><span>Zenithal spray or drybrush. Establish light
+      and shadow before any colour goes down.</span></div></li>
+    <li><div><b>Colour</b><span>Thinned, multiple coats. Over a value
+      underpainting this means glazes, not opaque basecoats.</span></div></li>
+    <li><div><b>Shade</b><span>Recesses unless you want the tint everywhere.
+      Pull excess with a clean damp tip while wet.</span></div></li>
+    <li><div><b>Highlight</b><span>Up the ridges, each pass tighter than the
+      one before.</span></div></li>
+    <li><div><b>Details</b><span>Eyes, lenses, teeth, metals.</span></div></li>
+    <li><div><b>Base and rim</b><span>Texture, then a solid rim.</span></div></li>
+    <li><div><b>Seal</b><span>Matt overall, gloss only where you want
+      shine.</span></div></li>
+  </ol>
 </section>
 
 <section class="section" id="colours">
