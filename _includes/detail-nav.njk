@@ -1,0 +1,15 @@
+{#- Sidebar for the master–detail layout (detail-layout.js). Same source as
+    jump.njk and the nav submenu — the page's own `sections:` front matter —
+    so this is a third rendering of one list, not a fourth hand-maintained
+    copy. Hidden by default; detail-layout.js reveals it once it has
+    confirmed JS is running and the viewport is wide enough to hold a sidebar
+    beside a reading column. Wrap the page's run of `.fold-section` elements
+    in `<div class="detail-panels">` directly after this include, both
+    inside a `<div class="detail">`. -#}
+{% if sections %}
+<nav class="detail-nav" aria-label="Sections">
+  {%- for s in sections %}
+  <a href="#{{ s.id }}">{{ s.label }}</a>
+  {%- endfor %}
+</nav>
+{% endif %}

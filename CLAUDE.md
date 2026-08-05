@@ -26,6 +26,8 @@ _includes/base.njk            Shared layout: <head>, sitebar/nav, main/wrap, foo
 assets/style.css               Shared design tokens and components (loaded on every page)
 assets/css/{page}.css          Per-page CSS, one file per top-level page
 assets/js/tracker.js           Tracker's vanilla JS logic
+assets/js/detail-layout.js     Master–detail sidebar for the folded-index pages
+_includes/detail-nav.njk       Sidebar for master–detail, built from `sections:`
 .eleventy.js                   Eleventy config (passthrough copy, template engine)
 wrangler.jsonc                 Cloudflare Worker config (assets.directory: _site)
 ```
@@ -174,6 +176,17 @@ Note that per-page CSS loads *after* `style.css`, so a page-level cap still
 wins over the shared rule. The check, not the cascade, is what actually
 prevents this.
 
+The one honest exception: on the four folded-index pages (see "Master–detail
+layout" below), the detail column is a fixed `grid-template-columns` track
+(`260px minmax(0,860px)`), not a `max-width`. That still caps the measure of
+whatever prose lands in it — the guard only ever checked for the literal
+`max-width` property, not for "does anything constrain text," and a grid
+track is a real way to do the same thing. It only applies inside `.detail-live`
+(desktop, JS confirmed running); on a phone, or with JS off at any width, the
+page is the unconstrained full-width accordion described above. If this
+starts happening in more places than that one component, it deserves its own
+rule instead of living as an exception here.
+
 ### Quality floor
 
 Mobile is the primary target, not a fallback — design and test for phone
@@ -190,6 +203,41 @@ glanceable layouts over dense information.
 
 Visible keyboard focus. `prefers-reduced-motion` respected. Print styles on
 reference pages.
+
+### Master–detail layout (folded-index pages)
+
+`painting.html`, `painting-reference.html`, `painting-table-ready.html`, and
+`troubleshooting.html` fold each section to a row (`.fold-section` wrapping a
+`<details class="fold">`) so the page reads as a tappable index on a phone.
+`assets/js/detail-layout.js` progressively enhances that on wide screens: it
+turns the folded index into a permanent sidebar (`.detail-nav`, built from
+the page's own `sections:` front matter — same source as the nav submenu and
+`jump.njk`, so a section is still declared once) and shows exactly one
+section at a time beside it, at >=900px, once it has confirmed JS is actually
+running. `turn-order.html` and `rules-changes.html` are deliberately **not**
+in this group — they're closer to a straight read (a turn order, a changelog)
+than a lookup table, so folding and a permanent index would fight their
+grain rather than help; they keep the plain jump nav instead.
+
+This is additive, not a replacement: the script only ever toggles the
+`hidden` attribute and a fold's `open` state, never markup, so:
+
+- **No-JS** gets exactly the accordion it already had, at any width — the
+  sidebar's CSS default is `display:none`, and only the script flips that.
+- **Deep links** (`#ratios`, including ones nested inside a section, like a
+  single colour's own fold) resolve to the right sidebar entry and section
+  even though the sidebar's own list is coarser than every id on the page.
+- **Print** gets every section, not just the selected one — the script
+  clears all the hiding before `beforeprint`/the print media query and puts
+  it back after, on top of `folds.js`'s existing open-everything-for-print
+  handling, which still runs underneath this unchanged.
+
+If a fifth page ever needs this, wrap its fold-sections in
+`<div class="detail"><div class="detail-panels">...</div></div>` right after
+`{% include "detail-nav.njk" %}` — see any of the four pages above for the
+exact shape. Don't hand-build another sidebar; there's already three
+renderings of one section list (nav submenu, jump nav, this one) and a fourth
+would be redundant, not coherent.
 
 ## Tracker
 
