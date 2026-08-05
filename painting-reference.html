@@ -45,8 +45,10 @@ sections:
 
 {% include "jump.njk" %}
 
-<section class="section" id="ratios">
-  <h2>Dilution by job</h2>
+<section class="section fold-section" id="ratios">
+  <details class="fold">
+    <summary><h2>Dilution by job</h2></summary>
+    <div class="fold-body">
   <p class="sub">Ratios are paint : thinner by volume, straight from the pot.
     A starting point, not a law — pigment load varies by brand and by colour, so
     judge what you see on the palette.</p>
@@ -83,10 +85,14 @@ sections:
         paint on a drybrush is how you get chalky streaks.</p>
     </div>
   </div>
+    </div>
+  </details>
 </section>
 
-<section class="section" id="brush">
-  <h2>Brush load</h2>
+<section class="section fold-section" id="brush">
+  <details class="fold">
+    <summary><h2>Brush load</h2></summary>
+    <div class="fold-body">
   <p class="sub">Four states, judged on a paper towel before the brush touches
     the model. The ratios above decide how thin the paint is; this decides how
     much of it the brush is carrying, which is a separate control and the one
@@ -200,10 +206,14 @@ sections:
       </tr>
     </tbody>
   </table>
+    </div>
+  </details>
 </section>
 
-<section class="section" id="order">
-  <h2>Order of work</h2>
+<section class="section fold-section" id="order">
+  <details class="fold">
+    <summary><h2>Order of work</h2></summary>
+    <div class="fold-body">
   <p class="sub">This one really is a sequence. Jumping ahead costs more time
     than doing it in order.</p>
   <ol class="steps">
@@ -223,46 +233,62 @@ sections:
     <li><div><b>Seal</b><span>Matt overall, gloss only where you want
       shine.</span></div></li>
   </ol>
+    </div>
+  </details>
 </section>
 
-<section class="section" id="colours">
-  <h2>Colours that fight back</h2>
+<section class="section fold-section" id="colours">
+  <details class="fold">
+    <summary><h2>Colours that fight back</h2></summary>
+    <div class="fold-body">
   <p class="sub">Four colours do not behave like the rest. Each one needs a
     different starting point than the one you would guess.</p>
 
-  <div class="cards">
-    <div class="card">
-      <h3>White</h3>
-      <p>Do not start from white. Base a <b>light neutral grey</b>, wash the
-        recesses with something heavily thinned and dark, and put white only on
-        the topmost points. White everywhere reads flat and chalky — there is no
-        room left to highlight into.</p>
-    </div>
-    <div class="card">
-      <h3>Yellow</h3>
-      <p>Yellow covers badly and turns green or brown over a dark base. Start
-        from an <b>ochre or darker yellow</b> and work up. Shade it with a thin
-        <b>orange</b> — brown and black wash both kill it.</p>
-    </div>
-    <div class="card">
-      <h3>Black</h3>
-      <p>Highlighted with grey, but the grey's temperature decides what it
-        reads as: <b>cool grey for armour and metal</b>, warmer grey for
-        leather and cloth. Keep it sparse. If the grey is obvious at arm's
-        length the thing has stopped being black.</p>
-    </div>
-    <div class="card">
-      <h3>Red</h3>
-      <p>Highlighting red with anything white-ish turns it pink. Push
-        <b>toward orange</b> instead. Shade with a neutral dark rather than a
-        brown, which drags it toward rust.</p>
-    </div>
+  <div class="folds">
+    <details class="fold" id="c-white">
+      <summary>White</summary>
+      <div class="fold-body">
+        <p>Do not start from white. Base a <b>light neutral grey</b>, wash the
+          recesses with something heavily thinned and dark, and put white only
+          on the topmost points. White everywhere reads flat and chalky — there
+          is no room left to highlight into.</p>
+      </div>
+    </details>
+    <details class="fold" id="c-yellow">
+      <summary>Yellow</summary>
+      <div class="fold-body">
+        <p>Yellow covers badly and turns green or brown over a dark base. Start
+          from an <b>ochre or darker yellow</b> and work up. Shade it with a
+          thin <b>orange</b> — brown and black wash both kill it.</p>
+      </div>
+    </details>
+    <details class="fold" id="c-black">
+      <summary>Black</summary>
+      <div class="fold-body">
+        <p>Highlighted with grey, but the grey's temperature decides what it
+          reads as: <b>cool grey for armour and metal</b>, warmer grey for
+          leather and cloth. Keep it sparse. If the grey is obvious at arm's
+          length the thing has stopped being black.</p>
+      </div>
+    </details>
+    <details class="fold" id="c-red">
+      <summary>Red</summary>
+      <div class="fold-body">
+        <p>Highlighting red with anything white-ish turns it pink. Push
+          <b>toward orange</b> instead. Shade with a neutral dark rather than a
+          brown, which drags it toward rust.</p>
+      </div>
+    </details>
   </div>
+    </div>
+  </details>
 </section>
 
-<section class="section split">
+<section class="section split fold-section">
   <div id="highlights">
-    <h2>Two kinds of highlight</h2>
+    <details class="fold">
+      <summary><h2>Two kinds of highlight</h2></summary>
+      <div class="fold-body">
     <p class="sub">Both get called highlighting. They are different marks and
       doing the second one like the first is what makes a model look busy.</p>
     <ul class="states">
@@ -282,10 +308,14 @@ sections:
     </ul>
     <p class="sub">At arm's length the eye reads an isolated bright point as a
       reflection. A bright line just reads as a lighter object.</p>
+      </div>
+    </details>
   </div>
 
   <div id="eyes">
-    <h2>Eyes</h2>
+    <details class="fold">
+      <summary><h2>Eyes</h2></summary>
+      <div class="fold-body">
     <p class="sub">The detail people dread most. The trick is that you do not
       paint the eye small — you paint it too big and then take it back.</p>
     <ol class="steps">
@@ -305,21 +335,29 @@ sections:
     <p class="sub">Both eyes have to match more than either has to be good —
       mismatched pupils are what make a face look cross-eyed. If one is off,
       widen both and re-cut.</p>
+      </div>
+    </details>
   </div>
 </section>
 
-<section class="section" id="wrong">
-  <h2>When it goes wrong</h2>
+<section class="section fold-section" id="wrong">
+  <details class="fold">
+    <summary><h2>When it goes wrong</h2></summary>
+    <div class="fold-body">
   <p class="sub">Symptom first — that is how you will actually look it up.
     Frosted primer, filled detail, cloudy varnish, tide lines, a brush that
     will not hold a point, and how to strip a model back down all live on
     their own page.</p>
   <p><a class="crumb" href="/troubleshooting.html">Troubleshooting &rarr;</a></p>
+    </div>
+  </details>
 </section>
 
-<section class="section split">
+<section class="section split fold-section">
   <div id="words">
-    <h2>Consistency words</h2>
+    <details class="fold">
+      <summary><h2>Consistency words</h2></summary>
+      <div class="fold-body">
     <p class="sub">What people mean when they skip the ratio.</p>
     <dl class="vocab">
       <div><dt>Cream</dt><dd>Pot paint, unthinned. Drybrush and texture work
@@ -331,10 +369,14 @@ sections:
       <div><dt>Ink</dt><dd>Glazes and washes. Colour visible in the mix, no body
         to it at all.</dd></div>
     </dl>
+      </div>
+    </details>
   </div>
 
   <div id="thumb">
-    <h2>Rules of thumb</h2>
+    <details class="fold">
+      <summary><h2>Rules of thumb</h2></summary>
+      <div class="fold-body">
     <p class="sub">The short list worth memorising.</p>
     <ul class="rules-list">
       <li>Value does the work. Colour gets the credit.</li>
@@ -344,5 +386,7 @@ sections:
       <li>Fix mistakes with the surrounding colour, not by scraping.</li>
       <li>Finish the model in front of you before starting the next one.</li>
     </ul>
+      </div>
+    </details>
   </div>
 </section>

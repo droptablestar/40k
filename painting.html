@@ -23,8 +23,10 @@ sections:
 
 {% include "jump.njk" %}
 
-<section class="section" id="kit">
-  <h2>What to actually buy</h2>
+<section class="section fold-section" id="kit">
+  <details class="fold">
+    <summary><h2>What to actually buy</h2></summary>
+    <div class="fold-body">
   <p class="sub">Roughly $70–90 gets you painting properly. The single most
     common beginner mistake is spending that on forty paints and one bad brush
     instead. Buy few things, buy them decent.</p>
@@ -75,10 +77,14 @@ sections:
       <em>~$6</em>
     </li>
   </ul>
+    </div>
+  </details>
 </section>
 
-<section class="section" id="basics">
-  <h2>Before you touch a model</h2>
+<section class="section fold-section" id="basics">
+  <details class="fold">
+    <summary><h2>Before you touch a model</h2></summary>
+    <div class="fold-body">
   <p class="sub">The part nobody explains because everyone around you already
     knows it. If you're teaching someone in person, this is what you'd show
     them with your hands before either of you says a word about technique.</p>
@@ -99,40 +105,48 @@ sections:
     </div>
   </div>
 
-  <h3>Building a wet palette</h3>
-  <p class="sub">A shallow, sealable container, a sponge, and a sheet of
-    palette paper. Fifteen minutes to build, reusable indefinitely.</p>
-  <ol class="steps">
-    <li><div><b>Get a container with a lid</b><span>A takeaway tub or a
-      dedicated wet palette box. Shallow and flat beats deep — you're loading
-      a brush from it, not storing soup.</span></div></li>
-    <li><div><b>Cut a sponge to fit</b><span>A kitchen sponge or the foam
-      insert some wet palettes ship with. It should sit flat in the base with
-      no gaps at the edges.</span></div></li>
-    <li><div><b>Soak it and wring it out</b><span>Fully saturate the sponge
-      under a tap, then squeeze until it stops dripping but is still damp
-      through. Too wet and paint thins itself on the palette; too dry and it
-      stops working within the hour.</span></div></li>
-    <li><div><b>Lay palette paper on top</b><span>Purpose-made wet palette
-      paper, or baking parchment as a cheaper substitute. It needs to be
-      porous enough to pull water up from the sponge — regular printer paper
-      does not work.</span></div></li>
-    <li><div><b>Mist the paper lightly</b><span>A spray bottle, a few pumps.
-      Damp, not pooling. This gets the paper wicking straight away instead of
-      slowly drawing water up from the sponge underneath.</span></div></li>
-    <li><div><b>Load paint and seal between sessions</b><span>Put paint on as
-      normal. Snap the lid on whenever you step away, even for a few minutes —
-      that's most of what keeps it workable for so long.</span></div></li>
-  </ol>
-  <p class="sub">Top up the sponge with a little water every session or two as
-    it dries out, and replace the paper once it starts to discolour or tear.
-    Mould can grow in a sealed palette left unused for a long stretch —
-    rinse the sponge or start a fresh one if it's been sitting for weeks.</p>
+  <details class="fold" id="wet-palette-build">
+    <summary>Building a wet palette</summary>
+    <div class="fold-body">
+      <p class="sub">A shallow, sealable container, a sponge, and a sheet of
+        palette paper. Fifteen minutes to build, reusable indefinitely.</p>
+      <ol class="steps">
+        <li><div><b>Get a container with a lid</b><span>A takeaway tub or a
+          dedicated wet palette box. Shallow and flat beats deep — you're loading
+          a brush from it, not storing soup.</span></div></li>
+        <li><div><b>Cut a sponge to fit</b><span>A kitchen sponge or the foam
+          insert some wet palettes ship with. It should sit flat in the base with
+          no gaps at the edges.</span></div></li>
+        <li><div><b>Soak it and wring it out</b><span>Fully saturate the sponge
+          under a tap, then squeeze until it stops dripping but is still damp
+          through. Too wet and paint thins itself on the palette; too dry and it
+          stops working within the hour.</span></div></li>
+        <li><div><b>Lay palette paper on top</b><span>Purpose-made wet palette
+          paper, or baking parchment as a cheaper substitute. It needs to be
+          porous enough to pull water up from the sponge — regular printer paper
+          does not work.</span></div></li>
+        <li><div><b>Mist the paper lightly</b><span>A spray bottle, a few pumps.
+          Damp, not pooling. This gets the paper wicking straight away instead of
+          slowly drawing water up from the sponge underneath.</span></div></li>
+        <li><div><b>Load paint and seal between sessions</b><span>Put paint on as
+          normal. Snap the lid on whenever you step away, even for a few minutes —
+          that's most of what keeps it workable for so long.</span></div></li>
+      </ol>
+      <p class="sub">Top up the sponge with a little water every session or two as
+        it dries out, and replace the paper once it starts to discolour or tear.
+        Mould can grow in a sealed palette left unused for a long stretch —
+        rinse the sponge or start a fresh one if it's been sitting for weeks.</p>
+    </div>
+  </details>
+    </div>
+  </details>
 </section>
 
-<section class="section split" id="loading">
+<section class="section split fold-section" id="loading">
   <div>
-    <h2>Loading a brush</h2>
+    <details class="fold">
+      <summary><h2>Loading a brush</h2></summary>
+      <div class="fold-body">
     <p class="sub">The same four moves, every time, before the brush ever
       reaches the model. Get this wrong and every later step fights it —
       flooded detail, streaky coverage, a ruined tip.</p>
@@ -181,10 +195,14 @@ sections:
     <p class="sub">Once this feels automatic, the <a
       href="/painting-reference.html#brush">technique reference</a> covers
       finer control over how loaded a brush should be for a given job.</p>
+      </div>
+    </details>
   </div>
 
   <div id="rinsing">
-    <h2>Water and rinsing</h2>
+    <details class="fold">
+      <summary><h2>Water and rinsing</h2></summary>
+      <div class="fold-body">
     <p class="sub">Bad habits here are the quiet cause of a lot of muddy,
       streaky paint.</p>
     <ul class="rules-list">
@@ -196,11 +214,15 @@ sections:
       <li>Wipe the brush on a towel before loading new paint — a wet brush thins
         whatever it picks up next, whether you meant it to or not.</li>
     </ul>
+      </div>
+    </details>
   </div>
 </section>
 
-<section class="section" id="first">
-  <h2>Your first model, end to end</h2>
+<section class="section fold-section" id="first">
+  <details class="fold">
+    <summary><h2>Your first model, end to end</h2></summary>
+    <div class="fold-body">
   <p class="sub">Pick a single infantry model you do not care much about. Not the
     character, not the tank. The first one is practice and you should expect to
     be mildly disappointed by it.</p>
@@ -235,10 +257,14 @@ sections:
     <li><div><b>Varnish</b><span>A matt spray protects it from handling. Worth
       doing on anything you intend to actually play with.</span></div></li>
   </ol>
+    </div>
+  </details>
 </section>
 
-<section class="section" id="traps">
-  <h2>Beginner traps</h2>
+<section class="section fold-section" id="traps">
+  <details class="fold">
+    <summary><h2>Beginner traps</h2></summary>
+    <div class="fold-body">
   <p class="sub">The mistakes that cost people the most time, in the order they
     usually happen.</p>
   <ul class="rules-list">
@@ -255,4 +281,6 @@ sections:
       studio light at 10x magnification. Yours will be seen at arm's length on a
       table.</li>
   </ul>
+    </div>
+  </details>
 </section>

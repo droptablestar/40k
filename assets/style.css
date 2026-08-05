@@ -657,6 +657,126 @@ a.card:hover::before{border-color:transparent var(--accent) transparent transpar
 .diag td:last-child{color:var(--bone-dim);}
 .diag tr:hover td{background:rgba(244,240,230,.03);}
 
+/* ---------- fold: the shared disclosure ----------
+   One collapsible entry: a summary that stays visible and is the tap target,
+   a body behind the toggle. Use `.folds` on a wrapper to close the top of a
+   run of them.
+
+   Grid rather than flex for the summary: a summary long enough to wrap is an
+   anonymous flex item and wraps as a whole block, stranding the +/- marker on
+   the line above. Fixed columns keep the marker beside the first line however
+   many lines the summary runs to. (troubleshooting.css hit this and solved it
+   the same way; this is that solution, promoted.)
+
+   Printing: a collapsed <details> prints as a list of headings with no
+   content, which makes a printed reference page useless. Everything opens
+   under @media print below — page-level disclosures should not re-solve it. */
+
+.folds{border-top:1px solid var(--line);}
+
+.fold{border-bottom:1px solid var(--line);}
+
+.fold > summary{
+  display:grid;
+  grid-template-columns:16px 1fr;
+  align-items:baseline;
+  gap:8px 14px;
+  min-height:34px; /* touch target floor */
+  padding:14px 0;
+  cursor:pointer;
+  list-style:none;
+  font-size:var(--fs-md);
+  font-weight:600;
+}
+
+.fold > summary::-webkit-details-marker{display:none;}
+
+.fold > summary::before{
+  content:"+";
+  font-family:var(--mono);
+  font-size:var(--fs-base);
+  color:var(--accent);
+}
+
+.fold[open] > summary::before{content:"–";}
+
+.fold > summary:hover{color:var(--bone);}
+
+/* a summary that is a one-line description rather than a name reads as body
+   copy, not as a heading */
+.fold > summary.as-lede{font-size:var(--fs-sm);font-weight:400;color:var(--bone-dim);}
+.fold > summary.as-lede:hover{color:var(--bone);}
+
+.fold-body{padding:0 0 20px 30px;}
+.fold-body > :first-child{margin-top:0;}
+.fold-body p{margin:0;color:var(--bone-dim);font-size:var(--fs-sm);line-height:1.55;}
+.fold-body p + p{margin-top:11px;}
+.fold-body b{color:var(--bone);}
+
+/* ---------- fold-section: a whole page section collapsed to a row ----------
+   Closed, a section is one list row and the page is an index you tap into.
+   Open, the heading returns to display size and the section reads exactly as
+   it did before it was ever folded. The section's own top padding goes, or
+   every row would sit 56px apart and the compactness is lost. */
+
+.fold-section{padding-top:0;}
+.fold-section:first-of-type{padding-top:32px;}
+.fold-section > .fold,
+.fold-section > div > .fold{border-top:1px solid var(--line);margin-top:-1px;}
+
+.fold-section .fold > summary > h2{
+  display:inline;
+  font-family:var(--body);
+  font-size:var(--fs-md);
+  font-weight:600;
+  line-height:1.35;
+  letter-spacing:normal;
+}
+
+.fold-section .fold[open] > summary{padding-bottom:8px;}
+
+.fold-section .fold[open] > summary > h2{
+  display:block;
+  font-family:var(--display);
+  font-weight:800;
+  font-size:clamp(26px,4.4vw,44px);
+  line-height:1.04;
+  letter-spacing:-.025em;
+  padding-top:10px;
+}
+
+/* A split section is two columns of prose, which is a fine way to read but a
+   bad index: closed, its two folds land side by side on desktop and separated
+   by the grid gap on a phone, so the run of rows loses its rhythm. Rows are
+   full width, one per line, like every other section. */
+.split.fold-section{display:block;}
+
+/* The heading is a link (heading-anchors.js), and its "#" marker is meant to
+   sit beside a display heading, not on every row of an index — it doubles the
+   things that look tappable in a row that is already entirely a tap target.
+   Show it once the section is open and the heading is a heading again. */
+.fold-section .fold > summary a{color:inherit;text-decoration:none;}
+.fold-section .fold:not([open]) > summary .heading-anchor{display:none;}
+/* sits beside the heading rather than wrapping it, so it needs its own box */
+.heading-anchor-beside{display:inline-block;vertical-align:middle;}
+.heading-anchor-beside::after{margin-left:10px;}
+
+@media (max-width:560px){
+  .fold > summary{padding:13px 0;gap:8px 10px;}
+  .fold-body{padding:0 0 18px 26px;}
+  .fold-section .fold[open] > summary > h2{padding-top:6px;}
+}
+
+@media print{
+  /* Forcing the children visible is not enough on its own: a closed <details>
+     hides its content through ::details-content, not through the children's
+     own display. Browsers that don't support that pseudo-element are covered
+     by folds.js, which opens every details on beforeprint. */
+  details.fold::details-content{content-visibility:visible !important;block-size:auto !important;}
+  .fold > *{display:block !important;}
+  .fold > summary::before{content:"";}
+}
+
 /* ---------- disclosure list: stratagems, expandable entries ---------- */
 
 .strat-group{margin-bottom:36px;}
