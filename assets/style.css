@@ -89,13 +89,21 @@ body{
   line-height:1.5;
 }
 
-.wrap{max-width:min(1600px, 94vw);margin:0 auto;padding:0 20px;} /* max-width-ok: the one content column */
+.wrap{max-width:min(1600px, 94vw);margin:0 auto;padding:0 20px;} /* max-width-ok: the outer container — header, footer, and any page that opts out of the reading column (front matter `wide: true`) render straight inside this */
 
-/* ---------- text spans the column ----------
-   .wrap is the only thing that decides how wide text gets. Headings and body
-   copy always run its full width — no ch-based measure caps. This has been
-   reintroduced and removed several times; `npm run check` fails the build on
-   any new max-width in a stylesheet that isn't marked `max-width-ok`. */
+/* ---------- the reading column ----------
+   `.col` is the single place prose gets measured. base.njk wraps every
+   page's content in it by default; a page sets `wide: true` in its front
+   matter to render straight inside `.wrap` instead (tracker, charts) — or,
+   like painting-reference.html, opts out of the auto-wrap and places `.col`
+   itself around only the sections that should be capped, leaving something
+   genuinely wide (the ratio ladder) outside it. Either way this is the only
+   place that constrains how wide text gets; everything inside `.col` still
+   spans its own full width, same as before. `npm run check` (see that
+   script) fails the build on an un-marked cap anywhere else in a
+   stylesheet. */
+
+.col{max-width:min(660px, 100%);margin:0 auto;} /* max-width-ok: the reading-column cap — the one place text gets measured; ~85 characters at fs-base on a 1920px screen */
 
 .hero h1, .hero h2, .hero p,
 .section > h2, .sub, .hero-lede{max-width:none;}

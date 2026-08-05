@@ -91,9 +91,13 @@
 
 <main>
   <div class="wrap">
-
+{% if wide %}
     {{ content | safe }}
-
+{% else %}
+    <div class="col">
+      {{ content | safe }}
+    </div>
+{% endif %}
   </div>
 </main>
 

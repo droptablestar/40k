@@ -6,6 +6,7 @@ description: Thinning ratios, brush load, order of work, and the colours that
       need a different starting point, for painting Warhammer 40,000 miniatures.
 bodyClass: s-painting
 pageCss: css/painting-reference.css
+wide: true
 sections:
   - { id: ratios, label: "Ratios" }
   - { id: brush, label: "Brush load" }
@@ -42,6 +43,13 @@ sections:
       shifts a light one. That asymmetry is the whole trick behind shading.</p>
   </div>
 </header>
+
+{#- Everything below the hero is prose and folded reference sections, so it
+    gets the reading-column cap. The hero above stays at the page's full
+    (wide: true) measure so its two-column split — text beside the ratio
+    ladder — keeps the width that split needs; see assets/style.css's ".col"
+    comment. -#}
+<div class="col">
 
 {% include "jump.njk" %}
 
@@ -390,3 +398,5 @@ sections:
     </details>
   </div>
 </section>
+
+</div>

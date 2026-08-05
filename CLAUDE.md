@@ -41,6 +41,8 @@ title / description      <title> and meta description
 bodyClass                s-painting or s-rules (sets the section accent)
 pageCss                  path under assets/, e.g. css/painting.css
 pageJs                   path under assets/, e.g. js/tracker.js (optional)
+wide                     true to skip the reading-column cap (optional) —
+                         see "Prose is capped, tables can opt wide" below
 extraFooter               raw HTML appended to the shared footer (optional)
 themeColor                sets <meta name="theme-color"> (optional)
 ```
@@ -156,19 +158,39 @@ cards get neither.
 Structural devices should encode something true. Numbered lists are for real
 sequences only — the painting order of operations is one, a list of tips is not.
 
-### Text spans the column
+### Prose is capped, tables can opt wide
 
-`.wrap` is the only thing that decides how wide anything gets. Headings and
-body copy run its full width. **Never put a `max-width` on text** — no `60ch`
-measure caps on a lede, no `14ch` on a heading. This has been introduced and
-removed repeatedly and it is the single most common layout bug on this site.
+This used to say "never put a max-width on text" — that rule is gone. The
+site had no measure at all before mid-2026 (see the layout plan this
+replaced): a paragraph on the landing page or a fold body could stretch to
+nearly 200 characters on a wide screen, which reads worse than any cap does.
+The rule now is the opposite: **prose is capped by default, and a page opts
+out only for content that is genuinely wide or tabular.**
 
+There is exactly one place this cap lives: `.col` in `assets/style.css`
+(`max-width:min(660px, 100%)`, ~85 characters at `--fs-base` on a 1920px
+screen). `base.njk` wraps every page's content in `.col` automatically. A
+page opts its *entire* body out of the cap with `wide: true` in its front
+matter, which renders it straight inside `.wrap` (the outer, un-capped
+container — still the thing that decides gutters and the absolute widest
+anything on the site ever gets). `tracker.html` and `charts.html` use this:
+both are tools/tables, not reading prose. A page can also opt out *part* of
+itself while keeping the rest capped, by setting `wide: true` and placing its
+own `<div class="col">` around just the sections that should be measured —
+`painting-reference.html` does this, so its hero's two-column split (text
+beside the ratio ladder) keeps the width that split needs, while the folded
+reference sections below it are capped like every other page.
+
+Headings and body copy still run the *full width of whichever container
+they're in* — `.col` or `.wrap` — no `ch`-based caps on individual elements.
 `assets/style.css` declares `max-width:none` once for `.hero h1`, `.hero p`,
 `.section > h2`, `.sub` and `.hero-lede`; per-page CSS should not re-declare
 it. `npm run check` (which `npm run build` runs first) fails on any
 `max-width` in a stylesheet that is not a media query, not `none`/`100%`, and
 not marked with a trailing `max-width-ok` comment. Add that marker only for a
-genuine non-text cap — a tooltip panel, an image — and say why in the comment.
+genuine cap — the reading column, a tooltip panel, an image — and say why in
+the comment. Don't add a *second* numeric cap anywhere else; `.col` is the
+only one that should ever constrain text width.
 
 Note that per-page CSS loads *after* `style.css`, so a page-level cap still
 wins over the shared rule. The check, not the cascade, is what actually
