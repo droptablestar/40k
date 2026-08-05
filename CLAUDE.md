@@ -158,17 +158,50 @@ sequences only — the painting order of operations is one, a list of tips is no
 
 ### Text spans the column
 
-`.wrap` is the only thing that decides how wide anything gets. Headings and
-body copy run its full width. **Never put a `max-width` on text** — no `60ch`
-measure caps on a lede, no `14ch` on a heading. This has been introduced and
-removed repeatedly and it is the single most common layout bug on this site.
+`.wrap` is the only thing that decides how wide anything gets, and it now
+carries the site's one reading-column cap (`min(760px, 94vw)`, tuned so prose
+lands roughly 45-90 characters at 1920px). Before this, nothing on the site
+had a measure — a card blurb had ~193 characters available — and that was the
+actual defect, not the presence or absence of a rail (see the layout-coherence
+plan this decision came from). **Per-page CSS still may not add its own cap**
+— no `60ch` on a lede, no `14ch` on a heading, no page-level `.wrap` override.
+That rule hasn't changed; only where the one sanctioned cap lives has.
 
-`assets/style.css` declares `max-width:none` once for `.hero h1`, `.hero p`,
-`.section > h2`, `.sub` and `.hero-lede`; per-page CSS should not re-declare
-it. `npm run check` (which `npm run build` runs first) fails on any
-`max-width` in a stylesheet that is not a media query, not `none`/`100%`, and
-not marked with a trailing `max-width-ok` comment. Add that marker only for a
-genuine non-text cap — a tooltip panel, an image — and say why in the comment.
+The rule going forward: **prose is capped, tables can opt wide, the landing
+page is the one index with a rail.**
+
+- Prose (headings, paragraphs, list text) inherits the cap from `.wrap` and
+  needs no class of its own.
+- Genuinely wide content — a wide table, a graphic, a multi-column app-like
+  layout — uses the `.wide` / `.wide-inner` pair in `assets/style.css`, the
+  one named opt-out mechanism. `.wide` breaks its child out of the ancestor
+  `.wrap` (a viewport-relative full-bleed technique); `.wide-inner` re-centres
+  the content at the site's former wide measure (`min(1600px, 94vw)`) instead
+  of running edge-to-edge. Used together:
+  `<div class="wide"><div class="wide-inner"> ... </div></div>`. Currently
+  used by the painting-reference ratio ladder (wrapped around the whole hero,
+  to preserve its original two-column split), the tracker's round bar and
+  army panels, and Charts' wound table.
+- The landing page (`index.html`) keeps its labelled shelf rail (`.when` +
+  `.entries`) as its own thing — it groups unlike sections under a real label,
+  which a page about one topic doesn't need. It still sits inside the capped
+  `.wrap`, which is why its card blurbs are capped like everywhere else; only
+  the rail's two-column grammar is page-specific. No other page gets a rail.
+- The in-page jump nav (`_includes/jump.njk`) is dropped on pages whose
+  sections are collapsed to folded rows (`.fold-section`) — the rows are
+  already the index, so a jump nav above them is a second copy of the same
+  list. It stays on pages with real prose sections and no folded index
+  (Turn order, What changed in 11th, and any future page shaped like them).
+
+`assets/style.css` still declares `max-width:none` for `.hero h1`, `.hero p`,
+`.section > h2`, `.sub` and `.hero-lede` — that's about letting those
+specific elements span whatever container they're actually in (a `.wide-inner`
+or a `.split` column), not about opting out of the site-wide cap. `npm run
+check` (which `npm run build` runs first) fails on any width limit in a
+stylesheet that is not a media query, not `none`/`100%`, and not marked with a
+trailing `max-width-ok` comment. Add that marker only for a genuine cap that
+isn't the reading column or the wide opt-out — a tooltip panel, an image — and
+say why in the comment.
 
 Note that per-page CSS loads *after* `style.css`, so a page-level cap still
 wins over the shared rule. The check, not the cascade, is what actually

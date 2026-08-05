@@ -89,16 +89,43 @@ body{
   line-height:1.5;
 }
 
-.wrap{max-width:min(1600px, 94vw);margin:0 auto;padding:0 20px;} /* max-width-ok: the one content column */
+.wrap{max-width:min(760px, 94vw);margin:0 auto;padding:0 20px;} /* max-width-ok: the site's one reading column. Nothing on the site had a measure before this cap; see "Text spans the column" in CLAUDE.md. */
 
 /* ---------- text spans the column ----------
-   .wrap is the only thing that decides how wide text gets. Headings and body
-   copy always run its full width — no ch-based measure caps. This has been
-   reintroduced and removed several times; `npm run check` fails the build on
-   any new max-width in a stylesheet that isn't marked `max-width-ok`. */
+   .wrap is the only thing that decides how wide anything gets, and it now
+   carries the site's one reading-column cap (tuned so prose lands roughly
+   45-90 characters at 1920px). No per-page CSS may add its own cap —
+   `npm run check` fails the build on any new width limit in a stylesheet that
+   isn't marked `max-width-ok` (see scripts/check-layout.mjs). Genuinely wide
+   content (a wide table, a graphic) uses `.wide`/`.wide-inner` below, not a
+   page-level cap. */
 
 .hero h1, .hero h2, .hero p,
 .section > h2, .sub, .hero-lede{max-width:none;}
+
+/* ---------- wide opt-out ----------
+   For content that is genuinely tabular or graphical and needs more than the
+   reading column — the painting-reference ratio ladder, the tracker's army
+   panels, the charts wound table. `.wide` breaks its child out of the
+   ancestor `.wrap` using the standard viewport-relative full-bleed technique,
+   then `.wide-inner` re-centres the content at the site's former full-width
+   measure so it doesn't run edge-to-edge. Use both together:
+     <div class="wide"><div class="wide-inner"> ... </div></div> */
+
+.wide{
+  width:100vw;
+  position:relative;
+  left:50%;
+  right:50%;
+  margin-left:-50vw;
+  margin-right:-50vw;
+}
+
+.wide-inner{
+  max-width:min(1600px, 94vw); /* max-width-ok: the wide opt-out's own cap — the site's former full column width, for content the reading measure is deliberately too narrow for */
+  margin:0 auto;
+  padding:0 20px;
+}
 
 a{color:var(--accent);}
 
