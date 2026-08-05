@@ -344,6 +344,129 @@ a{color:var(--accent);}
 
 .jump a:hover{color:var(--bone);background:var(--ground-3);}
 
+/* ---------- page rail (Option B: "rail everywhere") ----------
+   A labelled left rail plus a capped reading column, used on every page that
+   declares `sections:` in its front matter. base.njk renders this — .rail
+   and .page-col are the only two children of .page-layout, so the many
+   sibling <section> elements a content page is made of all land in one grid
+   cell (.page-col) rather than needing per-child placement.
+
+   The rail's index reads from the same `sections:` front matter the nav
+   submenu (base.njk) already builds its flyout from — see the note there.
+   It replaces the old horizontal .jump strip on every page that has one:
+   the rail *is* the index now, so the strip would just be a second copy of
+   it sitting above the first.
+
+   860px is the reading measure: at the far right of a 1920px screen the
+   grid's third column (1fr) is unclaimed slack, matching the plan's mock
+   rather than stretching prose to whatever the viewport happens to be. */
+
+.page-layout{
+  display:grid;
+  grid-template-columns:200px minmax(0,860px) 1fr;
+  gap:0 40px;
+  align-items:start;
+}
+
+.rail{
+  grid-column:1;
+  position:sticky;
+  /* Has to clear the sitebar at every width, same as the jump nav's own
+     sticky offset — see --bar-h above. */
+  top:calc(var(--bar-h) + 28px);
+  padding-top:32px;
+  max-height:calc(100vh - var(--bar-h) - 56px);
+  overflow-y:auto;
+}
+
+.page-col{
+  grid-column:2;
+  min-width:0;
+  max-width:860px; /* max-width-ok: Option B's capped reading column — the one
+    place this site caps prose. See CLAUDE.md "Text spans the column." */
+}
+
+.rail-label{
+  font-family:var(--mono);
+  font-size:var(--fs-xs);
+  letter-spacing:.16em;
+  text-transform:uppercase;
+  color:var(--accent);
+  margin:0 0 18px;
+}
+
+.rail-index{
+  display:flex;
+  flex-direction:column;
+  gap:1px;
+  border-top:1px solid var(--line);
+}
+
+.rail-index a{
+  display:block;
+  min-height:34px; /* touch target floor */
+  padding:9px 0 9px 14px;
+  border-left:2px solid var(--line);
+  font-family:var(--mono);
+  font-size:var(--fs-xs);
+  letter-spacing:.06em;
+  text-transform:uppercase;
+  color:var(--bone-dim);
+  text-decoration:none;
+  transition:color .16s ease,border-color .16s ease;
+}
+
+.rail-index a:hover,
+.rail-index a:focus-visible{color:var(--bone);border-left-color:var(--accent);}
+
+/* Below ~900px there is no room for a 200px rail beside an 860px column —
+   the viewport isn't even that wide. The rail collapses above the content
+   and reflows into the same horizontal, scrollable strip the old .jump nav
+   used, so a phone keeps the affordance it already had rather than losing
+   it to make room for a desktop-only sidebar. Not sticky here, deliberately:
+   a sticky element in normal document flow would need its own height added
+   to html{scroll-padding-top}, the same problem --jump-h existed to solve —
+   and re-plumbing that for a component that's a sidebar (out of flow) at
+   every wider breakpoint isn't worth it for what the rail buys on a phone,
+   which folded rows already mostly cover on the pages that have them. */
+@media (max-width:900px){
+  .page-layout{display:block;}
+  .rail{
+    position:static;
+    max-height:none;
+    overflow:visible;
+    padding-top:0;
+    margin-bottom:28px;
+  }
+  .page-col{max-width:none;}
+  .rail-label{margin-bottom:10px;}
+  .rail-index{
+    flex-direction:row;
+    flex-wrap:wrap;
+    gap:2px;
+    border-top:0;
+  }
+  .rail-index a{
+    border-left:0;
+    background:var(--ground-2);
+    padding:9px 14px;
+  }
+}
+
+@media (max-width:560px){
+  /* same reasoning as the old .jump nav at this width: wrapped, a section
+     index this long is two or three rows stacked under an already-tall
+     mobile sitebar, so scroll it in one row instead. */
+  .rail-index{flex-wrap:nowrap;overflow-x:auto;scrollbar-width:none;}
+  .rail-index::-webkit-scrollbar{display:none;}
+  .rail-index a{white-space:nowrap;}
+}
+
+@media print{
+  .page-layout{display:block;}
+  .rail{position:static;max-height:none;overflow:visible;}
+}
+
 /* ---------- crumb: a link to another page, styled distinctly from .jump ---------- */
 
 .crumb{

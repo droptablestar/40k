@@ -15,9 +15,6 @@
 .hero h1 em{font-style:normal;color:var(--accent);}
 .hero p{margin:0;color:var(--bone-dim);font-size:15px;}
 
-/* the crumbs linking to sibling pages read as a separate affordance from
-   the same-page jump nav above them, not more pills in the same row */
-.jump + .crumbs{margin-top:14px;}
 .crumbs{display:flex;flex-wrap:wrap;gap:8px;}
 .crumbs .crumb{margin-bottom:0;}
 

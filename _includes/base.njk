@@ -1,7 +1,7 @@
 {#- One nav entry: a link to a page, plus a flyout submenu of that page's
     sections if it declared any. The section list comes from the page's own
-    `sections:` front matter — the same list its in-page jump nav is built
-    from (see jump.njk), so the two cannot drift apart. Pages with no
+    `sections:` front matter — the same list its left rail is built from (see
+    the `page.rail` block below), so the two cannot drift apart. Pages with no
     `sections:` (Charts, Tracker) render as a plain link. -#}
 {% macro navitem(url, label, all) %}
           <div class="nav-item-group">
@@ -92,7 +92,31 @@
 <main>
   <div class="wrap">
 
+    {%- if sections %}
+    {#- The rail: a labelled left column carrying the page's section index.
+        Reads `sections`/`railLabel` straight from front matter — the same
+        `sections` list the nav submenu above builds its flyout from, so
+        there is exactly one place that enumerates a page's sections. This
+        replaces the old horizontal jump strip (`jump.njk`, retired) on every
+        page that declares `sections:`. -#}
+    <div class="page-layout">
+      <aside class="rail">
+        {%- if railLabel %}
+        <p class="rail-label">{{ railLabel }}</p>
+        {%- endif %}
+        <nav class="rail-index" aria-label="On this page">
+          {%- for s in sections %}
+          <a href="#{{ s.id }}">{{ s.label }}</a>
+          {%- endfor %}
+        </nav>
+      </aside>
+      <div class="page-col">
+        {{ content | safe }}
+      </div>
+    </div>
+    {%- else %}
     {{ content | safe }}
+    {%- endif %}
 
   </div>
 </main>

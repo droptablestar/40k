@@ -156,19 +156,44 @@ cards get neither.
 Structural devices should encode something true. Numbered lists are for real
 sequences only — the painting order of operations is one, a list of tips is not.
 
-### Text spans the column
+### Text spans the column — with one deliberate exception
 
-`.wrap` is the only thing that decides how wide anything gets. Headings and
-body copy run its full width. **Never put a `max-width` on text** — no `60ch`
-measure caps on a lede, no `14ch` on a heading. This has been introduced and
-removed repeatedly and it is the single most common layout bug on this site.
+`.wrap` is still the only thing that decides how wide the *page* gets, and
+per-page CSS still must not add its own text cap — no `60ch` measure caps on
+a lede, no `14ch` on a heading, invented locally. That was the rule
+unconditionally until the Option B layout pass; it caused enough repeat bugs
+that it is still the default assumption for any new page or component.
 
-`assets/style.css` declares `max-width:none` once for `.hero h1`, `.hero p`,
-`.section > h2`, `.sub` and `.hero-lede`; per-page CSS should not re-declare
-it. `npm run check` (which `npm run build` runs first) fails on any
-`max-width` in a stylesheet that is not a media query, not `none`/`100%`, and
-not marked with a trailing `max-width-ok` comment. Add that marker only for a
-genuine non-text cap — a tooltip panel, an image — and say why in the comment.
+The one exception, added deliberately and in exactly one place: pages that
+declare `sections:` front matter get a left rail (`.rail`, the section index)
+next to a capped reading column (`.page-col`, `max-width:860px`), rendered by
+`_includes/base.njk` and styled in `assets/style.css` under "page rail
+(Option B)". That single `.page-col` rule, marked `max-width-ok`, is the only
+sanctioned text cap on the site. It exists because *nothing* on this site
+constrained prose width before it — not even the pages that looked like they
+did (a hero that happens to sit in a two-column split is not the same as an
+actual measure) — and full-width text at 1920px was running past 180
+characters. Below ~900px the rail collapses above the content and the cap
+lifts (`.page-col{max-width:none}` in that breakpoint): a phone was already
+one column, so there's nothing to cap there.
+
+Pages without `sections:` (the landing page, tracker, charts, references,
+factions) get neither the rail nor the cap and keep running full-width. The
+landing page is the intentional exception-to-the-exception: its `.shelf`
+grid already carries its own label column per group, which is the
+site's original rail idea, and it stays as the standalone exemplar of that
+grammar rather than being folded into the generic two-column layout.
+
+`assets/style.css` also still declares `max-width:none` for `.hero h1`,
+`.hero p`, `.section > h2`, `.sub` and `.hero-lede` — that guards against a
+*re-introduced* cap on those elements, and still applies inside `.page-col`
+exactly as before; the column caps the box, not those rules.
+
+`npm run check` (which `npm run build` runs first) fails on any `max-width`
+in a stylesheet that is not a media query, not `none`/`100%`, and not marked
+with a trailing `max-width-ok` comment. Do not add that marker to justify a
+new cap without discussing it first — the one on `.page-col` is deliberate
+and singular, not a precedent for scattering more.
 
 Note that per-page CSS loads *after* `style.css`, so a page-level cap still
 wins over the shared rule. The check, not the cascade, is what actually
