@@ -286,19 +286,6 @@
   color:var(--bone-dim);
 }
 
-/* ---------- closing note ---------- */
-
-.note{
-  margin-top:28px;
-  padding:20px;
-  background:var(--ground-2);
-  border-left:2px solid var(--rust);
-}
-
-.note h2{font-family:var(--body);font-size:var(--fs-md);font-weight:600;margin:0 0 8px;}
-.note p{margin:0 0 10px;font-size:var(--fs-sm);color:var(--bone-dim);}
-.note p:last-child{margin-bottom:0;}
-
 /* ---------- wider screens ---------- */
 
 @media (min-width:760px){
