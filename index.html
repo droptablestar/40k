@@ -4,114 +4,165 @@ permalink: /index.html
 title: "Bench & Table — a 40k reference"
 description: A plain-language reference for Warhammer 40,000 11th edition and
       miniature painting, written for people who just started.
-bodyClass: s-painting
+bodyClass: s-index
 pageCss: css/index.css
+themeColor: "#242220"
+# The official 11th edition Core Rules PDF, hosted by Games Workshop. If GW
+# reissues the PDF this URL changes — check the downloads page and update it
+# here, once. Same URL as turn-order.html and rules-changes.html.
+coreRules: https://assets.warhammer-community.com/eng_01-06_warhammer40k_new40k_core_rules-was6fbu1ix-hfewhmxyiy.pdf
 extraFooter: |
   <p>Rules text belongs to GW — go read the free PDF.</p>
 ---
-<section class="hero">
-  <p class="eyebrow">40k 11th edition · house reference</p>
-  <h1>You don't need to know <em>all of it</em> yet.</h1>
-  <p class="hero-lede">Everything here is written for someone who started this year.
-    No meta talk, no assumed vocabulary. <b>The official rules are free</b> — this
-    site is the plain-language layer on top, plus the hobby side nobody puts in
-    the rulebook.</p>
+<section class="slate">
+  <div class="slate-grid" aria-hidden="true">
+    <svg viewBox="0 0 600 300" preserveAspectRatio="xMidYMid slice" role="presentation">
+      <defs>
+        <pattern id="b-grid" width="30" height="30" patternUnits="userSpaceOnUse">
+          <path d="M30 0 H0 V30" fill="none" stroke="var(--accent-solid)" stroke-opacity=".22" stroke-width="1"/>
+        </pattern>
+      </defs>
+      <rect width="600" height="300" fill="url(#b-grid)"/>
+    </svg>
+  </div>
+
+  <div class="slate-body">
+    <div class="slate-copy">
+    <p class="eyebrow">Warhammer 40,000 · plain language layer</p>
+    <h1>You don't need to know <em>all of it</em> yet.</h1>
+    <p class="hero-lede">Everything here is written for someone who started this year.
+      No meta talk, no assumed vocabulary. <a href="{{ coreRules }}" rel="noopener"><b>The official rules are free</b></a> — this
+      site is the plain-language layer on top, plus the hobby side nobody puts in
+      the rulebook.</p>
+    </div>
+
+    <div class="slate-shot">
+      <div class="shot-ring">
+        {#- Empty until assets/img/hero.jpg exists. Once it does, give this
+          role="img" and an aria-label describing the actual model — an empty
+          slot has nothing to announce, a photo does. -#}
+        <div class="shot-frame shot-hero" aria-hidden="true"></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="hazard" aria-hidden="true"></div>
 </section>
 
-<div class="shelf">
+<div class="modules">
 
-  <div class="shelf-group">
-    <div class="when">At the desk
-      <span>Paint on your hands, model in a clamp.</span>
-    </div>
-    <div class="entries">
-      <a class="entry" href="/painting.html">
+  <section class="mod">
+    <h2><span class="tick">01</span>At the desk</h2>
+    <p class="mod-sub">Paint on your hands, model in a clamp.</p>
+    <div class="mod-list">
+      <a class="cell" href="/painting.html">
         <b>Painting, start to finish</b>
         <span>What to buy and how to get your first model painted, end to end.
           Start here if you have never painted a model.</span>
       </a>
-      <a class="entry" href="/painting-reference.html">
+      <a class="cell" href="/painting-reference.html">
         <b>Technique reference</b>
         <span>Thinning ratios, brush load, order of work, and the colours that
           need a different starting point than you would guess.</span>
       </a>
-      <a class="entry" href="/troubleshooting.html">
+      <a class="cell" href="/troubleshooting.html">
         <b>When it goes wrong</b>
         <span>Symptom-first fixes — frosted primer, filled detail, cloudy
           varnish, stripping a model back down.</span>
       </a>
-      <a class="entry" href="/painting-table-ready.html">
+      <a class="cell" href="/painting-table-ready.html">
         <b>Table-ready painting</b>
         <span>Fast, sourced methods for getting a whole army playable
           quickly — not a showcase piece.</span>
       </a>
-      <div class="entry pending">
+      <div class="cell pending">
         <b>Basing</b>
         <span>Texture, rims, static grass. The step that makes a table-quality
           model look finished.</span>
       </div>
     </div>
-  </div>
+  </section>
 
-  <div class="shelf-group">
-    <div class="when">At the table
-      <span>Mid-game, someone has a question, dice are waiting.</span>
+  <section class="mod">
+    <h2><span class="tick">02</span>Before a game</h2>
+    <p class="mod-sub">Kitchen table, army list open, nobody rolling yet.</p>
+    <div class="mod-list">
+      <a class="cell" href="/factions.html">
+        <b>Factions</b>
+        <span>What each army actually plays like — identity and playstyle
+          notes, not datasheets.</span>
+      </a>
+      <a class="cell" href="/rules-changes.html">
+        <b>What changed in 11th</b>
+        <span>10th vs 11th edition, the actual differences, in plain
+          language — detachments, stratagems, cover, objectives, and more.</span>
+      </a>
+      <div class="cell pending">
+        <b>Building a list</b>
+        <span>Detachments, points, what a legal army actually requires.</span>
+      </div>
+      <div class="cell pending">
+        <b>House rulings</b>
+        <span>Calls we have made, so we make the same one twice.</span>
+      </div>
     </div>
-    <div class="entries">
-      <a class="entry" href="/tracker.html">
+  </section>
+
+  <section class="mod">
+    <h2><span class="tick">03</span>At the table</h2>
+    <p class="mod-sub">Mid-game, someone has a question, dice are waiting.</p>
+    <div class="mod-list">
+      <a class="cell" href="/tracker.html">
         <b>Battle tracker</b>
         <span>Command points, victory points, and battle round. Saves to your
           phone as you play. Track damage with dice or tokens at the table.</span>
       </a>
-      <a class="entry" href="/turn-order.html">
+      <a class="cell" href="/turn-order.html">
         <b>Turn order</b>
         <span>The five phases, what you may do in each, and the order operations
           resolve in — plus what you can do on your opponent's turn.</span>
       </a>
-      <a class="entry" href="/charts.html">
+      <a class="cell" href="/charts.html">
         <b>Charts</b>
         <span>Wound rolls, strength against toughness — the numbers you
           look up twenty times a game. More on the way.</span>
       </a>
-      <a class="entry" href="/keywords.html">
+      <a class="cell" href="/keywords.html">
         <b>Keywords &amp; abilities</b>
         <span>Every core ability and keyword that shows up on a datasheet, in
           one searchable list — what [BLAST] does, what TOWERING is for.</span>
       </a>
     </div>
-  </div>
-
-  <div class="shelf-group">
-    <div class="when">Before a game
-      <span>Kitchen table, army list open, nobody rolling yet.</span>
-    </div>
-    <div class="entries">
-      <a class="entry" href="/factions.html">
-        <b>Factions</b>
-        <span>What each army actually plays like — identity and playstyle
-          notes, not datasheets.</span>
-      </a>
-      <a class="entry" href="/rules-changes.html">
-        <b>What changed in 11th</b>
-        <span>10th vs 11th edition, the actual differences, in plain
-          language — detachments, stratagems, cover, objectives, and more.</span>
-      </a>
-      <div class="entry pending">
-        <b>Building a list</b>
-        <span>Detachments, points, what a legal army actually requires.</span>
-      </div>
-      <div class="entry pending">
-        <b>House rulings</b>
-        <span>Calls we have made, so we make the same one twice.</span>
-      </div>
-    </div>
-  </div>
+  </section>
 
 </div>
 
-<div class="note">
-  <h2>Where the real rules live</h2>
-  <p>Games Workshop publishes the 11th edition Core Rules as a free PDF and in
+<section class="roster">
+  <h2>The armies on this table</h2>
+  <p class="mod-sub">Photo slots — your own painted models, one per army. Files go
+    in <code>assets/img/</code>.</p>
+  <div class="roster-row">
+    <a class="chip" href="/factions/tyranids.html">
+      <span class="chip-shot shot-tyranids" aria-hidden="true"></span>
+      <b>Tyranids</b>
+      <span class="chip-note">identity · painting log</span>
+    </a>
+    <a class="chip" href="/factions/world-eaters.html">
+      <span class="chip-shot shot-world-eaters" aria-hidden="true"></span>
+      <b>World Eaters</b>
+      <span class="chip-note">identity · painting log</span>
+    </a>
+    <a class="chip" href="/factions.html">
+      <span class="chip-shot shot-shelf" aria-hidden="true"></span>
+      <b>Everyone else</b>
+      <span class="chip-note">all factions</span>
+    </a>
+  </div>
+</section>
+
+<div class="note-box">
+  <p><b>Where the real rules live.</b> Games Workshop publishes the 11th edition
+    Core Rules as a free <a href="{{ coreRules }}" rel="noopener">PDF</a> and in
     the Warhammer 40,000 app. Download them. This site summarises and explains;
     it does not replace them, and when the two disagree, the PDF wins.</p>
   <p>Datasheets for every unit are also free in the app. If a page here is out of

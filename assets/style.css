@@ -45,10 +45,22 @@
      roughly the right place with JS disabled. */
   --bar-h:56px;
   --jump-h:0px;
+
+  /* Hazard stripe. Deliberately not the accent: it is a caution-tape device,
+     and on the neutral index an accent-coloured stripe stops reading as
+     hazard tape at all. Fixed across sections for that reason. */
+  --hazard:#B8933F;
 }
 
 body.s-painting{--accent:#B99FE0;--accent-solid:#9478D6;--accent-lo:#453458;}
 body.s-rules{--accent:#D8B564;--accent-solid:#B8933F;--accent-lo:#57441F;}
+
+/* The accent says which half of the site you are in — bench or table. The
+   landing page is in neither; it is the index to both. Wearing either section
+   colour there makes the other half feel like the odd one out, so the index
+   goes neutral and both halves are an equal step away from it. Emphasis that
+   the section pages carry with hue, the index carries with luminance. */
+body.s-index{--accent:#F4F0E6;--accent-solid:#E6DFCE;--accent-lo:#4A463F;}
 
 /* ---------- modern reset (Josh Comeau) ---------- */
 
