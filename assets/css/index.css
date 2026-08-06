@@ -1,93 +1,218 @@
-.hero{padding:72px 0 56px;border-bottom:1px solid var(--line);}
+/* Landing page — "data-slate".
+   Terminal readout hero with one circular photo, hazard stripe, dense module
+   grid. The backdrop and rings are drawn in SVG/CSS, so the page is correct
+   before any photo exists; the roster row at the bottom carries the rest. */
 
-.hero h1{
-  font-family:var(--display);
-  font-weight:800;
-  font-size:clamp(40px,7.2vw,82px);
-  line-height:.94;
-  letter-spacing:-.035em;
-  margin:0 0 22px;
+/* ---------- slate hero ---------- */
+
+.slate{
+  position:relative;
+  margin:0 -20px 0;
+  padding:0 0 0;
+  background:var(--ground-2);
+  border-top:1px solid var(--accent-lo);
+  overflow:hidden;
+  isolation:isolate;
 }
 
-.hero h1 em{font-style:normal;color:var(--accent);}
+/* Drawn backdrop: grid plus a reticle. Decorative, aria-hidden. */
+.slate-grid{
+  position:absolute;
+  inset:0;
+  z-index:-1;
+  opacity:.75;
+  -webkit-mask-image:radial-gradient(130% 110% at 74% 42%,#000 18%,transparent 78%);
+  mask-image:radial-gradient(130% 110% at 74% 42%,#000 18%,transparent 78%);
+}
 
-.hero-lede{
-  font-size:17px;
-  color:var(--bone-dim);
+.slate-grid svg{width:100%;height:100%;}
+
+.slate-body{position:relative;padding:28px 20px 14px;}
+
+/* Hero image, circular: it sits inside the reticle rings the backdrop is
+   already drawing, so the photo reads as the thing being sighted rather than
+   as a picture pasted onto the slate. */
+.slate-shot{margin:0;}
+
+/* The rings hang off the image itself rather than off the backdrop, so they
+   are concentric by construction — a reticle drawn behind the photo drifts
+   out of alignment the moment the column width changes. */
+.shot-ring{
+  position:relative;
+  width:74%;
+  /* the dashed ring overflows this box by 26px — reserve it in the flow so it
+     never crowds the hazard stripe below or the copy above */
+  margin:30px auto 26px;
+}
+
+.shot-ring::before,
+.shot-ring::after{
+  content:"";
+  position:absolute;
+  border-radius:50%;
+  pointer-events:none;
+}
+
+.shot-ring::before{
+  inset:-11px;
+  border:1px solid var(--accent-lo);
+}
+
+.shot-ring::after{
+  inset:-26px;
+  border:1px dashed var(--accent-lo);
+  opacity:.7;
+}
+
+.shot-frame{
+  aspect-ratio:1;
+  border-radius:50%;
+  border:1px solid var(--accent-lo);
+  background:
+    repeating-linear-gradient(-45deg, rgba(184,147,63,.1) 0 6px, transparent 6px 12px),
+    var(--ground);
+}
+
+/* Sample art standing in for a real photo — swap the url for your own .jpg. */
+.shot-hero{background:url(/assets/img/sample-hero.svg) center/cover var(--ground);}
+
+/* Corner brackets instead of a full border — reads as instrumentation, and
+   keeps the type running the full width of the column. */
+.slate-body::before,
+.slate-body::after{
+  content:"";
+  position:absolute;
+  width:18px;
+  height:18px;
+  border:1px solid var(--accent);
+  opacity:.7;
+}
+
+.slate-body::before{top:14px;left:8px;border-right:0;border-bottom:0;}
+.slate-body::after{bottom:14px;right:8px;border-left:0;border-top:0;}
+
+.slate h1{
+  font-family:var(--display);
+  font-weight:800;
+  font-size:clamp(38px,8.4vw,86px);
+  line-height:.92;
+  letter-spacing:-.035em;
+  margin:0 0 20px;
+}
+
+.slate h1 em{
+  font-style:normal;
+  color:var(--accent);
+}
+
+.slate .eyebrow{color:var(--bone-dim);}
+
+.slate .hero-lede{font-size:var(--fs-base);color:var(--bone-dim);margin:0;}
+.slate .hero-lede b{color:var(--bone);font-weight:500;}
+
+/* Hazard stripe closing the hero. Pure CSS, no asset. */
+.hazard{
+  height:10px;
+  background:repeating-linear-gradient(
+    -45deg,
+    var(--accent-solid) 0 10px,
+    var(--ground) 10px 20px
+  );
+  opacity:.65;
+}
+
+/* ---------- modules ---------- */
+
+.modules{margin-top:28px;}
+
+.mod{
+  border:1px solid var(--line);
+  background:var(--ground-2);
+  padding:16px 14px 14px;
+  margin-bottom:12px;
+}
+
+.mod h2{
+  display:flex;
+  align-items:baseline;
+  gap:10px;
+  font-family:var(--display);
+  font-weight:800;
+  font-size:clamp(20px,4.4vw,28px);
+  letter-spacing:-.02em;
+  line-height:1.1;
   margin:0;
 }
 
-.hero-lede b{color:var(--bone);font-weight:500;}
-
-/* signature: the shelf — entries grouped by when you reach for them */
-
-.shelf{margin-top:14px;}
-
-.shelf-group{
-  display:grid;
-  grid-template-columns:190px minmax(0,1fr);
-  gap:32px;
-  padding:30px 0;
-  border-top:1px solid var(--line);
-}
-
-.shelf-group:last-of-type{border-bottom:1px solid var(--line);}
-
-.when{
+.tick{
   font-family:var(--mono);
-  font-size:11px;
-  letter-spacing:.16em;
-  text-transform:uppercase;
-  color:var(--accent);
-  padding-top:3px;
+  font-weight:600;
+  font-size:var(--fs-xs);
+  font-variant-numeric:tabular-nums;
+  letter-spacing:.1em;
+  color:var(--ink-on-accent);
+  background:var(--accent-solid);
+  padding:3px 7px;
 }
 
-.when span{
-  display:block;
+.mod-sub{
+  margin:8px 0 14px;
+  font-size:var(--fs-sm);
   color:var(--bone-dim);
-  letter-spacing:.04em;
-  text-transform:none;
-  font-size:12px;
-  margin-top:7px;
-  line-height:1.4;
 }
 
-.entries{display:flex;flex-direction:column;gap:2px;}
+.mod-list{display:flex;flex-direction:column;gap:8px;}
 
-.entry{
+.cell{
+  position:relative;
   display:block;
   text-decoration:none;
   color:inherit;
-  background:var(--ground-2);
-  padding:16px 18px;
-  border-left:2px solid transparent;
-  transition:background .16s ease,border-color .16s ease;
+  background:var(--ground);
+  border:1px solid var(--line);
+  border-top:1px solid var(--accent-lo);
+  padding:13px 14px;
+  min-height:44px;
 }
 
-.entry:hover,
-.entry:focus-visible{background:var(--ground-3);border-left-color:var(--accent);}
+/* Same folded-corner affordance the rest of the site uses: visible without
+   hover, because half the time this is read one-handed at a table. */
+.cell:not(.pending)::before{
+  content:"";
+  position:absolute;
+  top:0;
+  right:0;
+  width:0;
+  height:0;
+  border-style:solid;
+  border-width:0 14px 14px 0;
+  border-color:transparent var(--accent-solid) transparent transparent;
+  transition:border-color .16s ease;
+}
 
-.entry b{
+.cell:hover,.cell:focus-visible{background:var(--ground-3);}
+.cell:hover::before{border-color:transparent var(--accent) transparent transparent;}
+
+.cell b{
   display:block;
   font-family:var(--display);
   font-weight:700;
-  font-size:19px;
+  font-size:var(--fs-md);
   letter-spacing:-.01em;
   margin-bottom:3px;
 }
 
-.entry span{font-size:13.5px;color:var(--bone-dim);line-height:1.45;}
+.cell span{display:block;font-size:var(--fs-sm);color:var(--bone-dim);line-height:1.45;}
 
-.entry.pending{
+.cell.pending{
   background:transparent;
   border:1px dashed var(--line);
-  border-left:1px dashed var(--line);
   cursor:default;
 }
 
-.entry.pending:hover{background:transparent;border-left-color:var(--line);}
-.entry.pending b{color:var(--bone-dim);}
-.entry.pending b::after{
+.cell.pending b{color:var(--bone-dim);}
+
+.cell.pending b::after{
   content:"not written yet";
   display:block;
   font-family:var(--mono);
@@ -98,24 +223,110 @@
   margin-top:5px;
 }
 
+/* ---------- roster: the small photo slots ---------- */
+
+.roster{margin-top:32px;}
+
+.roster h2{
+  font-family:var(--display);
+  font-weight:800;
+  font-size:clamp(20px,4.4vw,28px);
+  letter-spacing:-.02em;
+  margin:0;
+}
+
+.roster code{font-family:var(--mono);font-size:var(--fs-xs);color:var(--bone);}
+
+.roster-row{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;}
+
+.chip{
+  display:block;
+  text-decoration:none;
+  color:inherit;
+  background:var(--ground-2);
+  border:1px solid var(--line);
+  padding:8px;
+}
+
+.chip:hover,.chip:focus-visible{border-color:var(--accent);}
+
+.chip-shot{
+  display:block;
+  aspect-ratio:4/3;
+  margin-bottom:8px;
+  border:1px solid var(--line);
+  background:
+    repeating-linear-gradient(-45deg, rgba(184,147,63,.12) 0 6px, transparent 6px 12px),
+    var(--ground);
+  background-size:cover;
+  background-position:center;
+}
+
+/* Sample art standing in for real photos — swap the url for a .jpg of your
+   own model and everything else stays as is. */
+.shot-tyranids{background:url(/assets/img/sample-tyranids.svg) center/cover var(--ground);}
+.shot-world-eaters{background:url(/assets/img/sample-world-eaters.svg) center/cover var(--ground);}
+.shot-shelf{background:url(/assets/img/sample-shelf.svg) center/cover var(--ground);}
+
+.chip b{
+  display:block;
+  font-family:var(--display);
+  font-weight:700;
+  font-size:var(--fs-sm);
+  line-height:1.2;
+}
+
+.chip-note{
+  display:block;
+  margin-top:3px;
+  font-family:var(--mono);
+  font-size:var(--fs-micro);
+  letter-spacing:.08em;
+  text-transform:uppercase;
+  color:var(--bone-dim);
+}
+
+/* ---------- closing note ---------- */
+
 .note{
-  margin-top:44px;
-  padding:22px 24px;
+  margin-top:28px;
+  padding:20px;
   background:var(--ground-2);
   border-left:2px solid var(--rust);
 }
 
-.note h2{
-  font-family:var(--body);
-  font-size:14px;
-  font-weight:600;
-  margin:0 0 8px;
-}
-
-.note p{margin:0 0 10px;font-size:14px;color:var(--bone-dim);}
+.note h2{font-family:var(--body);font-size:var(--fs-md);font-weight:600;margin:0 0 8px;}
+.note p{margin:0 0 10px;font-size:var(--fs-sm);color:var(--bone-dim);}
 .note p:last-child{margin-bottom:0;}
 
-@media (max-width:720px){
-  .shelf-group{grid-template-columns:1fr;gap:16px;}
-  .hero{padding:44px 0 40px;}
+/* ---------- wider screens ---------- */
+
+@media (min-width:760px){
+  /* Two columns: copy left, image right. Grid, not a measure cap — the text
+     still fills the whole of its own column. */
+  .slate-body{
+    display:grid;
+    grid-template-columns:minmax(0,1.25fr) minmax(0,1fr);
+    align-items:center;
+    column-gap:40px;
+    padding:32px 32px 14px;
+  }
+  .slate-shot{margin:0;}
+  .shot-ring{width:80%;}
+  .modules{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;}
+  .mod{margin-bottom:0;}
+  .roster-row{gap:12px;}
+  /* 3/2 rather than 4/3 once the tracks are this wide: at full column width a
+     4/3 thumbnail is taller than the module list it sits under. */
+  .chip-shot{aspect-ratio:3/2;}
+  .chip b{font-size:var(--fs-md);}
+  .chip-note{font-size:var(--fs-2xs);}
+}
+
+@media (prefers-reduced-motion:reduce){
+  .cell::before{transition:none;}
+}
+
+@media print{
+  .slate-grid,.hazard,.chip-shot{display:none;}
 }
