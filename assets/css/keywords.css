@@ -1,0 +1,49 @@
+/* Keywords & abilities. The page is one long filtered list, so almost all of
+   it is shared components: .ref-search, .strat-list disclosures, .rule-ref.
+   What's here is the bits that only this page has. */
+
+/* Live result count under the search box. Mono and tabular so the number
+   doesn't jitter as it counts down while you type. */
+.ref-count{
+  margin:0 0 4px;
+  font-family:var(--mono);
+  font-size:var(--fs-xs);
+  font-variant-numeric:tabular-nums;
+  letter-spacing:.12em;
+  text-transform:uppercase;
+  color:var(--bone-dim);
+  min-height:1.2em;
+}
+
+/* The entry names are the literal strings printed on a datasheet —
+   [SUSTAINED HITS 2], TOWERING — so they're set in mono to read as
+   transcriptions of the card rather than as prose. */
+.strat-list .strat-name{
+  font-family:var(--mono);
+  font-size:var(--fs-sm);
+  letter-spacing:.02em;
+}
+
+/* The "what does it change" tag on the right of each row: hit roll, terrain,
+   deployment. Scan the tags to find the entry, then open it. */
+.strat-list .strat-meta{
+  color:var(--accent);
+  text-transform:uppercase;
+  font-size:var(--fs-2xs);
+  letter-spacing:.1em;
+}
+
+/* The lead-in to the second half of "Reading a datasheet", after the
+   numbered list of the three kinds of shorthand. */
+.steps + .sub{margin-top:26px;}
+
+@media (max-width:560px){
+  /* the tag drops under the name rather than sharing the row — side by side
+     at 360px leaves the name two words per line. Only the tag is forced onto
+     its own line: giving the *name* the full width would push the +/- marker
+     onto a line of its own above it. */
+  .strat-list > li > details > summary{gap:2px 12px;}
+  /* 32px lines the tag up under the name: the +/- marker (~10px) plus its
+     own 10px margin plus the summary's 12px column gap. */
+  .strat-list .strat-meta{flex:1 0 100%;padding-left:32px;}
+}

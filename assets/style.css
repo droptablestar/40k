@@ -933,6 +933,21 @@ a.card:hover::before{border-color:transparent var(--accent) transparent transpar
 
 .note-block b{color:var(--bone);}
 
+/* ---------- note box: the standing "the official rules win" footer ----------
+   Lived in four page stylesheets as four copies that had already drifted —
+   two of them hardcoded 13.5px instead of --fs-sm and were missing the
+   paragraph spacing, so their multi-paragraph boxes ran together. One copy. */
+
+.note-box{
+  margin-top:56px;
+  padding:20px 22px;
+  border:1px dashed var(--line);
+}
+
+.note-box p{margin:0;color:var(--bone-dim);font-size:var(--fs-sm);line-height:1.55;}
+.note-box p + p{margin-top:12px;}
+.note-box b{color:var(--bone);}
+
 /* ---------- reference search/filter ---------- */
 
 .ref-search{
@@ -1188,4 +1203,7 @@ a.card:hover::before{border-color:transparent var(--accent) transparent transpar
   .jump{position:static;box-shadow:none;clip-path:none;background:none;}
   .card,.ladder{background:#fff;}
   .section{break-inside:avoid;}
+  /* a filter box and its result count are controls, not content — on paper
+     every entry is already there and there is nothing to type into */
+  .ref-search,.ref-count,.ref-empty{display:none;}
 }
