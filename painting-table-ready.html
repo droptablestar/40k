@@ -15,6 +15,7 @@ sections:
   - { id: slapchop, label: "Slapchop" }
   - { id: time, label: "Time to expect" }
 ---
+{% import "paint-diagrams.njk" as dia %}
 <header class="hero">
   <a class="crumb" href="/painting.html">&larr; Painting guide</a>
   <p class="eyebrow">At the desk</p>
@@ -106,28 +107,46 @@ sections:
     <summary><h2>Contrast, step by step</h2></summary>
     <div class="fold-body">
 <p class="sub">The whole method is one confident pass per section, then leaving it alone.</p>
+
+      <p>The diagrams below are cut-throughs, not photos of finished models —
+        they show the paint film in section, because what the film is doing is
+        the part you can't see by looking at a model and the part that explains
+        every mistake further down.</p>
+
+      <ul class="dia-key">
+        <li>Model surface</li>
+        <li class="k-paint">Contrast paint</li>
+        <li class="k-bad">What went wrong</li>
+      </ul>
+
     <ol class="steps">
         <li><div><b>Shake the pot properly</b><span>Thirty seconds, hard. The
           pigment settles out of the medium between sessions, and a badly shaken
-          pot goes on as weak tinted water.</span></div></li>
+          pot goes on as weak tinted water.</span>
+          {{ dia.shake("s1") }}</div></li>
         <li><div><b>Use a bigger brush than feels right</b><span>A medium brush,
           loaded heavily. A fine detail brush holds too little to finish a panel in
-          one go, and running dry mid-panel is what leaves streaks.</span></div></li>
+          one go, and running dry mid-panel is what leaves streaks.</span>
+          {{ dia.brush("s2") }}</div></li>
         <li><div><b>One pass per section</b><span>Flood the area, guide the paint
           into the recesses, then stop. Work section by section — one arm, one
-          cloak, one leg — and finish each before starting the next.</span></div></li>
+          cloak, one leg — and finish each before starting the next.</span>
+          {{ dia.flood("s3") }}</div></li>
         <li><div><b>Wick off any pool immediately</b><span>If paint gathers into a
           dark blob on a flat area, touch a clean damp brush to the edge of the
           pool and it drinks it straight back out. This only works in the first
-          minute or so, while it's still wet.</span></div></li>
+          minute or so, while it's still wet.</span>
+          {{ dia.wick("s4") }}</div></li>
         <li><div><b>Do not go back in</b><span>Once a section starts to dry,
           leave it until it is completely dry. Touching a half-dry edge is what
           makes hard tide lines, and it's the single most common way this method
-          goes wrong.</span></div></li>
+          goes wrong.</span>
+          {{ dia.tideline("s5") }}</div></li>
         <li><div><b>Second coat only if you want it darker</b><span>Wait until the
           first is fully dry, then repeat. Each coat deepens the colour and closes
           up the highlight, so one coat is usually the right answer on infantry
-          you're batching.</span></div></li>
+          you're batching.</span>
+          {{ dia.coats("s6") }}</div></li>
       </ol>
 
       <p>Touch-dry is roughly 15 to 30 minutes, depending on how heavy the coat was
@@ -166,38 +185,38 @@ sections:
     going back into drying paint, or asking the paint to shade a flat
     surface.</p>
 
-  <table class="diag">
+  <table class="diag diag-fig">
     <thead>
       <tr><th>Symptom</th><th>Cause</th><th>Fix</th></tr>
     </thead>
     <tbody>
       <tr>
-        <td>Hard line across a panel</td>
+        <td>Hard line across a panel{{ dia.tideline("f1") }}</td>
         <td>You went back over an area that had started to dry.</td>
         <td>Let it dry fully, then a thin coat of the same colour over the
           whole panel to even it out. Full write-up on the
           <a href="/troubleshooting.html#paint">troubleshooting page</a>.</td>
       </tr>
       <tr>
-        <td>Dark blotches on flat areas</td>
+        <td>Dark blotches on flat areas{{ dia.blotch("f2") }}</td>
         <td>Paint pooled where there was no recess to run into.</td>
         <td>Wick it out with a clean damp brush while wet. Next time, less
           paint on flat panels — or basecoat them normally.</td>
       </tr>
       <tr>
-        <td>Colour came out weak and washed out</td>
+        <td>Colour came out weak and washed out{{ dia.washedout("f3") }}</td>
         <td>Under-shaken pot, or too dark an undercoat eating the light.</td>
         <td>Shake hard and add a second coat. Yellows, oranges and reds want
           white underneath.</td>
       </tr>
       <tr>
-        <td>Everything went flat and muddy</td>
+        <td>Everything went flat and muddy{{ dia.muddy("f4") }}</td>
         <td>Too many coats, or the coat was thinned with water.</td>
         <td>Nothing to undo it in place — put the shading back by hand with a
           drybrush or an edge highlight.</td>
       </tr>
       <tr>
-        <td>Painting over it lifts the colour underneath</td>
+        <td>Painting over it lifts the colour underneath{{ dia.reactivation("f5") }}</td>
         <td>Reactivation. The dried film re-wets when you work over it.</td>
         <td>Wait longer, and use less water in the paint on top. Varnish first
           if you're layering properly over it.</td>
