@@ -44,15 +44,6 @@
 
 .wound-table tr:hover td{background:rgba(244,240,230,.03);}
 
-.note-box{
-  margin-top:56px;
-  padding:20px 22px;
-  border:1px dashed var(--line);
-}
-
-.note-box p{margin:0;color:var(--bone-dim);font-size:13.5px;line-height:1.55;}
-.note-box b{color:var(--bone);}
-
 @media (max-width:560px){
   .wound-table, .wound-table tbody, .wound-table tr, .wound-table td{display:block;width:100%;}
   .wound-table thead{display:none;}

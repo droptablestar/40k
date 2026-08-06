@@ -177,18 +177,6 @@
 
 .react-list p{margin:0;color:var(--bone-dim);font-size:var(--fs-sm);line-height:1.55;}
 
-/* ---------- note box ---------- */
-
-.note-box{
-  margin-top:56px;
-  padding:20px 22px;
-  border:1px dashed var(--line);
-}
-
-.note-box p{margin:0;color:var(--bone-dim);font-size:var(--fs-sm);line-height:1.55;}
-.note-box p + p{margin-top:12px;}
-.note-box b{color:var(--bone);}
-
 @media (max-width:560px){
   /* three columns of prose in a 360px viewport is four words per line —
      stack each row into a labelled block instead */

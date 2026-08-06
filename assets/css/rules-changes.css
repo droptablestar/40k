@@ -56,17 +56,6 @@
 .change-body p{margin:0;color:var(--bone-dim);font-size:14px;line-height:1.55;}
 .change-body p + p{margin-top:10px;}
 
-/* ---------- note box ---------- */
-
-.note-box{
-  margin-top:56px;
-  padding:20px 22px;
-  border:1px dashed var(--line);
-}
-
-.note-box p{margin:0;color:var(--bone-dim);font-size:13.5px;line-height:1.55;}
-.note-box b{color:var(--bone);}
-
 @media (max-width:560px){
   .change-list summary{padding:14px 0;gap:10px;}
   .change-body{padding:0 0 16px 26px;}
