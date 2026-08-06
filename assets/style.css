@@ -657,6 +657,71 @@ a.card:hover::before{border-color:transparent var(--accent) transparent transpar
 .diag td:last-child{color:var(--bone-dim);}
 .diag tr:hover td{background:rgba(244,240,230,.03);}
 
+/* A .diag whose first cell carries a step diagram. The symptom column has to
+   be wide enough for the artwork to stay legible, so it takes over the space
+   the cause column doesn't need. */
+.diag-fig td:first-child{width:34%;}
+.diag-fig td:nth-child(2){width:26%;}
+
+/* ---------- step diagram ---------- */
+
+/* Hand-authored SVG showing what the paint film is doing — see
+   _includes/paint-diagrams.njk for the shared visual language. Lives here
+   rather than in a page stylesheet because the include is shared: a diagram
+   dropped onto another page has to arrive already styled. */
+
+.dia{
+  margin:12px 0 2px;
+  max-width:340px; /* max-width-ok: artwork, not text — past this the linework
+                      only scales up, it doesn't say any more */
+}
+
+.dia svg{width:100%;height:auto;overflow:visible;}
+
+.dia .dia-t{
+  font-family:var(--mono);
+  font-size:9px; /* --fs-micro, in the diagram's own user units */
+  letter-spacing:.09em;
+  fill:var(--bone-dim);
+}
+
+.dia .dia-bad{fill:var(--rust);}
+
+.dia figcaption{
+  margin-top:7px;
+  font-size:var(--fs-sm);
+  line-height:1.45;
+  color:var(--bone-dim);
+}
+
+/* Key to the shared visual language, sat once above the first run of them. */
+.dia-key{
+  display:flex;
+  flex-wrap:wrap;
+  gap:6px 18px;
+  margin:14px 0 4px;
+  padding:0;
+  list-style:none;
+  font-family:var(--mono);
+  font-size:var(--fs-2xs);
+  letter-spacing:.1em;
+  text-transform:uppercase;
+  color:var(--bone-dim);
+}
+
+.dia-key li{display:flex;align-items:center;gap:7px;}
+
+.dia-key li::before{
+  content:"";
+  width:16px;
+  height:9px;
+  border:1px solid var(--line);
+  background:var(--ground-3);
+}
+
+.dia-key li.k-paint::before{background:var(--accent-solid);opacity:.8;}
+.dia-key li.k-bad::before{background:none;border:1px dashed var(--rust);}
+
 /* ---------- fold: the shared disclosure ----------
    One collapsible entry: a summary that stays visible and is the tap target,
    a body behind the toggle. Use `.folds` on a wrapper to close the top of a

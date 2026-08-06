@@ -1,0 +1,391 @@
+{#- Contrast-method step diagrams.
+
+    Hand-authored SVG, not photographs. These show the *mechanism* — what the
+    paint film is doing on the surface — because that is the part you can't
+    see from a finished-model photo and the part that explains every failure
+    mode on the page.
+
+    Visual language, kept identical across all of them:
+
+      grey solid          the model surface, cut through (cross-section)
+      violet              contrast paint; more opaque = a thicker film
+      rust                the mistake, or the thing that went wrong
+      strip at the bottom the same surface seen face-on, i.e. what you'd
+                          actually look at
+
+    The standard cross-section profile is two raised ridges with a recess
+    between them — a cloth fold, a panel gap, the edge of a shoulder pad. The
+    paint region is built as "everything between a flat wet level and the
+    surface", masked by the solid body. That is literally how a levelling
+    fluid sits, so lowering the level line is all it takes to go from a wet
+    flood to a dried film with the ridges poking back through.
+
+    Mask/gradient ids have to be unique per page, so every macro takes a `uid`.
+
+    Usage:  {% import "paint-diagrams.njk" as dia %}
+            {{ dia.flood("s3") }}
+    Styling: `.dia` in assets/style.css. -#}
+
+{%- set PROF = "M6,70 L40,70 L62,40 L86,40 L108,70 L152,70 L174,40 L198,40 L220,70 L254,70" -%}
+{%- set BODY = PROF + " L254,76 L6,76 Z" -%}
+
+
+{#- The face-on strip: the same ridge/recess pattern seen from the front,
+    as a horizontal gradient. `lo` is the film over the ridge tops, `hi` the
+    film in the recess. Both are opacities of the paint colour over primer. -#}
+{% macro _strip(uid, lo, hi, mid, x, y, w) %}
+  <defs>
+    <linearGradient id="g-{{ uid }}" x1="0" x2="1">
+      <stop offset="0"    stop-color="var(--accent-solid)" stop-opacity="{{ mid }}"/>
+      <stop offset=".20"  stop-color="var(--accent-solid)" stop-opacity="{{ mid }}"/>
+      <stop offset=".274" stop-color="var(--accent-solid)" stop-opacity="{{ lo }}"/>
+      <stop offset=".36"  stop-color="var(--accent-solid)" stop-opacity="{{ mid }}"/>
+      <stop offset=".46"  stop-color="var(--accent-solid)" stop-opacity="{{ hi }}"/>
+      <stop offset=".54"  stop-color="var(--accent-solid)" stop-opacity="{{ hi }}"/>
+      <stop offset=".64"  stop-color="var(--accent-solid)" stop-opacity="{{ mid }}"/>
+      <stop offset=".726" stop-color="var(--accent-solid)" stop-opacity="{{ lo }}"/>
+      <stop offset=".80"  stop-color="var(--accent-solid)" stop-opacity="{{ mid }}"/>
+      <stop offset="1"    stop-color="var(--accent-solid)" stop-opacity="{{ mid }}"/>
+    </linearGradient>
+  </defs>
+  <rect x="{{ x }}" y="{{ y }}" width="{{ w }}" height="22" fill="var(--ground-3)"/>
+  <rect x="{{ x }}" y="{{ y }}" width="{{ w }}" height="22" fill="url(#g-{{ uid }})"/>
+  <rect x="{{ x }}" y="{{ y }}" width="{{ w }}" height="22" fill="none" stroke="var(--line)"/>
+{% endmacro %}
+
+
+{#- Cross-section body plus a paint film filled down from `level`. -#}
+{% macro _film(uid, level, opacity) %}
+  <defs>
+    <mask id="m-{{ uid }}">
+      <rect x="6" y="{{ level }}" width="248" height="{{ 76 - level }}" fill="#fff"/>
+      <path d="{{ BODY }}" fill="#000"/>
+    </mask>
+  </defs>
+  <rect x="6" y="{{ level }}" width="248" height="{{ 76 - level }}"
+        fill="var(--accent-solid)" opacity="{{ opacity }}" mask="url(#m-{{ uid }})"/>
+{% endmacro %}
+
+{% macro _surface() %}
+  <path d="{{ BODY }}" fill="var(--ground-3)"/>
+  <path d="{{ PROF }}" fill="none" stroke="var(--line)" stroke-width="1.5"/>
+{% endmacro %}
+
+
+{# ---------- 1. shake the pot ---------- #}
+{% macro shake(uid) %}
+<figure class="dia">
+  <svg viewBox="0 0 260 110" role="img">
+    <title>Two paint pots in cross-section. In the unshaken pot the pigment
+      has settled into a dense band at the bottom under thin clear medium; in
+      the shaken pot it is evenly dispersed.</title>
+    <g fill="none" stroke="var(--line)">
+      <rect x="20" y="20" width="86" height="62" rx="4"/>
+      <rect x="154" y="20" width="86" height="62" rx="4"/>
+    </g>
+    <clipPath id="p1-{{ uid }}"><rect x="20" y="20" width="86" height="62" rx="4"/></clipPath>
+    <clipPath id="p2-{{ uid }}"><rect x="154" y="20" width="86" height="62" rx="4"/></clipPath>
+    <g clip-path="url(#p1-{{ uid }})">
+      <rect x="20" y="20" width="86" height="42" fill="var(--accent-solid)" opacity=".17"/>
+      <rect x="20" y="62" width="86" height="20" fill="var(--accent-solid)" opacity=".92"/>
+      <line x1="20" y1="62" x2="106" y2="62" stroke="var(--rust)" stroke-width="1.5"/>
+    </g>
+    <g clip-path="url(#p2-{{ uid }})">
+      <rect x="154" y="20" width="86" height="62" fill="var(--accent-solid)" opacity=".5"/>
+      <g fill="none" stroke="var(--accent-solid)" stroke-opacity=".85" stroke-width="1.5">
+        <path d="M166,44 C180,32 214,60 228,46"/>
+        <path d="M166,62 C180,50 214,76 228,62"/>
+      </g>
+    </g>
+    <text class="dia-t" x="63" y="98" text-anchor="middle">SETTLED</text>
+    <text class="dia-t" x="197" y="98" text-anchor="middle">SHAKEN 30s</text>
+    <text class="dia-t dia-bad" x="63" y="14" text-anchor="middle">TINTED WATER</text>
+  </svg>
+  <figcaption>The pigment separates out between sessions. The top of an
+    unshaken pot is nearly clear medium.</figcaption>
+</figure>
+{% endmacro %}
+
+
+{# ---------- 2. brush size ---------- #}
+{% macro brush(uid) %}
+<figure class="dia">
+  <svg viewBox="0 0 260 110" role="img">
+    <title>A fine detail brush next to a medium brush. The detail brush holds
+      a small reservoir and its stroke breaks up into streaks partway along;
+      the medium brush carries enough paint to finish the stroke evenly.</title>
+    <g>
+      <rect x="14" y="20" width="34" height="9" rx="2" fill="var(--ground-3)"/>
+      <path d="M48,20 L74,23 L86,24.5 L74,26 L48,29 Z" fill="var(--accent-solid)" opacity=".6"/>
+      <rect x="14" y="62" width="34" height="16" rx="2" fill="var(--ground-3)"/>
+      <path d="M48,62 L76,66 L92,70 L76,74 L48,78 Z" fill="var(--accent-solid)" opacity=".6"/>
+    </g>
+    <defs>
+      <linearGradient id="s1-{{ uid }}" x1="0" x2="1">
+        <stop offset="0" stop-color="var(--accent-solid)" stop-opacity=".55"/>
+        <stop offset=".45" stop-color="var(--accent-solid)" stop-opacity=".5"/>
+        <stop offset=".62" stop-color="var(--accent-solid)" stop-opacity=".12"/>
+        <stop offset="1" stop-color="var(--accent-solid)" stop-opacity=".05"/>
+      </linearGradient>
+    </defs>
+    <rect x="106" y="16" width="140" height="17" fill="var(--ground-3)"/>
+    <rect x="106" y="16" width="140" height="17" fill="url(#s1-{{ uid }})"/>
+    <g stroke="var(--ground)" stroke-width="1.5">
+      <line x1="196" y1="16" x2="196" y2="33"/>
+      <line x1="209" y1="16" x2="209" y2="33"/>
+      <line x1="224" y1="16" x2="224" y2="33"/>
+    </g>
+    <rect x="106" y="16" width="140" height="17" fill="none" stroke="var(--line)"/>
+    <rect x="106" y="61" width="140" height="17" fill="var(--ground-3)"/>
+    <rect x="106" y="61" width="140" height="17" fill="var(--accent-solid)" opacity=".5"/>
+    <rect x="106" y="61" width="140" height="17" fill="none" stroke="var(--line)"/>
+    <text class="dia-t dia-bad" x="246" y="45" text-anchor="end">RAN DRY MID-PANEL</text>
+    <text class="dia-t" x="246" y="90" text-anchor="end">FINISHED IN ONE PASS</text>
+  </svg>
+  <figcaption>A brush that empties partway across a panel leaves the tail of
+    the stroke thin and streaked.</figcaption>
+</figure>
+{% endmacro %}
+
+
+{# ---------- 3. one flooded pass ---------- #}
+{% macro flood(uid) %}
+<figure class="dia">
+  <svg viewBox="0 0 260 110" role="img">
+    <title>Cross-section of two raised ridges with a recess between them,
+      under a wet coat of contrast paint. The paint is thin over the ridge
+      tops and deep in the recess, so the recess reads dark and the ridges
+      read light.</title>
+    {{ _surface() }}
+    {{ _film(uid, 34, ".45") }}
+    <line x1="6" y1="34" x2="254" y2="34" stroke="var(--accent)" stroke-width="1"
+          stroke-dasharray="3 3" opacity=".7"/>
+    <g fill="var(--accent)" opacity=".9">
+      <path d="M130,44 L134,52 L126,52 Z"/>
+      <path d="M130,56 L134,64 L126,64 Z"/>
+    </g>
+    <text class="dia-t" x="74" y="30" text-anchor="middle">THIN</text>
+    <text class="dia-t" x="186" y="30" text-anchor="middle">THIN</text>
+    {{ _strip(uid, ".14", ".85", ".45", 6, 84, 248) }}
+  </svg>
+  <figcaption>One wet pass. The film levels out, so it is thin where the
+    surface is high and deep where it is low — that's the whole trick.</figcaption>
+</figure>
+{% endmacro %}
+
+
+{# ---------- 4. wick out a pool ---------- #}
+{% macro wick(uid) %}
+<figure class="dia">
+  <svg viewBox="0 0 260 110" role="img">
+    <title>Cross-section of a flat panel with no recess. Paint has gathered
+      into a raised dark pool; a clean damp brush touched to the edge of the
+      pool draws the paint back out.</title>
+    <rect x="6" y="58" width="248" height="18" fill="var(--ground-3)"/>
+    <line x1="6" y1="58" x2="254" y2="58" stroke="var(--line)" stroke-width="1.5"/>
+    <path d="M62,58 C68,36 128,34 134,58 Z" fill="var(--accent-solid)" opacity=".85"/>
+    <path d="M62,58 C68,36 128,34 134,58" fill="none" stroke="var(--rust)"
+          stroke-width="1.5" stroke-dasharray="4 3"/>
+    <g>
+      <rect x="196" y="14" width="12" height="26" rx="2" fill="var(--ground-3)"
+            transform="rotate(24 202 27)"/>
+      <path d="M198,38 L212,38 L206,58 Z" fill="var(--accent-solid)" opacity=".35"
+            transform="rotate(24 202 40)"/>
+    </g>
+    <g fill="none" stroke="var(--accent)" stroke-width="1.5">
+      <path d="M140,50 L172,44"/>
+    </g>
+    <path d="M180,42.5 L168,39 L169,48 Z" fill="var(--accent)"/>
+    <text class="dia-t dia-bad" x="98" y="24" text-anchor="middle">POOL</text>
+    <text class="dia-t" x="130" y="94" text-anchor="middle">CLEAN DAMP BRUSH, TOUCHED TO THE EDGE</text>
+  </svg>
+  <figcaption>A flat area has nothing to drain into, so the paint just sits
+    there as a raised dome until something takes it away.</figcaption>
+</figure>
+{% endmacro %}
+
+
+{# ---------- 5. tide line ---------- #}
+{% macro tideline(uid) %}
+<figure class="dia">
+  <svg viewBox="0 0 260 110" role="img">
+    <title>A panel seen face-on. A second stroke was laid over the edge of a
+      first stroke that had already started to dry, leaving a hard dark line
+      where the two meet.</title>
+    <defs>
+      <linearGradient id="t1-{{ uid }}" x1="0" x2="1">
+        <stop offset="0" stop-color="var(--accent-solid)" stop-opacity=".42"/>
+        <stop offset=".82" stop-color="var(--accent-solid)" stop-opacity=".46"/>
+        <stop offset="1" stop-color="var(--accent-solid)" stop-opacity=".9"/>
+      </linearGradient>
+      <linearGradient id="t2-{{ uid }}" x1="0" x2="1">
+        <stop offset="0" stop-color="var(--accent-solid)" stop-opacity=".9"/>
+        <stop offset=".14" stop-color="var(--accent-solid)" stop-opacity=".46"/>
+        <stop offset="1" stop-color="var(--accent-solid)" stop-opacity=".42"/>
+      </linearGradient>
+    </defs>
+    <rect x="6" y="26" width="248" height="46" fill="var(--ground-3)"/>
+    <rect x="6" y="26" width="124" height="46" fill="url(#t1-{{ uid }})"/>
+    <rect x="130" y="26" width="124" height="46" fill="url(#t2-{{ uid }})"/>
+    <line x1="130" y1="26" x2="130" y2="72" stroke="var(--rust)" stroke-width="2"/>
+    <rect x="6" y="26" width="248" height="46" fill="none" stroke="var(--line)"/>
+    <g fill="none" stroke="var(--bone-dim)" stroke-width="1" opacity=".55">
+      <path d="M20,18 L118,18"/>
+      <path d="M240,18 L142,18"/>
+    </g>
+    <g fill="var(--bone-dim)" opacity=".55">
+      <path d="M124,18 L114,14 L114,22 Z"/>
+      <path d="M136,18 L146,14 L146,22 Z"/>
+    </g>
+    <text class="dia-t" x="12" y="12">FIRST PASS</text>
+    <text class="dia-t" x="248" y="12" text-anchor="end">SECOND PASS</text>
+    <text class="dia-t dia-bad" x="130" y="90" text-anchor="middle">HARD LINE WHERE THEY MET</text>
+  </svg>
+  <figcaption>Where a wet stroke meets one that had already started to set,
+    the two films stack instead of levelling into each other.</figcaption>
+</figure>
+{% endmacro %}
+
+
+{# ---------- 6. a second coat ---------- #}
+{% macro coats(uid) %}
+<figure class="dia">
+  <svg viewBox="0 0 260 122" role="img">
+    <title>Cross-section after a second coat: the film is deeper everywhere
+      and the ridge tops are nearly covered. The strip below compares one coat
+      against two — the second is richer but its highlight has closed
+      up.</title>
+    {{ _surface() }}
+    {{ _film(uid, 36, ".72") }}
+    <text class="dia-t" x="66" y="90" text-anchor="middle">ONE COAT</text>
+    <text class="dia-t" x="194" y="90" text-anchor="middle">TWO COATS</text>
+    {{ _strip(uid ~ "-a", ".14", ".82", ".42", 6, 96, 120) }}
+    {{ _strip(uid ~ "-b", ".46", ".95", ".72", 134, 96, 120) }}
+  </svg>
+  <figcaption>The second coat is richer, but the light band it covers over was
+    the highlight you were getting for free.</figcaption>
+</figure>
+{% endmacro %}
+
+
+{# ---------- fix: dark blotches on flat areas ---------- #}
+{% macro blotch(uid) %}
+<figure class="dia">
+  <svg viewBox="0 0 260 96" role="img">
+    <title>A large flat panel seen face-on, with irregular dark patches where
+      the paint dried wherever it happened to sit.</title>
+    <rect x="6" y="14" width="248" height="56" fill="var(--ground-3)"/>
+    <rect x="6" y="14" width="248" height="56" fill="var(--accent-solid)" opacity=".4"/>
+    <g fill="var(--accent-solid)" opacity=".55">
+      <path d="M36,30 C58,20 88,26 92,40 C96,56 60,62 42,54 C28,48 24,36 36,30 Z"/>
+      <path d="M132,44 C148,34 176,40 174,52 C172,64 140,66 132,56 Z"/>
+      <path d="M198,22 C216,18 234,28 228,38 C222,48 200,44 196,34 Z"/>
+    </g>
+    <g fill="none" stroke="var(--rust)" stroke-width="1.5" stroke-dasharray="4 3">
+      <path d="M36,30 C58,20 88,26 92,40 C96,56 60,62 42,54 C28,48 24,36 36,30 Z"/>
+      <path d="M132,44 C148,34 176,40 174,52 C172,64 140,66 132,56 Z"/>
+    </g>
+    <rect x="6" y="14" width="248" height="56" fill="none" stroke="var(--line)"/>
+    <text class="dia-t" x="130" y="86" text-anchor="middle">NO RECESS FOR IT TO RUN INTO</text>
+  </svg>
+  <figcaption>A vehicle panel, a shield, a big shoulder pad. With no recess to
+    run into, the paint dries wherever it happened to sit.</figcaption>
+</figure>
+{% endmacro %}
+
+
+{# ---------- fix: weak, washed out ---------- #}
+{% macro washedout(uid) %}
+<figure class="dia">
+  <svg viewBox="0 0 260 124" role="img">
+    <title>The same transparent colour over black primer and over white
+      primer. Over black the light is absorbed and the colour reads dull; over
+      white it bounces back up through the film and reads saturated.</title>
+    <g stroke="var(--bone-dim)" stroke-width="1.5" fill="none" opacity=".8">
+      <path d="M26,12 L44,36"/>
+      <path d="M158,12 L176,36"/>
+      <path d="M198,36 L216,12"/>
+    </g>
+    <g fill="var(--bone-dim)" opacity=".8">
+      <path d="M46,40 L38,30 L46,28 Z"/>
+      <path d="M178,40 L170,30 L178,28 Z"/>
+      <path d="M218,8 L210,18 L218,20 Z"/>
+    </g>
+    <rect x="16" y="42" width="104" height="14" fill="var(--accent-solid)" opacity=".45"/>
+    <rect x="16" y="56" width="104" height="16" fill="#100E0C"/>
+    <rect x="16" y="42" width="104" height="30" fill="none" stroke="var(--line)"/>
+    <rect x="148" y="42" width="104" height="14" fill="var(--accent-solid)" opacity=".45"/>
+    <rect x="148" y="56" width="104" height="16" fill="var(--bone)"/>
+    <rect x="148" y="42" width="104" height="30" fill="none" stroke="var(--line)"/>
+    <text class="dia-t dia-bad" x="68" y="86" text-anchor="middle">ABSORBED</text>
+    <text class="dia-t" x="200" y="86" text-anchor="middle">RETURNED</text>
+    <rect x="16" y="92" width="104" height="16" fill="var(--ground-3)"/>
+    <rect x="16" y="92" width="104" height="16" fill="var(--accent-solid)" opacity=".5"/>
+    <rect x="16" y="92" width="104" height="16" fill="#100E0C" opacity=".5"/>
+    <rect x="148" y="92" width="104" height="16" fill="var(--ground-3)"/>
+    <rect x="148" y="92" width="104" height="16" fill="var(--accent-solid)" opacity=".8"/>
+    <g fill="none" stroke="var(--line)">
+      <rect x="16" y="92" width="104" height="16"/>
+      <rect x="148" y="92" width="104" height="16"/>
+    </g>
+    <text class="dia-t dia-bad" x="68" y="120" text-anchor="middle">BLACK PRIMER</text>
+    <text class="dia-t" x="200" y="120" text-anchor="middle">WHITE PRIMER</text>
+  </svg>
+  <figcaption>The paint is transparent, so the undercoat is the light source.
+    Black gives it nothing to send back.</figcaption>
+</figure>
+{% endmacro %}
+
+
+{# ---------- fix: flat and muddy ---------- #}
+{% macro muddy(uid) %}
+<figure class="dia">
+  <svg viewBox="0 0 260 110" role="img">
+    <title>Cross-section under too many coats. The film has built up above the
+      ridge tops into an even opaque layer, so the surface reads as one flat
+      tone with no shadow or highlight left.</title>
+    {{ _surface() }}
+    {{ _film(uid, 26, ".97") }}
+    <line x1="6" y1="26" x2="254" y2="26" stroke="var(--rust)" stroke-width="1.5"/>
+    <text class="dia-t dia-bad" x="130" y="20" text-anchor="middle">FILM BURIES THE RIDGES</text>
+    <rect x="6" y="84" width="248" height="22" fill="var(--accent-solid)" opacity=".92"/>
+    <rect x="6" y="84" width="248" height="22" fill="none" stroke="var(--line)"/>
+  </svg>
+  <figcaption>Coat on coat until the film is opaque. The ridges are still
+    there; the paint has stopped reporting them.</figcaption>
+</figure>
+{% endmacro %}
+
+
+{# ---------- fix: reactivation ---------- #}
+{% macro reactivation(uid) %}
+<figure class="dia">
+  <svg viewBox="0 0 260 96" role="img">
+    <title>A dried contrast film with a wet layer of paint worked over the
+      top. The water in the new coat re-wets the film underneath and pulls its
+      colour up into the layer above.</title>
+    <rect x="6" y="52" width="248" height="16" fill="var(--ground-3)"/>
+    <rect x="6" y="40" width="248" height="12" fill="var(--accent-solid)" opacity=".8"/>
+    <rect x="6" y="24" width="248" height="16" fill="var(--bone)" opacity=".88"/>
+    <g fill="var(--accent-solid)" opacity=".7">
+      <path d="M46,40 C52,32 44,28 50,24 L62,24 C56,29 64,33 58,40 Z"/>
+      <path d="M118,40 C124,31 116,29 122,24 L134,24 C128,30 136,33 130,40 Z"/>
+      <path d="M190,40 C196,32 188,28 194,24 L206,24 C200,29 208,33 202,40 Z"/>
+    </g>
+    <g fill="none" stroke="var(--rust)" stroke-width="1.5">
+      <path d="M84,38 L84,28"/><path d="M156,38 L156,28"/><path d="M228,38 L228,28"/>
+    </g>
+    <g fill="var(--rust)">
+      <path d="M84,22 L79,32 L89,32 Z"/>
+      <path d="M156,22 L151,32 L161,32 Z"/>
+      <path d="M228,22 L223,32 L233,32 Z"/>
+    </g>
+    <rect x="6" y="24" width="248" height="44" fill="none" stroke="var(--line)"/>
+    <text class="dia-t" x="6" y="18">NEW WET LAYER</text>
+    <text class="dia-t" x="254" y="18" text-anchor="end">DRIED CONTRAST, LIFTING</text>
+    <text class="dia-t" x="130" y="88" text-anchor="middle">PRIMER</text>
+  </svg>
+  <figcaption>Water in the new layer re-wets the dried film and carries its
+    colour up into the coat you just put down.</figcaption>
+</figure>
+{% endmacro %}
