@@ -73,8 +73,18 @@
     var(--ground);
 }
 
-/* Sample art standing in for a real photo — swap the url for your own .jpg. */
-.shot-hero{background:url(/assets/img/sample-hero.svg) center/cover var(--ground);}
+/* Drop a square photo of a model in as assets/img/hero.webp or .jpg and it
+   appears — no code change. Both extensions are listed as layers: whichever
+   file is missing simply doesn't paint, and with neither there the hatch
+   below shows through, so an empty slot reads as deliberately empty rather
+   than broken. .webp sits on top, so it wins if both exist. */
+.shot-hero{
+  background:
+    url(/assets/img/hero.webp) center/cover no-repeat,
+    url(/assets/img/hero.jpg) center/cover no-repeat,
+    repeating-linear-gradient(-45deg, rgba(184,147,63,.1) 0 6px, transparent 6px 12px),
+    var(--ground);
+}
 
 /* Corner brackets instead of a full border — reads as instrumentation, and
    keeps the type running the full width of the column. */
@@ -100,6 +110,11 @@
   margin:0 0 20px;
 }
 
+/* The accent is bone here, so hue can't carry the emphasis the way it does
+   on a section page. Drop the rest of the headline a step instead and let
+   the emphasised words sit at full brightness. */
+.slate h1{color:var(--bone-dim);}
+
 .slate h1 em{
   font-style:normal;
   color:var(--accent);
@@ -115,7 +130,7 @@
   height:10px;
   background:repeating-linear-gradient(
     -45deg,
-    var(--accent-solid) 0 10px,
+    var(--hazard) 0 10px,
     var(--ground) 10px 20px
   );
   opacity:.65;
@@ -258,15 +273,24 @@
   background:
     repeating-linear-gradient(-45deg, rgba(184,147,63,.12) 0 6px, transparent 6px 12px),
     var(--ground);
-  background-size:cover;
-  background-position:center;
 }
 
-/* Sample art standing in for real photos — swap the url for a .jpg of your
-   own model and everything else stays as is. */
-.shot-tyranids{background:url(/assets/img/sample-tyranids.svg) center/cover var(--ground);}
-.shot-world-eaters{background:url(/assets/img/sample-world-eaters.svg) center/cover var(--ground);}
-.shot-shelf{background:url(/assets/img/sample-shelf.svg) center/cover var(--ground);}
+/* One landscape photo per army, same drop-in rule as the hero: name the file
+   after the army, .webp or .jpg, and it appears. Adding an army is two lines
+   below plus a chip in the markup. */
+.shot-tyranids,
+.shot-world-eaters,
+.shot-shelf{
+  background:
+    var(--shot-webp) center/cover no-repeat,
+    var(--shot-jpg) center/cover no-repeat,
+    repeating-linear-gradient(-45deg, rgba(184,147,63,.12) 0 6px, transparent 6px 12px),
+    var(--ground);
+}
+
+.shot-tyranids{--shot-webp:url(/assets/img/tyranids.webp);--shot-jpg:url(/assets/img/tyranids.jpg);}
+.shot-world-eaters{--shot-webp:url(/assets/img/world-eaters.webp);--shot-jpg:url(/assets/img/world-eaters.jpg);}
+.shot-shelf{--shot-webp:url(/assets/img/shelf.webp);--shot-jpg:url(/assets/img/shelf.jpg);}
 
 .chip b{
   display:block;

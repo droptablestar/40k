@@ -4,7 +4,7 @@ permalink: /index.html
 title: "Bench & Table — a 40k reference"
 description: A plain-language reference for Warhammer 40,000 11th edition and
       miniature painting, written for people who just started.
-bodyClass: s-rules
+bodyClass: s-index
 pageCss: css/index.css
 themeColor: "#242220"
 # The official 11th edition Core Rules PDF, hosted by Games Workshop. If GW
@@ -38,8 +38,10 @@ extraFooter: |
 
     <div class="slate-shot">
       <div class="shot-ring">
-        <div class="shot-frame shot-hero" role="img"
-             aria-label="Sample image standing in for a photo of a painted model"></div>
+        {#- Empty until assets/img/hero.jpg exists. Once it does, give this
+          role="img" and an aria-label describing the actual model — an empty
+          slot has nothing to announce, a photo does. -#}
+        <div class="shot-frame shot-hero" aria-hidden="true"></div>
       </div>
     </div>
   </div>
