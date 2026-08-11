@@ -3,7 +3,83 @@
 
 .lead .crumb{margin-bottom:18px;}
 
-/* ---- headline: how much of the army is table-ready ---- */
+/* ---- first visit: start a log, or open one you already have ---- */
+
+.start{
+  background:var(--ground-2);
+  border:1px solid var(--line);
+  padding:18px 16px 20px;
+}
+
+.start[hidden]{display:none;}
+
+.start h2{
+  font-family:var(--display);font-weight:700;
+  font-size:clamp(22px,4vw,30px);letter-spacing:-.02em;margin:0 0 8px;
+}
+
+.start > p{margin:0 0 16px;font-size:var(--fs-sm);color:var(--bone-dim);
+  line-height:1.55;}
+
+.openform{margin-top:22px;border-top:1px solid var(--line);padding-top:16px;}
+
+.openform label,.addf label,.addu label{
+  display:block;
+  font-family:var(--mono);font-size:var(--fs-2xs);letter-spacing:.18em;
+  text-transform:uppercase;color:var(--bone-dim);margin-bottom:6px;
+}
+
+.openrow{display:flex;gap:8px;}
+.openrow input{flex:1 1 auto;min-width:0;}
+
+.openerr{
+  margin:8px 0 0;font-size:var(--fs-sm);color:var(--rust);
+}
+
+.openerr[hidden]{display:none;}
+
+#logbody[hidden]{display:none;}
+
+/* ---- the code: the only thing that gets the log back ---- */
+
+.logcode{
+  background:var(--ground-2);
+  border:1px solid var(--line);
+  border-bottom:0;
+  padding:14px 16px 16px;
+}
+
+.codeval{
+  margin:4px 0 0;
+  font-family:var(--mono);font-weight:600;font-size:var(--fs-base);
+  letter-spacing:.02em;color:var(--bone);
+  overflow-wrap:anywhere;
+}
+
+/* shown until it's been written down somewhere outside this browser, which
+   is the one step that makes the log survive a wipe */
+.codewrite{
+  margin-top:12px;padding:12px 14px;
+  background:rgba(229,132,102,.12);
+  border-left:2px solid var(--rust);
+}
+
+.codewrite[hidden]{display:none;}
+
+.codewrite p{margin:0 0 12px;font-size:var(--fs-sm);color:var(--bone-dim);
+  line-height:1.55;}
+
+.coderow{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px;}
+
+.btn.quiet{font-size:var(--fs-2xs);min-height:36px;padding:10px 12px;}
+
+.codesync{
+  margin:10px 0 0;
+  font-family:var(--mono);font-size:var(--fs-2xs);letter-spacing:.1em;
+  text-transform:uppercase;color:var(--bone-dim);line-height:1.5;
+}
+
+/* ---- headline: how much of the whole collection is table-ready ---- */
 
 .progress{
   background:var(--ground-2);
@@ -49,50 +125,68 @@
   font-variant-numeric:tabular-nums;
 }
 
-/* ---- add a unit ---- */
+/* ---- one army ---- */
 
-.add{
+.faction{margin-top:26px;}
+
+.fhead{
   display:grid;
-  grid-template-columns:minmax(0,1fr) auto;
-  gap:10px 12px;
-  margin-top:2px;
-  padding:14px 16px 16px;
+  grid-template-columns:minmax(0,1fr) auto auto;
+  align-items:start;gap:10px;
+  padding-bottom:8px;
+  border-bottom:1px solid var(--line);
+}
+
+.fid{min-width:0;}
+
+.faction h2{
+  font-family:var(--display);font-weight:700;
+  font-size:clamp(20px,4vw,28px);letter-spacing:-.02em;margin:0;
+  overflow-wrap:anywhere;
+}
+
+.fbox{
+  margin:3px 0 0;
+  font-family:var(--mono);font-size:var(--fs-2xs);letter-spacing:.12em;
+  text-transform:uppercase;color:var(--bone-dim);line-height:1.4;
+}
+
+.fpct{
+  margin:0;align-self:center;
+  display:flex;align-items:baseline;gap:1px;
+  font-family:var(--mono);font-weight:600;font-size:var(--fs-base);
+  font-variant-numeric:tabular-nums;color:var(--accent);
+}
+
+.fpct span{font-size:var(--fs-2xs);color:var(--bone-dim);}
+
+.fdel{align-self:center;height:38px;}
+
+.fmeta{
+  margin:8px 0 0;
+  font-family:var(--mono);font-size:var(--fs-2xs);letter-spacing:.1em;
+  text-transform:uppercase;color:var(--bone-dim);
+  font-variant-numeric:tabular-nums;
+}
+
+.fbar{
+  margin-top:7px;height:4px;
   background:var(--ground-2);
   border:1px solid var(--line);
-  border-top:0;
+  overflow:hidden;
 }
 
-.add-name{grid-column:1 / -1;min-width:0;}
+.ffill{height:100%;background:var(--accent-solid);}
 
-.add label{
-  display:block;
-  font-family:var(--mono);font-size:var(--fs-2xs);letter-spacing:.18em;
-  text-transform:uppercase;color:var(--bone-dim);margin-bottom:6px;
+.fnone{
+  margin:12px 0 0;padding:14px;
+  border:1px dashed var(--line);
+  font-size:var(--fs-sm);color:var(--bone-dim);
 }
-
-.add input{
-  display:block;width:100%;min-width:0;min-height:44px;
-  background:var(--ground);border:1px solid var(--line);color:var(--bone);
-  font-family:var(--body);font-size:var(--fs-md);padding:10px 12px;
-}
-
-.add input::placeholder{color:var(--bone-dim);}
-.add input:focus{outline:none;border-color:var(--accent);}
-.add input:focus-visible{outline:2px solid var(--accent);outline-offset:2px;}
-
-.stepper{display:flex;align-items:center;gap:8px;}
-
-.stepper output{
-  font-family:var(--mono);font-weight:600;font-size:var(--fs-base);
-  font-variant-numeric:tabular-nums;
-  min-width:2.5ch;text-align:center;color:var(--bone);
-}
-
-.add-go{align-self:end;min-height:44px;}
 
 /* ---- the units ---- */
 
-.units{list-style:none;margin:18px 0 0;padding:0;display:flex;
+.units{list-style:none;margin:12px 0 0;padding:0;display:flex;
   flex-direction:column;gap:8px;}
 
 .unit{
@@ -168,6 +262,66 @@
 .ubtn:disabled{opacity:.35;cursor:default;}
 .ubtn:disabled:hover{background:transparent;color:var(--bone-dim);}
 
+/* ---- adding: a unit to an army, and an army to the log ---- */
+
+.fadd{margin-top:10px;}
+
+.fadd summary{
+  list-style:none;cursor:pointer;
+  font-family:var(--mono);font-size:var(--fs-xs);letter-spacing:.14em;
+  text-transform:uppercase;color:var(--bone-dim);
+  border:1px solid var(--line);padding:12px 14px;
+}
+
+.fadd summary::-webkit-details-marker{display:none;}
+.fadd summary::before{content:"+ ";color:var(--accent);}
+.fadd[open] summary::before{content:"\2212 ";}
+.fadd summary:hover{color:var(--bone);border-color:var(--accent);}
+
+.addu,.addf{
+  display:grid;
+  grid-template-columns:minmax(0,1fr) auto;
+  gap:10px 12px;
+  padding:14px 16px 16px;
+  background:var(--ground-2);
+  border:1px solid var(--line);
+  border-top:0;
+}
+
+.addf{margin-top:26px;border-top:1px solid var(--line);}
+
+.addu-name,.addf-pick,.addf-name{grid-column:1 / -1;min-width:0;}
+.addf-name[hidden]{display:none;}
+
+.addu input,.addf input,.addf select,.openrow input{
+  display:block;width:100%;min-width:0;min-height:44px;
+  background:var(--ground);border:1px solid var(--line);color:var(--bone);
+  font-family:var(--body);font-size:var(--fs-md);padding:10px 12px;
+}
+
+.addu input::placeholder,.addf input::placeholder,
+.openrow input::placeholder{color:var(--bone-dim);}
+
+.addu input:focus,.addf input:focus,.addf select:focus,
+.openrow input:focus{outline:none;border-color:var(--accent);}
+
+.addu input:focus-visible,.addf input:focus-visible,
+.addf select:focus-visible,.openrow input:focus-visible{
+  outline:2px solid var(--accent);outline-offset:2px;
+}
+
+.stepper{display:flex;align-items:center;gap:8px;}
+
+.stepper output{
+  font-family:var(--mono);font-weight:600;font-size:var(--fs-base);
+  font-variant-numeric:tabular-nums;
+  min-width:2.5ch;text-align:center;color:var(--bone);
+}
+
+.addu button[type="submit"],.addf button[type="submit"]{
+  align-self:end;min-height:44px;
+}
+
 /* ---- empty state ---- */
 
 .empty{
@@ -212,11 +366,11 @@
 .stage-key li.mark-ready{border-top:1px solid var(--accent-lo);}
 
 @media (max-width:560px){
-  .add{padding:14px 14px 16px;}
+  .addu,.addf{padding:14px 14px 16px;}
   .uadv{padding:12px 12px 13px;}
 }
 
 @media print{
-  .add,.uside,.actions,.warn{display:none;}
+  .start,.logcode,.addu,.addf,.fadd,.uside,.actions,.warn{display:none;}
   .uadv{padding-left:0;}
 }

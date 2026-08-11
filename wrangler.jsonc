@@ -5,9 +5,39 @@
   "observability": {
     "enabled": true
   },
+  // The Worker only exists to serve /api/* (the paint log's durable copy).
+  // Every other request is a built page or asset and is answered from _site
+  // without the Worker running.
+  // .mjs, not .js: package.json says "type": "commonjs" for Eleventy's sake,
+  // and a Worker entry point has to be an ES module.
+  "main": "worker/paint-log-api.mjs",
   "assets": {
-    "directory": "_site"
+    "directory": "_site",
+    "binding": "ASSETS",
+    "run_worker_first": ["/api/*"]
   },
+  //
+  // ---- Paint log database ----------------------------------------------
+  //
+  // Uncomment this block after creating the database, and paste in the id
+  // that `wrangler d1 create benchtable` prints. It is commented out because
+  // a placeholder id makes `wrangler deploy` fail outright, which would take
+  // the whole site's deploys down until the database exists.
+  //
+  //   npx wrangler d1 create benchtable
+  //   npx wrangler d1 migrations apply benchtable --remote
+  //
+  // Until it is uncommented the paint log still works — it just stays on the
+  // device, and the page says so instead of claiming to be synced.
+  //
+  // "d1_databases": [
+  //   {
+  //     "binding": "DB",
+  //     "database_name": "benchtable",
+  //     "database_id": "<id from wrangler d1 create>",
+  //     "migrations_dir": "migrations"
+  //   }
+  // ],
   "compatibility_flags": [
     "nodejs_compat"
   ]

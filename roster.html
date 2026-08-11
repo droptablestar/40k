@@ -3,9 +3,13 @@ layout: base.njk
 permalink: /roster.html
 title: "Paint log — Bench & Table"
 description: Track how far each unit in your army is through painting, and how
-      much of it is table-ready.
+      much of it is table-ready. Kept under a code you can reopen anywhere.
 bodyClass: s-painting
 pageCss: css/roster.css
+pageJsExtra:
+  - js/paint-log-words.js
+  - js/paint-log-sync.js
+  - js/combat-patrols.js
 pageJs: js/roster.js
 themeColor: "#242220"
 ---
@@ -14,52 +18,91 @@ themeColor: "#242220"
   <p class="eyebrow">At the desk</p>
   <h1>Paint log</h1>
   <p>How far each unit is through painting, and how much of the army is
-    table-ready. Tap a unit to move it to the next stage. Saves to this device
-    as you go.</p>
+    table-ready. Tap a unit to move it to the next stage. Each log has a code
+    of four words — keep the code and you can open the same log on any phone or
+    laptop, including after this browser has been wiped.</p>
 </section>
 
 <p class="warn" id="nostore" hidden>
-  This browser is blocking local storage, so the log will reset if you reload.
-  Everything still works for the current session.
+  This browser is blocking local storage, so nothing is kept on the device.
+  Edits still go up under your code, and the page still works for this session.
 </p>
 
+<section class="start" id="start" hidden>
+  <h2>Start a log, or open one you already have</h2>
+  <p>A new log gets a code of four words. That code is the only thing that
+    identifies it — there are no accounts here and nothing to sign into.</p>
+  <button class="btn" id="start-new" type="button">Start a new log</button>
+  <form class="openform" id="start-open">
+    <label for="start-code">Already have a code?</label>
+    <div class="openrow">
+      <input id="start-code" name="start-code" type="text" maxlength="60"
+        autocomplete="off" autocapitalize="none" spellcheck="false"
+        placeholder="rust-hive-brass-nine">
+      <button class="btn" type="submit">Open</button>
+    </div>
+    <p class="openerr" id="start-err" hidden>Four words joined by dashes, the
+      way it was given to you.</p>
+  </form>
+</section>
+
+<div id="logbody" hidden>
+
+<section class="logcode" id="logcode">
+  <p class="plabel">Your log code</p>
+  <p class="codeval"><output id="codeval"></output></p>
+
+  <div class="codewrite" id="codewrite" hidden>
+    <p><b>Write this down somewhere that is not this browser.</b> A note in
+      your phone, a photo of it, the back of your army list, a message to
+      yourself. Clearing site data or a new phone wipes this browser's copy of
+      the log — the code is how you get it all back, and it is the only way.</p>
+    <button class="btn" id="codeok" type="button">I've written it down</button>
+  </div>
+
+  <div class="coderow">
+    <button class="btn quiet" id="codecopy" type="button">Copy code</button>
+    <button class="btn quiet" id="codeswitch" type="button">Open another log</button>
+  </div>
+  <p class="codesync" id="codesync"></p>
+</section>
+
 <section class="progress" aria-labelledby="prog-label">
-  <p class="plabel" id="prog-label">Table-ready</p>
+  <p class="plabel" id="prog-label">Table-ready, whole collection</p>
   <p class="ppct"><output id="pct">0</output><span class="punit">%</span></p>
   <div class="pbar"><div class="pfill" id="pfill"></div></div>
   <p class="pcount"><output id="pmodels">0 / 0 models</output> &middot;
     <output id="punits">0 / 0 units</output></p>
 </section>
 
-<form class="add" id="add">
-  <div class="add-name">
-    <label for="uname">Unit</label>
-    <input id="uname" name="uname" type="text" maxlength="40" autocomplete="off"
-      placeholder="Intercessor Squad" required>
-  </div>
-  <div class="add-count">
-    <label for="umodels">Models</label>
-    <div class="stepper">
-      <button class="step" type="button" data-step="-1" aria-label="One fewer model">&minus;</button>
-      <output id="umodels" aria-live="polite">1</output>
-      <button class="step" type="button" data-step="1" aria-label="One more model">+</button>
-    </div>
-  </div>
-  <button class="btn add-go" type="submit">Add unit</button>
-</form>
-
-<ul class="units" id="units"></ul>
+<div id="factions"></div>
 
 <p class="empty" id="empty" hidden>
-  Nothing logged yet. Put in your first unit above — its name, and how many
-  miniatures are in it. Then tap the unit each time you finish a stage on it,
-  from bare sprue through to varnish.
+  Nothing logged yet. Add an army below — pick your Combat Patrol box and its
+  units come in already named and counted, or start an empty one and put the
+  units in yourself. Then tap a unit each time you finish a stage on it, from
+  bare sprue through to varnish.
 </p>
+
+<form class="addf" id="addf">
+  <div class="addf-pick">
+    <label for="fpick">Add an army</label>
+    <select id="fpick" name="fpick"></select>
+  </div>
+  <div class="addf-name" id="fnamewrap">
+    <label for="fname">Call it</label>
+    <input id="fname" name="fname" type="text" maxlength="40" autocomplete="off"
+      placeholder="World Eaters">
+  </div>
+  <button class="btn" type="submit">Add army</button>
+</form>
 
 <div class="actions">
   <button class="btn danger" id="clear" type="button">Clear log</button>
   <span class="saved" id="saved">Saved on this device</span>
 </div>
+
+</div><!-- /#logbody -->
 
 <section class="stages">
   <h2>The stages</h2>
@@ -75,8 +118,12 @@ themeColor: "#242220"
       Varnish protects the paint rather than changing how it looks, so it is
       the stage after the line, not part of it.</p>
     <p>The percentage is weighted by miniatures, not by units — ten finished
-      infantry move it further than one finished character.</p>
-    <p>This log lives in this browser on this device only. It does not sync to
-      your other phone, and clearing site data clears it.</p>
+      infantry move it further than one finished character. Each army carries
+      its own percentage, and the big figure at the top is every army added
+      together.</p>
+    <p>Edits save on the device first and go up under your code a moment
+      later, so the log keeps working with no signal and catches up when there
+      is one. Anyone with your code can read and change the log, so treat it
+      like a shared key rather than a password.</p>
   </div>
 </section>
