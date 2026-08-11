@@ -1,0 +1,76 @@
+---
+layout: base.njk
+permalink: /odds.html
+title: "Can I hurt that? — Bench & Table"
+description: Work out what one weapon does to one model — expected damage and
+      the chance it dies, with the hit, wound and save maths shown step by step.
+bodyClass: s-rules
+pageCss: css/odds.css
+pageJs: js/odds.js
+themeColor: "#242220"
+# Same free Core Rules PDF the rest of the site links to.
+coreRules: https://assets.warhammer-community.com/eng_01-06_warhammer40k_new40k_core_rules-was6fbu1ix-hfewhmxyiy.pdf
+---
+<section class="lead">
+  <p class="eyebrow">At the table</p>
+  <h1>Can I hurt that?</h1>
+  <p>Set the weapon, then the model you are pointing it at. The answer
+    updates as you tap.</p>
+</section>
+
+<div class="result" id="result" role="status" aria-live="polite">
+  <div class="stats">
+    <div class="stat">
+      <div class="stat-name">Damage dealt</div>
+      <div class="stat-fig" id="r-damage">1.1</div>
+      <div class="stat-foot" id="r-damage-foot">of 2 wounds</div>
+    </div>
+    <div class="stat">
+      <div class="stat-name">Chance it dies</div>
+      <div class="stat-fig" id="r-kill">31%</div>
+      <div class="stat-foot">this shooting or fight</div>
+    </div>
+  </div>
+
+  <p class="chain" id="r-chain">
+    <span><b>10</b> attacks</span>
+    <span><b>6.7</b> hits</span>
+    <span><b>3.3</b> wounds</span>
+    <span><b>1.1</b> get through</span>
+  </p>
+
+  <p class="rolls" id="r-rolls">Hit 3+ &middot; wound 4+ &middot; save 3+</p>
+</div>
+
+<section class="panel">
+  <h2>The attack</h2>
+  <div class="ctls" id="ctls-attack"></div>
+</section>
+
+<section class="panel">
+  <h2>The model you are shooting</h2>
+  <div class="ctls" id="ctls-target"></div>
+</section>
+
+<section class="panel">
+  <h2>Extras</h2>
+  <div class="chips" id="chips"></div>
+  <p class="chip-note">Cover in 11th edition does not improve a save — it makes
+    you harder to hit, one fixed &minus;1, however many ways you qualify for
+    it. Re-rolling 1s covers the common "re-roll hit rolls of 1" ability.</p>
+</section>
+
+<div class="note-box">
+  <p><b>This is arithmetic, not the rules.</b> It works out averages from the
+    numbers you type in. Where it disagrees with the official rules, the
+    official rules win — Games Workshop publishes the 11th edition Core Rules
+    as a free <a href="{{ coreRules }}" rel="noopener">PDF</a> and in the
+    Warhammer 40,000 app.</p>
+  <p>It assumes <b>one model with no special abilities</b>: no feel-no-pain
+    rolls, no re-rolls beyond the one toggle, no sustained or lethal hits, no
+    damage reduction. Damage that spills past the model's last wound is wasted,
+    which is how a single-model target works — against a full unit, extra
+    damage does not carry to the next model either.</p>
+  <p>Averages are not promises. A 31% chance to kill something means it
+    survives most of the time.</p>
+</div>
