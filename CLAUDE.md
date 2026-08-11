@@ -228,6 +228,25 @@ the offline fallback; the site has to work at a shop with no signal.
 - Unbuilt pages appear on the landing page as dashed placeholders rather than
   being hidden, so the gaps are visible.
 
+## Naming
+
+Everything gets a name a person can read and act on. If a name doesn't say what
+the thing is, it's wrong — no hashes, no agent/session ids, no `temp`, `new`,
+`final`, `test2`. This applies to branches, worktrees, files, CSS classes,
+commits, and PR titles alike.
+
+```
+worktrees   ~/Documents/40k-wt/<topic>        40k-wt/paint-log, 40k-wt/odds
+branches    <kind>/<topic>                    feature/paint-log, painting/step-images
+page files  <topic>.html + assets/{css,js}/<topic>.{css,js}, matching the permalink
+storage     benchtable:<thing>:v<n>           benchtable:battle:v1, benchtable:roster:v1
+```
+
+A worktree and the branch inside it should share the topic word, so
+`git worktree list` reads as a list of what's in flight. Agent-generated names
+like `worktree-agent-a2efa128b2b6ba5d2` get renamed before they're pushed, not
+kept because the tool chose them.
+
 ## Writing style
 
 Plain verbs, sentence case, no filler. Say what a thing does rather than selling
