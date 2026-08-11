@@ -76,11 +76,28 @@
   color:var(--bone);letter-spacing:0;
 }
 
-.rolls{
-  margin:8px 0 0;
+/* the three per-roll chances behind the chain: what "3+ to hit" is actually
+   worth. Three equal columns so the figures sit in a row and can be compared
+   down the page; the caption under each may wrap without moving them. */
+.steps{
+  display:grid;grid-template-columns:repeat(3,minmax(0,1fr));
+  gap:10px;margin:10px 0 0;
+  padding-top:9px;border-top:1px solid var(--line);
+}
+
+.step{display:flex;flex-direction:column;gap:1px;}
+
+.step-pct{
+  font-family:var(--mono);font-weight:600;font-size:var(--fs-md);
+  font-variant-numeric:tabular-nums;
+  color:var(--bone);line-height:1.1;
+}
+
+.step-name{
   font-family:var(--mono);font-size:var(--fs-2xs);
   font-variant-numeric:tabular-nums;
-  letter-spacing:.12em;text-transform:uppercase;color:var(--bone-dim);
+  letter-spacing:.02em;text-transform:uppercase;
+  color:var(--bone-dim);line-height:1.3;
 }
 
 /* ---- input panels ---- */
@@ -168,7 +185,7 @@
   .result{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:16px 22px;align-items:start;}
   .stats{grid-row:span 2;}
   .chain{margin-top:0;align-self:end;}
-  .rolls{margin-top:0;align-self:start;}
+  .steps{margin-top:0;align-self:start;}
   .ctls{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:0 32px;}
 }
 

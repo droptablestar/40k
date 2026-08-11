@@ -128,7 +128,13 @@
       kill: kill,
       hitNeed: hit.need,
       woundNeed: wNeed,
-      saveNeed: sNeed
+      saveNeed: sNeed,
+      // The three per-roll chances behind the chain above, as fractions.
+      // pHit already includes cover and the re-roll, so it moves when they do
+      // even though the number on the dice does not.
+      pHit: hit.p,
+      pWound: pWound,
+      pFail: pFail
     };
   }
 
@@ -172,6 +178,13 @@
   fill("chips", TOGGLES.map(chipHtml));
 
   var one = function (v) { return v.toFixed(1); };
+  // One decimal on every percentage, so 66.7 and 100.0 line up in the row.
+  var pct = function (v) { return (v * 100).toFixed(1) + "%"; };
+
+  function stepHtml(p, name) {
+    return '<div class="step"><span class="step-pct">' + pct(p) +
+      '</span><span class="step-name">' + esc(name) + '</span></div>';
+  }
 
   function render() {
     FIELDS.forEach(function (f) {
@@ -203,9 +216,11 @@
       '<span><b>' + one(r.wounds) + '</b> wounds</span>' +
       '<span><b>' + one(r.through) + '</b> get through</span>';
 
-    document.getElementById("r-rolls").textContent =
-      "Hit " + r.hitNeed + "+ · wound " + r.woundNeed + "+ · " +
-      (r.saveNeed >= 7 ? "no save" : "save " + r.saveNeed + "+");
+    document.getElementById("r-steps").innerHTML =
+      stepHtml(r.pHit, "to hit " + r.hitNeed + "+" +
+        (state.reroll1 ? ", re-roll 1s" : "")) +
+      stepHtml(r.pWound, "to wound " + r.woundNeed + "+") +
+      stepHtml(r.pFail, r.saveNeed >= 7 ? "no save" : "save " + r.saveNeed + "+ fails");
   }
 
   /* ---------- input ---------- */
