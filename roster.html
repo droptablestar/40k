@@ -1,0 +1,82 @@
+---
+layout: base.njk
+permalink: /roster.html
+title: "Paint log — Bench & Table"
+description: Track how far each unit in your army is through painting, and how
+      much of it is table-ready.
+bodyClass: s-painting
+pageCss: css/roster.css
+pageJs: js/roster.js
+themeColor: "#242220"
+---
+<section class="lead">
+  <a class="crumb" href="/painting.html">&larr; Painting guide</a>
+  <p class="eyebrow">At the desk</p>
+  <h1>Paint log</h1>
+  <p>How far each unit is through painting, and how much of the army is
+    table-ready. Tap a unit to move it to the next stage. Saves to this device
+    as you go.</p>
+</section>
+
+<p class="warn" id="nostore" hidden>
+  This browser is blocking local storage, so the log will reset if you reload.
+  Everything still works for the current session.
+</p>
+
+<section class="progress" aria-labelledby="prog-label">
+  <p class="plabel" id="prog-label">Table-ready</p>
+  <p class="ppct"><output id="pct">0</output><span class="punit">%</span></p>
+  <div class="pbar"><div class="pfill" id="pfill"></div></div>
+  <p class="pcount"><output id="pmodels">0 / 0 models</output> &middot;
+    <output id="punits">0 / 0 units</output></p>
+</section>
+
+<form class="add" id="add">
+  <div class="add-name">
+    <label for="uname">Unit</label>
+    <input id="uname" name="uname" type="text" maxlength="40" autocomplete="off"
+      placeholder="Intercessor Squad" required>
+  </div>
+  <div class="add-count">
+    <label for="umodels">Models</label>
+    <div class="stepper">
+      <button class="step" type="button" data-step="-1" aria-label="One fewer model">&minus;</button>
+      <output id="umodels" aria-live="polite">1</output>
+      <button class="step" type="button" data-step="1" aria-label="One more model">+</button>
+    </div>
+  </div>
+  <button class="btn add-go" type="submit">Add unit</button>
+</form>
+
+<ul class="units" id="units"></ul>
+
+<p class="empty" id="empty" hidden>
+  Nothing logged yet. Put in your first unit above — its name, and how many
+  miniatures are in it. Then tap the unit each time you finish a stage on it,
+  from bare sprue through to varnish.
+</p>
+
+<div class="actions">
+  <button class="btn danger" id="clear" type="button">Clear log</button>
+  <span class="saved" id="saved">Saved on this device</span>
+</div>
+
+<section class="stages">
+  <h2>The stages</h2>
+  <p class="sub">Same order of work as
+    <a href="/painting.html#first">your first model, end to end</a>, with the
+    three prep steps — clipping, mould lines, glue — counted as one.</p>
+  <ol class="stage-key" id="stage-key"></ol>
+  <div class="note-block">
+    <p><b>Table-ready is the base coat through to the base rim.</b> A model
+      counts once it is painted, shaded, brought back up, detailed and based —
+      the point where it reads clearly from arm's length, which is what
+      <a href="/painting-table-ready.html#standard">table-ready</a> means here.
+      Varnish protects the paint rather than changing how it looks, so it is
+      the stage after the line, not part of it.</p>
+    <p>The percentage is weighted by miniatures, not by units — ten finished
+      infantry move it further than one finished character.</p>
+    <p>This log lives in this browser on this device only. It does not sync to
+      your other phone, and clearing site data clears it.</p>
+  </div>
+</section>

@@ -943,6 +943,7 @@ a.card:hover::before{border-color:transparent var(--accent) transparent transpar
   color:var(--bone-dim);
 }
 
+.note-block p + p{margin-top:12px;}
 .note-block b{color:var(--bone);}
 
 /* ---------- note box: the standing "the official rules win" footer ----------
@@ -1151,6 +1152,62 @@ a.card:hover::before{border-color:transparent var(--accent) transparent transpar
 .ability-list dt{font-weight:600;font-size:var(--fs-sm);margin-bottom:3px;}
 
 .ability-list dd{margin:0;font-size:var(--fs-sm);color:var(--bone-dim);line-height:1.5;}
+
+/* ---------- tool pages: tracker, paint log ----------
+   The two pages that are a tool rather than a document share a head, a
+   storage warning, buttons and a stepper. They lived in tracker.css until
+   the paint log needed the same four things; per-page copies of these had
+   already gone out of sync once elsewhere on this site. */
+
+.lead{padding:34px 0 26px;}
+
+.lead h1{
+  font-family:var(--display);font-weight:800;
+  font-size:clamp(32px,6vw,54px);line-height:.96;
+  letter-spacing:-.03em;margin:0 0 10px;
+}
+
+.lead p{margin:0;color:var(--bone-dim);font-size:var(--fs-sm);}
+
+/* storage blocked, quota full — the state where nothing will be saved */
+.warn{
+  margin:0 0 18px;padding:12px 16px;
+  background:rgba(229,132,102,.12);
+  border-left:2px solid var(--rust);
+  font-size:var(--fs-sm);color:var(--bone-dim);
+}
+
+.warn[hidden]{display:none;}
+
+.actions{display:flex;flex-wrap:wrap;gap:8px;margin-top:26px;}
+
+.btn{
+  font-family:var(--mono);font-size:var(--fs-xs);letter-spacing:.14em;
+  text-transform:uppercase;background:transparent;
+  border:1px solid var(--line);color:var(--bone-dim);
+  min-height:38px;padding:11px 16px;cursor:pointer;
+}
+
+.btn:hover{color:var(--bone);border-color:var(--accent);}
+.btn.danger:hover{color:var(--rust);border-color:var(--rust);}
+
+.saved{
+  font-family:var(--mono);font-size:var(--fs-2xs);letter-spacing:.14em;
+  text-transform:uppercase;color:var(--bone-dim);
+  align-self:center;margin-left:auto;
+}
+
+/* one square +/- control. 38px so it clears the 34px touch floor with
+   paint on your hands. */
+.step{
+  width:38px;height:38px;flex:0 0 auto;
+  background:transparent;border:1px solid var(--line);
+  color:var(--bone);font-size:var(--fs-base);line-height:1;cursor:pointer;
+  transition:background .14s ease,border-color .14s ease;
+}
+
+.step:hover{background:var(--ground-2);border-color:var(--accent);}
+.step:active{background:var(--accent-solid);color:var(--ink-on-accent);}
 
 /* ---------- footer ---------- */
 
