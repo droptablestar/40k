@@ -265,13 +265,19 @@
   }
 
   function ctlHtml(f) {
-    // Attacks and Damage get a dice-roll cycle button inline, ahead of their
-    // own stepper — "Fixed" (the numeric stepper) is one tap away like any
-    // other profile, not a separate row easy to miss.
+    // Attacks and Damage get a dice-roll picker inline, ahead of their own
+    // stepper — a native <select> so every profile (including "Fixed", the
+    // numeric stepper) is one tap away, not several taps of cycling to reach.
     var dice = f.diceKey ?
-      '<button class="ctl-dice" type="button" data-dice="' + f.diceKey +
-        '" id="dice-' + f.diceKey + '" aria-label="' + esc(f.label) + ' roll type">' +
-        esc(DICE_PRESETS[state[f.diceKey]].label) + '</button>' : '';
+      '<span class="ctl-dice-wrap" id="dice-wrap-' + f.diceKey + '">' +
+        '<select class="ctl-dice" data-dice="' + f.diceKey +
+          '" id="dice-' + f.diceKey + '" aria-label="' + esc(f.label) + ' roll type">' +
+          DICE_PRESETS.map(function (p, i) {
+            return '<option value="' + i + '"' +
+              (state[f.diceKey] === i ? ' selected' : '') + '>' + esc(p.label) + '</option>';
+          }).join('') +
+        '</select>' +
+      '</span>' : '';
     return '<div class="ctl">' +
       '<div class="ctl-label">' +
         '<span class="ctl-name" id="lab-' + f.key + '">' + esc(f.label) + '</span>' +
@@ -327,9 +333,11 @@
       inc.disabled = locked || state[f.key] >= f.max;
 
       if (f.diceKey) {
-        var diceBtn = document.getElementById("dice-" + f.diceKey);
-        diceBtn.textContent = DICE_PRESETS[state[f.diceKey]].label;
-        diceBtn.classList.toggle("ctl-dice--active", state[f.diceKey] !== 0);
+        var diceSel = document.getElementById("dice-" + f.diceKey);
+        var diceWrap = document.getElementById("dice-wrap-" + f.diceKey);
+        diceSel.value = state[f.diceKey];
+        diceSel.classList.toggle("ctl-dice--active", state[f.diceKey] !== 0);
+        diceWrap.classList.toggle("ctl-dice-wrap--active", state[f.diceKey] !== 0);
       }
     });
 
@@ -400,19 +408,18 @@
     var t = e.target.closest ? e.target.closest("[data-t]") : null;
     if (t) { state[t.getAttribute("data-t")] = !state[t.getAttribute("data-t")]; render(); return; }
 
-    // Tap cycles forward through the dice presets, wrapping back to "Fixed" —
-    // the list is short enough that a single button beats a +/- pair here.
-    var d = e.target.closest ? e.target.closest("[data-dice]") : null;
-    if (d) {
-      var key = d.getAttribute("data-dice");
-      state[key] = (state[key] + 1) % DICE_PRESETS.length;
-      render();
-      return;
-    }
-
     var b = e.target.closest ? e.target.closest(".ctl-btn") : null;
     if (!b || b.disabled) return;
     bump(b.getAttribute("data-k"), b.getAttribute("data-act") === "inc" ? 1 : -1);
+  });
+
+  // The dice-roll picker is a native <select>, so every profile is one tap
+  // away in the OS's own picker instead of several taps of cycling.
+  document.addEventListener("change", function (e) {
+    var sel = e.target.closest ? e.target.closest("select.ctl-dice") : null;
+    if (!sel) return;
+    state[sel.getAttribute("data-dice")] = parseInt(sel.value, 10);
+    render();
   });
 
   render();

@@ -148,14 +148,32 @@
   color:var(--bone);
 }
 
-/* The Attacks/Damage dice-roll cycle button, inline with their stepper.
+/* The Attacks/Damage dice-roll picker, inline with their stepper. A native
+   <select> rather than a cycle button — tapping it opens the OS's own
+   picker with every profile listed, so any option (including getting back
+   to "Fixed") is one tap away instead of several taps of cycling.
    "Fixed" reads as a plain outline like any other control; once a dice
    profile is picked it fills solid, the same on/off language as the chip
    toggles below, so the mode change is unmissable rather than a quiet
-   label swap. */
+   label swap. appearance:none strips iOS Safari's own blue/gray select
+   chrome, which would otherwise clash with the flat dark styling here —
+   the OS picker that opens on tap is unaffected either way. */
+.ctl-dice-wrap{position:relative;display:inline-flex;flex:0 0 auto;}
+
+.ctl-dice-wrap::after{
+  content:"";position:absolute;right:9px;top:50%;
+  width:0;height:0;pointer-events:none;
+  border-left:4px solid transparent;border-right:4px solid transparent;
+  border-top:5px solid var(--bone-dim);
+  transform:translateY(-50%);
+}
+
+.ctl-dice-wrap--active::after{border-top-color:var(--ink-on-accent);}
+
 .ctl-dice{
+  appearance:none;-webkit-appearance:none;-moz-appearance:none;
   min-width:44px;height:44px;flex:0 0 auto;
-  padding:0 8px;
+  padding:0 22px 0 8px;
   background:transparent;border:1px solid var(--line);
   color:var(--bone-dim);font-family:var(--mono);font-weight:600;
   font-size:var(--fs-2xs);letter-spacing:.04em;
@@ -218,5 +236,5 @@
 
 @media print{
   .result{position:static;}
-  .ctl-btn,.ctl-dice,.chip-toggle{display:none;}
+  .ctl-btn,.ctl-dice-wrap,.chip-toggle{display:none;}
 }
