@@ -1,0 +1,243 @@
+.lead{padding:34px 0 22px;}
+
+.lead h1{
+  font-family:var(--display);font-weight:800;
+  font-size:clamp(32px,6vw,54px);line-height:.96;
+  letter-spacing:-.03em;margin:0 0 10px;
+}
+
+.lead p{margin:0;color:var(--bone-dim);font-size:var(--fs-sm);}
+
+/* ---- the answer ----
+   Sticky under the site bar so it stays on screen while you thumb through
+   the inputs below it. Opaque background, because the page ground is a
+   dotted texture and a translucent panel would show the controls sliding
+   underneath it. */
+
+.result{
+  position:sticky;
+  top:calc(var(--bar-h) + 4px);
+  z-index:4;
+  background:var(--ground-2);
+  border:1px solid var(--accent-lo);
+  border-top:2px solid var(--accent-solid);
+  padding:14px 14px 12px;
+}
+
+.stats{
+  display:grid;
+  grid-template-columns:repeat(2,minmax(0,1fr));
+  gap:1px;
+  background:var(--line);
+  border:1px solid var(--line);
+}
+
+.stat{background:var(--ground-3);padding:10px 12px 11px;}
+
+.stat-name{
+  font-family:var(--mono);font-size:var(--fs-2xs);
+  letter-spacing:.18em;text-transform:uppercase;
+  color:var(--bone-dim);margin-bottom:4px;
+}
+
+/* The two figures are the whole point of the page, so they get the display
+   tier rather than a step on the six-size scale — same exception the hero
+   headings take. Mono, so the digits do not jitter as they update. */
+.stat-fig{
+  font-family:var(--mono);font-weight:600;
+  font-size:clamp(30px,8.5vw,42px);
+  font-variant-numeric:tabular-nums;
+  line-height:1;color:var(--accent);
+}
+
+.stat-foot{
+  font-family:var(--mono);font-size:var(--fs-2xs);
+  font-variant-numeric:tabular-nums;
+  letter-spacing:.08em;color:var(--bone-dim);margin-top:6px;
+}
+
+/* the teaching line: attacks → hits → wounds → through */
+.chain{
+  display:flex;flex-wrap:wrap;align-items:baseline;gap:4px 6px;
+  margin:12px 0 0;
+  font-family:var(--mono);font-size:var(--fs-2xs);
+  font-variant-numeric:tabular-nums;
+  letter-spacing:.06em;text-transform:uppercase;color:var(--bone-dim);
+}
+
+.chain span{display:inline-flex;align-items:baseline;gap:5px;}
+
+.chain span + span::before{
+  content:"→";color:var(--accent);margin-right:1px;
+}
+
+.chain b{
+  font-weight:600;font-size:var(--fs-md);
+  color:var(--bone);letter-spacing:0;
+}
+
+/* the per-roll chances behind the chain: what "3+ to hit" is actually
+   worth. Normally three steps (hit/wound/save); Feel No Pain adds a fourth
+   that wraps onto its own row rather than squeezing four into one, so each
+   column stays wide enough for its caption. */
+.steps{
+  display:grid;grid-template-columns:repeat(3,minmax(0,1fr));
+  gap:10px;margin:10px 0 0;
+  padding-top:9px;border-top:1px solid var(--line);
+}
+
+.step:nth-child(4){grid-column:1;}
+
+.step{display:flex;flex-direction:column;gap:1px;}
+
+.step-pct{
+  font-family:var(--mono);font-weight:600;font-size:var(--fs-md);
+  font-variant-numeric:tabular-nums;
+  color:var(--bone);line-height:1.1;
+}
+
+.step-name{
+  font-family:var(--mono);font-size:var(--fs-2xs);
+  font-variant-numeric:tabular-nums;
+  letter-spacing:.02em;text-transform:uppercase;
+  color:var(--bone-dim);line-height:1.3;
+}
+
+/* ---- input panels ---- */
+
+.panel{padding-top:26px;}
+
+.panel > h2{
+  font-family:var(--mono);font-size:var(--fs-xs);
+  letter-spacing:.2em;text-transform:uppercase;
+  color:var(--bone-dim);font-weight:500;
+  padding-bottom:8px;border-bottom:1px solid var(--line);
+  margin:0 0 2px;
+}
+
+.ctl{
+  display:grid;
+  grid-template-columns:minmax(0,1fr) auto;
+  gap:10px;align-items:center;
+  padding:7px 0;
+  border-bottom:1px solid var(--line);
+}
+
+.ctl-name{display:block;font-size:var(--fs-md);}
+
+.ctl-hint{
+  display:block;font-family:var(--mono);font-size:var(--fs-2xs);
+  letter-spacing:.08em;color:var(--bone-dim);margin-top:2px;
+}
+
+.ctl-set{display:flex;align-items:center;gap:4px;}
+
+.ctl-btn{
+  width:44px;height:44px;flex:0 0 auto;
+  background:transparent;border:1px solid var(--line);
+  color:var(--bone);font-size:var(--fs-base);line-height:1;
+  cursor:pointer;touch-action:manipulation;
+  transition:background .14s ease,border-color .14s ease;
+}
+
+.ctl-btn:hover:not(:disabled){background:var(--ground-2);border-color:var(--accent);}
+.ctl-btn:active:not(:disabled){background:var(--accent-solid);color:var(--ink-on-accent);}
+.ctl-btn:disabled{color:var(--bone-dim);opacity:.35;cursor:default;}
+
+.ctl-val{
+  min-width:3.4ch;text-align:center;
+  font-family:var(--mono);font-weight:600;font-size:var(--fs-base);
+  font-variant-numeric:tabular-nums;
+  color:var(--bone);
+}
+
+/* The Attacks/Damage dice-roll picker, inline with their stepper. A native
+   <select> rather than a cycle button — tapping it opens the OS's own
+   picker with every profile listed, so any option (including getting back
+   to "Fixed") is one tap away instead of several taps of cycling.
+   "Fixed" reads as a plain outline like any other control; once a dice
+   profile is picked it fills solid, the same on/off language as the chip
+   toggles below, so the mode change is unmissable rather than a quiet
+   label swap. appearance:none strips iOS Safari's own blue/gray select
+   chrome, which would otherwise clash with the flat dark styling here —
+   the OS picker that opens on tap is unaffected either way. */
+.ctl-dice-wrap{position:relative;display:inline-flex;flex:0 0 auto;}
+
+.ctl-dice-wrap::after{
+  content:"";position:absolute;right:9px;top:50%;
+  width:0;height:0;pointer-events:none;
+  border-left:4px solid transparent;border-right:4px solid transparent;
+  border-top:5px solid var(--bone-dim);
+  transform:translateY(-50%);
+}
+
+.ctl-dice-wrap--active::after{border-top-color:var(--ink-on-accent);}
+
+.ctl-dice{
+  appearance:none;-webkit-appearance:none;-moz-appearance:none;
+  min-width:44px;height:44px;flex:0 0 auto;
+  padding:0 22px 0 8px;
+  background:transparent;border:1px solid var(--line);
+  color:var(--bone-dim);font-family:var(--mono);font-weight:600;
+  font-size:var(--fs-2xs);letter-spacing:.04em;
+  font-variant-numeric:tabular-nums;
+  cursor:pointer;touch-action:manipulation;
+  transition:background .14s ease,border-color .14s ease,color .14s ease;
+}
+
+.ctl-dice:hover{color:var(--bone);border-color:var(--accent);}
+
+.ctl-dice--active{
+  background:var(--accent-solid);border-color:var(--accent-solid);
+  color:var(--ink-on-accent);
+}
+
+/* ---- toggles ---- */
+
+.chips{display:flex;flex-wrap:wrap;gap:8px;padding-top:12px;}
+
+.chip-toggle{
+  display:flex;flex-direction:column;gap:3px;
+  min-height:44px;justify-content:center;
+  padding:8px 14px;text-align:left;
+  background:transparent;border:1px solid var(--line);
+  color:var(--bone-dim);font-size:var(--fs-sm);
+  cursor:pointer;touch-action:manipulation;
+}
+
+.chip-toggle span{
+  font-family:var(--mono);font-size:var(--fs-2xs);
+  font-variant-numeric:tabular-nums;
+  letter-spacing:.12em;text-transform:uppercase;
+}
+
+.chip-toggle:hover{color:var(--bone);border-color:var(--accent);}
+
+.chip-toggle[aria-pressed="true"]{
+  background:var(--accent-solid);border-color:var(--accent-solid);
+  color:var(--ink-on-accent);font-weight:500;
+}
+
+.chip-toggle[aria-pressed="true"] span{color:var(--ink-on-accent);opacity:.75;}
+
+.chip-note{
+  margin:12px 0 0;color:var(--bone-dim);
+  font-size:var(--fs-sm);line-height:1.55;
+}
+
+@media (min-width:700px){
+  .result{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:16px 22px;align-items:start;}
+  .stats{grid-row:span 2;}
+  .chain{margin-top:0;align-self:end;}
+  .steps{margin-top:0;align-self:start;}
+  .ctls{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:0 32px;}
+}
+
+@media (prefers-reduced-motion:reduce){
+  .ctl-btn,.ctl-dice{transition:none;}
+}
+
+@media print{
+  .result{position:static;}
+  .ctl-btn,.ctl-dice-wrap,.chip-toggle{display:none;}
+}

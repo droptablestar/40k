@@ -71,11 +71,12 @@
         </div>
       </details>
       <details class="nav-drop">
-        <summary{% if page.url == "/turn-order.html" or page.url == "/charts.html" or page.url == "/keywords.html" or page.url == "/rules-changes.html" %} class="here"{% endif %}>Rules</summary>
+        <summary{% if page.url == "/turn-order.html" or page.url == "/charts.html" or page.url == "/keywords.html" or page.url == "/rules-changes.html" or page.url == "/odds.html" %} class="here"{% endif %}>Rules</summary>
         <div class="nav-panel">
           {{ navitem("/turn-order.html", "Turn order", collections.all) }}
           {{ navitem("/keywords.html", "Keywords & abilities", collections.all) }}
           {{ navitem("/charts.html", "Charts", collections.all) }}
+          {{ navitem("/odds.html", "Can I hurt that?", collections.all) }}
           {{ navitem("/rules-changes.html", "What changed in 11th", collections.all) }}
         </div>
       </details>
