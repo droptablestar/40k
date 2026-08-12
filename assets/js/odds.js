@@ -35,21 +35,15 @@
     { label: "3D6",   n: 3, sides: 6, mod: 0 }
   ];
 
-  function diceFmt(v) { return DICE_PRESETS[v].label; }
-
   var FIELDS = [
     { group: "attack", key: "attacks",   label: "Attacks",        min: 1, max: 60, value: 10,
       diceKey: "attacksDice" },
-    { group: "attack", key: "attacksDice", label: "Attacks roll", min: 0, max: DICE_PRESETS.length - 1,
-      value: 0, fmt: diceFmt, hint: "Fixed, or a dice profile" },
     { group: "attack", key: "hit",       label: "Hit roll",       min: 2, max: 6,  value: 3, fmt: plus,
       hint: "Ballistic or weapon skill" },
     { group: "attack", key: "strength",  label: "Strength",       min: 1, max: 24, value: 4 },
     { group: "attack", key: "ap",        label: "Armour piercing", min: -4, max: 0, value: 0, fmt: ap },
     { group: "attack", key: "damage",    label: "Damage",         min: 1, max: 12, value: 1,
       diceKey: "damageDice" },
-    { group: "attack", key: "damageDice", label: "Damage roll",  min: 0, max: DICE_PRESETS.length - 1,
-      value: 0, fmt: diceFmt, hint: "Fixed, or a dice profile" },
 
     { group: "target", key: "toughness", label: "Toughness",      min: 1, max: 16, value: 4 },
     { group: "target", key: "save",      label: "Save",           min: 2, max: 7,  value: 3, fmt: saveFmt },
@@ -66,6 +60,10 @@
   var state = {};
   FIELDS.forEach(function (f) { state[f.key] = f.value; });
   TOGGLES.forEach(function (t) { state[t.key] = false; });
+  // Attacks and Damage each pair with a dice-roll cycle button living in the
+  // same row as their stepper (index 0 = "Fixed", i.e. use the stepper).
+  state.attacksDice = 0;
+  state.damageDice = 0;
 
   function plus(v) { return v + "+"; }
   function ap(v) { return v === 0 ? "0" : "−" + Math.abs(v); }
@@ -267,12 +265,20 @@
   }
 
   function ctlHtml(f) {
+    // Attacks and Damage get a dice-roll cycle button inline, ahead of their
+    // own stepper — "Fixed" (the numeric stepper) is one tap away like any
+    // other profile, not a separate row easy to miss.
+    var dice = f.diceKey ?
+      '<button class="ctl-dice" type="button" data-dice="' + f.diceKey +
+        '" id="dice-' + f.diceKey + '" aria-label="' + esc(f.label) + ' roll type">' +
+        esc(DICE_PRESETS[state[f.diceKey]].label) + '</button>' : '';
     return '<div class="ctl">' +
       '<div class="ctl-label">' +
         '<span class="ctl-name" id="lab-' + f.key + '">' + esc(f.label) + '</span>' +
         (f.hint ? '<span class="ctl-hint">' + esc(f.hint) + '</span>' : '') +
       '</div>' +
       '<div class="ctl-set">' +
+        dice +
         '<button class="ctl-btn" type="button" data-act="dec" data-k="' + f.key +
           '" aria-label="Lower ' + esc(f.label) + '">&minus;</button>' +
         '<output class="ctl-val" id="val-' + f.key + '" aria-labelledby="lab-' + f.key + '">' +
@@ -319,6 +325,12 @@
       var locked = f.diceKey && state[f.diceKey] !== 0;
       dec.disabled = locked || state[f.key] <= f.min;
       inc.disabled = locked || state[f.key] >= f.max;
+
+      if (f.diceKey) {
+        var diceBtn = document.getElementById("dice-" + f.diceKey);
+        diceBtn.textContent = DICE_PRESETS[state[f.diceKey]].label;
+        diceBtn.classList.toggle("ctl-dice--active", state[f.diceKey] !== 0);
+      }
     });
 
     TOGGLES.forEach(function (t) {
@@ -387,6 +399,16 @@
   document.addEventListener("click", function (e) {
     var t = e.target.closest ? e.target.closest("[data-t]") : null;
     if (t) { state[t.getAttribute("data-t")] = !state[t.getAttribute("data-t")]; render(); return; }
+
+    // Tap cycles forward through the dice presets, wrapping back to "Fixed" —
+    // the list is short enough that a single button beats a +/- pair here.
+    var d = e.target.closest ? e.target.closest("[data-dice]") : null;
+    if (d) {
+      var key = d.getAttribute("data-dice");
+      state[key] = (state[key] + 1) % DICE_PRESETS.length;
+      render();
+      return;
+    }
 
     var b = e.target.closest ? e.target.closest(".ctl-btn") : null;
     if (!b || b.disabled) return;

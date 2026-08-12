@@ -148,6 +148,29 @@
   color:var(--bone);
 }
 
+/* The Attacks/Damage dice-roll cycle button, inline with their stepper.
+   "Fixed" reads as a plain outline like any other control; once a dice
+   profile is picked it fills solid, the same on/off language as the chip
+   toggles below, so the mode change is unmissable rather than a quiet
+   label swap. */
+.ctl-dice{
+  min-width:44px;height:44px;flex:0 0 auto;
+  padding:0 8px;
+  background:transparent;border:1px solid var(--line);
+  color:var(--bone-dim);font-family:var(--mono);font-weight:600;
+  font-size:var(--fs-2xs);letter-spacing:.04em;
+  font-variant-numeric:tabular-nums;
+  cursor:pointer;touch-action:manipulation;
+  transition:background .14s ease,border-color .14s ease,color .14s ease;
+}
+
+.ctl-dice:hover{color:var(--bone);border-color:var(--accent);}
+
+.ctl-dice--active{
+  background:var(--accent-solid);border-color:var(--accent-solid);
+  color:var(--ink-on-accent);
+}
+
 /* ---- toggles ---- */
 
 .chips{display:flex;flex-wrap:wrap;gap:8px;padding-top:12px;}
@@ -190,10 +213,10 @@
 }
 
 @media (prefers-reduced-motion:reduce){
-  .ctl-btn{transition:none;}
+  .ctl-btn,.ctl-dice{transition:none;}
 }
 
 @media print{
   .result{position:static;}
-  .ctl-btn,.chip-toggle{display:none;}
+  .ctl-btn,.ctl-dice,.chip-toggle{display:none;}
 }
