@@ -1,6 +1,6 @@
 /* Attack resolver.
  *
- * A pure function of nine numbers and two toggles: no storage, no network,
+ * A pure function of eleven numbers and two toggles: no storage, no network,
  * no state beyond the current control values. Everything is computed exactly
  * (closed-form probabilities and an exact binomial tail) rather than simulated,
  * so the same inputs always give the same answer.
@@ -15,13 +15,41 @@
      reads on their datasheet ("3+", "-1", "—"), so the stored value can stay
      a plain number the maths can use directly. */
 
+  /* A weapon's Attacks and Damage characteristics can be a fixed number or a
+     dice roll (D3, D6+1, 2D6, ...) instead — this is the standard set found
+     across real datasheets, including Blast's "+X per five models". Index 0
+     ("Fixed") means "use the paired numeric stepper" and is handled as a
+     plain number everywhere in the maths below. */
+  var DICE_PRESETS = [
+    { label: "Fixed" },
+    { label: "D3",    n: 1, sides: 3, mod: 0 },
+    { label: "D3+1",  n: 1, sides: 3, mod: 1 },
+    { label: "D3+2",  n: 1, sides: 3, mod: 2 },
+    { label: "D3+3",  n: 1, sides: 3, mod: 3 },
+    { label: "D6",    n: 1, sides: 6, mod: 0 },
+    { label: "D6+1",  n: 1, sides: 6, mod: 1 },
+    { label: "D6+2",  n: 1, sides: 6, mod: 2 },
+    { label: "D6+3",  n: 1, sides: 6, mod: 3 },
+    { label: "2D6",   n: 2, sides: 6, mod: 0 },
+    { label: "2D6+3", n: 2, sides: 6, mod: 3 },
+    { label: "3D6",   n: 3, sides: 6, mod: 0 }
+  ];
+
+  function diceFmt(v) { return DICE_PRESETS[v].label; }
+
   var FIELDS = [
-    { group: "attack", key: "attacks",   label: "Attacks",        min: 1, max: 60, value: 10 },
+    { group: "attack", key: "attacks",   label: "Attacks",        min: 1, max: 60, value: 10,
+      diceKey: "attacksDice" },
+    { group: "attack", key: "attacksDice", label: "Attacks roll", min: 0, max: DICE_PRESETS.length - 1,
+      value: 0, fmt: diceFmt, hint: "Fixed, or a dice profile" },
     { group: "attack", key: "hit",       label: "Hit roll",       min: 2, max: 6,  value: 3, fmt: plus,
       hint: "Ballistic or weapon skill" },
     { group: "attack", key: "strength",  label: "Strength",       min: 1, max: 24, value: 4 },
     { group: "attack", key: "ap",        label: "Armour piercing", min: -4, max: 0, value: 0, fmt: ap },
-    { group: "attack", key: "damage",    label: "Damage",         min: 1, max: 12, value: 1 },
+    { group: "attack", key: "damage",    label: "Damage",         min: 1, max: 12, value: 1,
+      diceKey: "damageDice" },
+    { group: "attack", key: "damageDice", label: "Damage roll",  min: 0, max: DICE_PRESETS.length - 1,
+      value: 0, fmt: diceFmt, hint: "Fixed, or a dice profile" },
 
     { group: "target", key: "toughness", label: "Toughness",      min: 1, max: 16, value: 4 },
     { group: "target", key: "save",      label: "Save",           min: 2, max: 7,  value: 3, fmt: saveFmt },
@@ -43,7 +71,13 @@
   function ap(v) { return v === 0 ? "0" : "−" + Math.abs(v); }
   function saveFmt(v) { return v >= 7 ? "—" : v + "+"; }
 
-  function show(f) { return f.fmt ? f.fmt(state[f.key]) : String(state[f.key]); }
+  // A field paired with a dice-roll selector (Attacks, Damage) shows the
+  // dice notation instead of its own number once that selector leaves
+  // "Fixed" — the number comes from the formula, not the stepper.
+  function show(f) {
+    if (f.diceKey && state[f.diceKey] !== 0) return DICE_PRESETS[state[f.diceKey]].label;
+    return f.fmt ? f.fmt(state[f.key]) : String(state[f.key]);
+  }
 
   /* ---------- the maths ---------- */
 
@@ -94,6 +128,64 @@
     return pmf;
   }
 
+  /* A single die's pmf: dense array where index = face value. D3 is exact
+     here (roll 1d6, halve round up gives {1,2,3} each at 1/3, same as a
+     uniform 3-sided die), not an approximation of the official method. */
+  function dieDist(sides) {
+    var pmf = [0], p = 1 / sides, i;
+    for (i = 1; i <= sides; i++) pmf[i] = p;
+    return pmf;
+  }
+
+  // pmf of the sum of two independent dense distributions, each indexed
+  // from 0.
+  function convolve(a, b) {
+    var out = new Array(a.length + b.length - 1), i, j;
+    for (i = 0; i < out.length; i++) out[i] = 0;
+    for (i = 0; i < a.length; i++) {
+      if (!a[i]) continue;
+      for (j = 0; j < b.length; j++) {
+        if (b[j]) out[i + j] += a[i] * b[j];
+      }
+    }
+    return out;
+  }
+
+  // pmf of "roll `preset.n` dice of `preset.sides` and add `preset.mod`".
+  function diceDist(preset) {
+    var die = dieDist(preset.sides), pmf = [1], i;
+    for (i = 0; i < preset.n; i++) pmf = convolve(pmf, die);
+    if (preset.mod) {
+      var shifted = new Array(pmf.length + preset.mod);
+      for (i = 0; i < preset.mod; i++) shifted[i] = 0;
+      for (i = 0; i < pmf.length; i++) shifted[i + preset.mod] = pmf[i];
+      pmf = shifted;
+    }
+    return pmf;
+  }
+
+  function expectedValue(pmf) {
+    var e = 0, i;
+    for (i = 0; i < pmf.length; i++) e += i * pmf[i];
+    return e;
+  }
+
+  // Mixes binomial(n, p) over every possible attack count `n`, weighted by
+  // how likely a variable Attacks roll is to land on that count — this is
+  // the distribution of unsaved wounds getting through when Attacks itself
+  // is random (rolled once, same as the Core Rules sequence).
+  function mixedBinomial(attacksPmf, p) {
+    var maxN = attacksPmf.length - 1;
+    var out = new Array(maxN + 1), n, k;
+    for (k = 0; k <= maxN; k++) out[k] = 0;
+    for (n = 0; n <= maxN; n++) {
+      if (!attacksPmf[n]) continue;
+      var bn = binomial(n, p);
+      for (k = 0; k <= n; k++) out[k] += attacksPmf[n] * bn[k];
+    }
+    return out;
+  }
+
   function compute() {
     var hit = hitChance();
     var wNeed = woundNeed(state.strength, state.toughness);
@@ -103,32 +195,60 @@
     var pFail = sNeed >= 7 ? 1 : (sNeed - 1) / 6;
     var pThrough = hit.p * pWound * pFail;
 
-    var n = state.attacks;
-    var pmf = binomial(n, pThrough);
+    var attacksLabel, expectedN, kPmf;
+    if (state.attacksDice === 0) {
+      expectedN = state.attacks;
+      kPmf = binomial(state.attacks, pThrough);
+      attacksLabel = String(state.attacks);
+    } else {
+      var attacksPreset = DICE_PRESETS[state.attacksDice];
+      var attacksPmf = diceDist(attacksPreset);
+      expectedN = expectedValue(attacksPmf);
+      kPmf = mixedBinomial(attacksPmf, pThrough);
+      attacksLabel = attacksPreset.label;
+    }
+    var maxK = kPmf.length - 1;
 
     // Damage that spills past the model's last wound is wasted, so the
-    // expected damage is the average of min(k * D, W), not attacks * damage.
-    var expDamage = 0, k;
-    for (k = 0; k <= n; k++) {
-      expDamage += pmf[k] * Math.min(k * state.damage, state.wounds);
+    // expected damage is the average of min(damage dealt, W), not
+    // attacks * damage.
+    var expDamage = 0, kill = 0, k;
+    if (state.damageDice === 0) {
+      // It dies on ceil(W / D) unsaved wounds or more.
+      var needed = Math.ceil(state.wounds / state.damage);
+      for (k = 0; k <= maxK; k++) {
+        expDamage += kPmf[k] * Math.min(k * state.damage, state.wounds);
+        if (k >= needed) kill += kPmf[k];
+      }
+    } else {
+      // Variable Damage is rolled separately for each unsaved wound, so the
+      // total for `k` wounds is the k-fold sum of the per-hit die — built
+      // incrementally as k grows rather than convolved from scratch each time.
+      var perHit = diceDist(DICE_PRESETS[state.damageDice]);
+      var dmgPmf = [1], d;
+      for (k = 0; k <= maxK; k++) {
+        if (k > 0) dmgPmf = convolve(dmgPmf, perHit);
+        if (!kPmf[k]) continue;
+        for (d = 0; d < dmgPmf.length; d++) {
+          if (!dmgPmf[d]) continue;
+          expDamage += kPmf[k] * dmgPmf[d] * Math.min(d, state.wounds);
+          if (d >= state.wounds) kill += kPmf[k] * dmgPmf[d];
+        }
+      }
     }
-
-    // It dies on ceil(W / D) unsaved wounds or more.
-    var needed = Math.ceil(state.wounds / state.damage);
-    var kill = 0;
-    for (k = needed; k <= n; k++) kill += pmf[k];
     if (kill > 1) kill = 1;
     if (kill < 0) kill = 0;
 
     return {
-      hits: n * hit.p,
-      wounds: n * hit.p * pWound,
-      through: n * pThrough,
+      hits: expectedN * hit.p,
+      wounds: expectedN * hit.p * pWound,
+      through: expectedN * pThrough,
       damage: expDamage,
       kill: kill,
       hitNeed: hit.need,
       woundNeed: wNeed,
       saveNeed: sNeed,
+      attacksLabel: attacksLabel,
       // The three per-roll chances behind the chain above, as fractions.
       // pHit already includes cover and the re-roll, so it moves when they do
       // even though the number on the dice does not.
@@ -194,8 +314,11 @@
       // rather than letting a tap silently do nothing.
       var dec = document.querySelector('[data-act="dec"][data-k="' + f.key + '"]');
       var inc = document.querySelector('[data-act="inc"][data-k="' + f.key + '"]');
-      dec.disabled = state[f.key] <= f.min;
-      inc.disabled = state[f.key] >= f.max;
+      // The paired numeric stepper locks once its dice selector leaves
+      // "Fixed" — the count comes from the roll, not the stepper.
+      var locked = f.diceKey && state[f.diceKey] !== 0;
+      dec.disabled = locked || state[f.key] <= f.min;
+      inc.disabled = locked || state[f.key] >= f.max;
     });
 
     TOGGLES.forEach(function (t) {
@@ -211,7 +334,7 @@
     document.getElementById("r-kill").textContent = Math.round(r.kill * 100) + "%";
 
     document.getElementById("r-chain").innerHTML =
-      '<span><b>' + state.attacks + '</b> attacks</span>' +
+      '<span><b>' + esc(r.attacksLabel) + '</b> attacks</span>' +
       '<span><b>' + one(r.hits) + '</b> hits</span>' +
       '<span><b>' + one(r.wounds) + '</b> wounds</span>' +
       '<span><b>' + one(r.through) + '</b> get through</span>';
