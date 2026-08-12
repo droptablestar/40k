@@ -13,10 +13,13 @@ index.html                 Landing page, grouped by when you'd reach for a page
 painting.html               Painting guide: beginner track
 painting-reference.html     Painting guide: technique reference
 tracker.html                 Battle tracker: CP, VP, round, per-unit damage
+roster.html                  Paint log: armies, units, painting stage, percent table-ready
 _includes/base.njk          Shared layout: head, nav, footer
 assets/style.css             Shared design tokens and components
 assets/css/{page}.css        Per-page CSS
 assets/js/tracker.js         Tracker's vanilla JS
+worker/paint-log-api.mjs     Worker behind /api/*, for the paint log's stored copy
+migrations/                  D1 schema for the paint log
 ```
 
 Each `.html` file at the root is front matter + body content only. See
@@ -50,6 +53,18 @@ confusing than useful); track that on the table instead.
 
 **It is per-device.** Two phones do not sync. Either one person tracks the whole
 game, or each player tracks their own army and you compare VP at the end.
+
+## Paint log
+
+Armies, the units in them, and how far each one is through painting. Unlike the
+tracker this is **not** per-device: each log has a four-word code, the log is
+stored in Cloudflare D1 under that code, and typing the code on any device
+opens the same log. The browser copy is the offline fallback, so it keeps
+working at a shop with no signal and catches up afterwards.
+
+The database is not created yet — the `d1_databases` block in `wrangler.jsonc`
+is commented out, and until it is filled in the log stays on the device and the
+page says so. See CLAUDE.md's Paint log section for the two commands.
 
 Each page sets a section class on `<body>` (the `bodyClass` front matter field)
 which swaps the accent colour:

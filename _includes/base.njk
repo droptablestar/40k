@@ -62,12 +62,13 @@
         </div>
       </details>
       <details class="nav-drop">
-        <summary{% if page.url == "/painting.html" or page.url == "/painting-reference.html" or page.url == "/painting-table-ready.html" or page.url == "/troubleshooting.html" %} class="here"{% endif %}>Painting</summary>
+        <summary{% if page.url == "/painting.html" or page.url == "/painting-reference.html" or page.url == "/painting-table-ready.html" or page.url == "/troubleshooting.html" or page.url == "/roster.html" %} class="here"{% endif %}>Painting</summary>
         <div class="nav-panel">
           {{ navitem("/painting.html", "Painting, start to finish", collections.all) }}
           {{ navitem("/painting-reference.html", "Technique reference", collections.all) }}
           {{ navitem("/painting-table-ready.html", "Table-ready painting", collections.all) }}
           {{ navitem("/troubleshooting.html", "When it goes wrong", collections.all) }}
+          {{ navitem("/roster.html", "Paint log", collections.all) }}
         </div>
       </details>
       <details class="nav-drop">
@@ -111,6 +112,12 @@
 <script src="/assets/js/tips.js" defer></script>
 <script src="/assets/js/heading-anchors.js" defer></script>
 <script src="/assets/js/folds.js" defer></script>
-{% if pageJs %}<script src="/assets/{{ pageJs }}" defer></script>
+{#- device storage guard, shared by the tracker and the paint log. defer keeps
+    it ahead of the page script that calls BenchStore.open(). -#}
+<script src="/assets/js/store.js" defer></script>
+{#- data files and helpers a page needs loaded before its own script. defer
+    runs them in document order, so pageJs still runs last. -#}
+{% if pageJsExtra %}{% for extra in pageJsExtra %}<script src="/assets/{{ extra }}" defer></script>
+{% endfor %}{% endif %}{% if pageJs %}<script src="/assets/{{ pageJs }}" defer></script>
 {% endif %}</body>
 </html>

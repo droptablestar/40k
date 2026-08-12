@@ -1,30 +1,9 @@
 (function(){
   "use strict";
 
-  var KEY = "benchtable:battle:v1";
-
-  /* ---------- storage with in-memory fallback ---------- */
-
-  var store = (function(){
-    var memory = null, usable = true;
-    try {
-      window.localStorage.setItem("__bt_test", "1");
-      window.localStorage.removeItem("__bt_test");
-    } catch (e) { usable = false; }
-    return {
-      usable: usable,
-      read: function(){
-        if (!usable) return memory;
-        try { return JSON.parse(window.localStorage.getItem(KEY)); }
-        catch (e) { return null; }
-      },
-      write: function(value){
-        if (!usable) { memory = value; return; }
-        try { window.localStorage.setItem(KEY, JSON.stringify(value)); }
-        catch (e) { /* quota or private mode; keep playing */ }
-      }
-    };
-  })();
+  /* Storage, with the in-memory fallback, lives in assets/js/store.js — the
+     paint log needs the identical guard and two copies would drift. */
+  var store = window.BenchStore.open("benchtable:battle:v1");
 
   if (!store.usable) {
     document.getElementById("nostore").hidden = false;

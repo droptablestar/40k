@@ -22,10 +22,15 @@ index.html                    Landing page (content + front matter, no <head>/na
 painting.html                 Painting guide: beginner track
 painting-reference.html       Painting guide: technique reference
 tracker.html                  Battle tracker: CP, VP, round, per-unit damage
+roster.html                   Paint log: armies, units, painting stage, percent table-ready
 _includes/base.njk            Shared layout: <head>, sitebar/nav, main/wrap, footer
 assets/style.css               Shared design tokens and components (loaded on every page)
 assets/css/{page}.css          Per-page CSS, one file per top-level page
 assets/js/tracker.js           Tracker's vanilla JS logic
+assets/js/roster.js            Paint log's vanilla JS logic
+assets/js/store.js             localStorage wrapper shared by the tracker and the paint log
+worker/paint-log-api.mjs       Worker: /api/* only. Everything else is a static asset.
+migrations/                    D1 schema, applied by hand with wrangler
 .eleventy.js                   Eleventy config (passthrough copy, template engine)
 wrangler.jsonc                 Cloudflare Worker config (assets.directory: _site)
 ```
@@ -41,6 +46,8 @@ title / description      <title> and meta description
 bodyClass                s-painting or s-rules (sets the section accent)
 pageCss                  path under assets/, e.g. css/painting.css
 pageJs                   path under assets/, e.g. js/tracker.js (optional)
+pageJsExtra              list of scripts loaded before pageJs — data files and
+                         helpers the page script expects to already be there
 extraFooter               raw HTML appended to the shared footer (optional)
 themeColor                sets <meta name="theme-color"> (optional)
 ```
@@ -208,10 +215,57 @@ the whole surface. Per-unit damage tracking was tried and removed; the
 models-vs-wounds distinction was more confusing than useful, so use a
 physical damage tracker (dice, tokens) at the table instead.
 
-Per-device. Two phones do not sync. If sync gets built, the plan is per-army
-write ownership — each phone writes only its own army, reads the other — over
-Cloudflare KV or D1, with polling rather than WebSockets. Keep localStorage as
-the offline fallback; the site has to work at a shop with no signal.
+Per-device. Two phones do not sync. If sync gets built, do it the way the paint
+log does it — D1, polling, localStorage demoted to the offline copy.
+
+## Paint log
+
+`roster.html` + `assets/js/roster.js`, with the durable copy in D1 behind
+`worker/paint-log-api.mjs`. Armies (factions), the units in them, and how far
+each unit is through the nine painting stages. The headline figure is the
+percentage of miniatures that are table-ready, per army and across the lot.
+
+Hand-entered data must survive a browser wipe, so localStorage is the offline
+copy and **D1 is the record**. Every edit writes to the device first and
+renders immediately — a tap never waits on a network — then goes up debounced,
+retried on reconnect. The page polls every 30s while visible.
+
+```
+localStorage   benchtable:roster:v2      { code, doc }
+D1             roster / faction / unit   migrations/0001_paint_log.sql
+API            GET|PUT /api/paint-log/<code>
+```
+
+There are no accounts. A log is identified by a **four-word code** (
+`rust-hive-brass-nine`, from `assets/js/paint-log-words.js`) which sits in the
+URL as `?log=`, and can be typed back in on any device. The code is the whole
+credential: anyone holding it can read and write that log. It is only as
+durable as wherever it gets written down, which is why the page nags about
+recording it outside the browser and keeps it visible and copyable afterwards.
+
+Merges are per row, not per document: every faction and unit carries its own
+`updatedAt` and the newer one wins, on both ends. Deletes are tombstones so an
+offline delete isn't undone by the other device syncing a stale copy back up.
+Stamps are monotonic per device (`now()` in roster.js) — two taps inside the
+same millisecond would otherwise tie, and a tie loses the second tap.
+
+Combat Patrol box contents live in `assets/js/combat-patrols.js` as plain data,
+so a box can be added by hand without touching any JS. Only add a box whose
+units and model counts can be checked against the box or its rules card — a log
+pre-filled with the wrong units is worse than an empty one.
+
+### Setting up the database
+
+Not provisioned yet. The `d1_databases` block in `wrangler.jsonc` is commented
+out on purpose: a placeholder id makes `wrangler deploy` fail outright and
+would take the whole site's deploys down. Until it is uncommented the API
+answers 501 and the page honestly says the log is on this device only.
+
+```bash
+npx wrangler d1 create benchtable            # prints the database_id
+# paste it into wrangler.jsonc and uncomment the block
+npx wrangler d1 migrations apply benchtable --remote
+```
 
 ## Content rules
 
