@@ -76,14 +76,17 @@
   color:var(--bone);letter-spacing:0;
 }
 
-/* the three per-roll chances behind the chain: what "3+ to hit" is actually
-   worth. Three equal columns so the figures sit in a row and can be compared
-   down the page; the caption under each may wrap without moving them. */
+/* the per-roll chances behind the chain: what "3+ to hit" is actually
+   worth. Normally three steps (hit/wound/save); Feel No Pain adds a fourth
+   that wraps onto its own row rather than squeezing four into one, so each
+   column stays wide enough for its caption. */
 .steps{
   display:grid;grid-template-columns:repeat(3,minmax(0,1fr));
   gap:10px;margin:10px 0 0;
   padding-top:9px;border-top:1px solid var(--line);
 }
+
+.step:nth-child(4){grid-column:1;}
 
 .step{display:flex;flex-direction:column;gap:1px;}
 
