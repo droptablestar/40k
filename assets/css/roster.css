@@ -87,6 +87,25 @@
 
 .btn.quiet{font-size:var(--fs-2xs);min-height:36px;padding:10px 12px;}
 
+/* other logs opened on this device, so switching doesn't mean retyping a
+   four-word code you already used once */
+.logswitch{margin-top:12px;}
+.logswitch[hidden]{display:none;}
+
+.logswitch label{
+  display:block;
+  font-family:var(--mono);font-size:var(--fs-2xs);letter-spacing:.18em;
+  text-transform:uppercase;color:var(--bone-dim);margin-bottom:6px;
+}
+
+.logswitch select{
+  display:block;width:100%;min-width:0;min-height:44px;
+  background:var(--ground);border:1px solid var(--line);color:var(--bone);
+  font-family:var(--body);font-size:var(--fs-md);padding:10px 12px;
+}
+.logswitch select:focus{outline:none;border-color:var(--accent);}
+.logswitch select:focus-visible{outline:2px solid var(--accent);outline-offset:2px;}
+
 .codesync{
   margin:10px 0 0;
   font-family:var(--mono);font-size:var(--fs-2xs);letter-spacing:.1em;

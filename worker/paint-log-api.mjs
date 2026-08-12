@@ -2,8 +2,9 @@
  *
  * Two routes, both keyed by the log's four-word code:
  *
- *   GET  /api/paint-log/<code>   read the whole log
- *   PUT  /api/paint-log/<code>   merge a device's copy in, get the result back
+ *   GET    /api/paint-log/<code>   read the whole log
+ *   PUT    /api/paint-log/<code>   merge a device's copy in, get the result back
+ *   DELETE /api/paint-log/<code>   remove the log and everything in it, for good
  *
  * There are no accounts on this site, so the code is the credential: whoever
  * has it can read and write that log. It is generated on the device, four
@@ -43,10 +44,11 @@ export default {
     try {
       if (request.method === "GET") return await read(env, code);
       if (request.method === "PUT") return await merge(env, code, request);
+      if (request.method === "DELETE") return await remove(env, code);
     } catch (err) {
       return json({ error: String(err && err.message || err) }, 500);
     }
-    return json({ error: "method not allowed" }, 405, { Allow: "GET, PUT" });
+    return json({ error: "method not allowed" }, 405, { Allow: "GET, PUT, DELETE" });
   }
 };
 
@@ -156,6 +158,28 @@ async function merge(env, code, request) {
 
   await env.DB.batch(stmts);
   return json(await load(env, code));
+}
+
+/* ---------- delete ---------- */
+
+async function remove(env, code) {
+  const roster = await env.DB
+    .prepare("SELECT id FROM roster WHERE id = ?")
+    .bind(code).first();
+  if (!roster) return json({ error: "no log with that code" }, 404);
+
+  // Explicit cascade rather than relying on ON DELETE CASCADE — D1's
+  // foreign-key enforcement is a per-connection pragma, not a guarantee.
+  await env.DB.batch([
+    env.DB.prepare(
+      "DELETE FROM unit WHERE faction_id IN " +
+      "(SELECT id FROM faction WHERE roster_id = ?)"
+    ).bind(code),
+    env.DB.prepare("DELETE FROM faction WHERE roster_id = ?").bind(code),
+    env.DB.prepare("DELETE FROM roster WHERE id = ?").bind(code)
+  ]);
+
+  return json({ ok: true });
 }
 
 /* ---------- input, made safe ----------

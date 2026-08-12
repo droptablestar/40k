@@ -211,10 +211,23 @@
     };
   }
 
+  /* Deletes the log everywhere — the server row and everything under it.
+     Not tied to an open() session, since the log being deleted from a
+     dropdown of saved logs may not be the one currently on screen. */
+  function remove(code) {
+    return fetch("/api/paint-log/" + encodeURIComponent(code), { method: "DELETE" })
+      .then(function (res) {
+        // 404: already gone. 501: no database, so nothing to delete anyway.
+        return res.ok || res.status === 404 || res.status === 501;
+      })
+      .catch(function () { return false; });
+  }
+
   window.PaintLogSync = {
     newCode: function () { return pick(4).join("-"); },
     valid: function (code) { return typeof code === "string" && CODE_RE.test(code.trim()); },
     merge: mergeDocs,
-    open: open
+    open: open,
+    remove: remove
   };
 })();

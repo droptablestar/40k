@@ -69,6 +69,12 @@ themeColor: "#242220"
     <button class="btn quiet" id="codecopy" type="button">Copy code</button>
     <button class="btn quiet" id="codeswitch" type="button">Open another log</button>
   </div>
+
+  <div class="logswitch" id="logswitchwrap" hidden>
+    <label for="logpick">Saved on this device</label>
+    <select id="logpick"></select>
+  </div>
+
   <p class="codesync" id="codesync"></p>
 </section>
 
@@ -104,6 +110,7 @@ themeColor: "#242220"
 
 <div class="actions">
   <button class="btn danger" id="clear" type="button">Clear log</button>
+  <button class="btn danger" id="deletelog" type="button">Delete this log</button>
   <span class="saved" id="saved">Saved on this device</span>
 </div>
 

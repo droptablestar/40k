@@ -10,9 +10,12 @@
 (function(){
   "use strict";
 
-  var store = window.BenchStore.open("benchtable:roster:v2");
-  var old   = window.BenchStore.open("benchtable:roster:v1");
-  var ack   = window.BenchStore.open("benchtable:roster-code-seen:v1");
+  var store   = window.BenchStore.open("benchtable:roster:v2");
+  var old     = window.BenchStore.open("benchtable:roster:v1");
+  var ack     = window.BenchStore.open("benchtable:roster-code-seen:v1");
+  var logHistory = window.BenchStore.open("benchtable:roster-history:v1");
+
+  var HISTORY_MAX = 20;
 
   /* ---------- stages ----------
      The order of work from painting.html, "Your first model, end to end",
@@ -161,6 +164,9 @@
     fill:      document.getElementById("pfill"),
     models:    document.getElementById("pmodels"),
     units:     document.getElementById("punits"),
+    switchWrap:document.getElementById("logswitchwrap"),
+    switchPick:document.getElementById("logpick"),
+    deleteLog: document.getElementById("deletelog"),
     pick:      document.getElementById("fpick"),
     fname:     document.getElementById("fname"),
     fnameWrap: document.getElementById("fnamewrap"),
@@ -175,6 +181,38 @@
   }
 
   function saveLocal(){ store.write({ code: code, doc: doc }); }
+
+  /* Every log this device has opened or created, most recent first — so
+     switching logs means picking from a list instead of retyping a code.
+     This is a local index only; the code itself is still the credential. */
+  function loadHistory(){
+    var h = logHistory.read();
+    return Array.isArray(h) ? h : [];
+  }
+
+  function touchHistory(c, label){
+    var list = loadHistory().filter(function(e){ return e && e.code !== c; });
+    list.unshift({ code: c, label: label || "", updatedAt: Date.now() });
+    if (list.length > HISTORY_MAX) list.length = HISTORY_MAX;
+    logHistory.write(list);
+    renderSwitcher();
+  }
+
+  function removeFromHistory(c){
+    logHistory.write(loadHistory().filter(function(e){ return e && e.code !== c; }));
+    renderSwitcher();
+  }
+
+  function renderSwitcher(){
+    var list = loadHistory();
+    el.switchWrap.hidden = list.length < 2;
+    if (list.length < 2) return;
+    el.switchPick.innerHTML = list.map(function(e){
+      var label = (e.label || "Unnamed log") + " — " + e.code;
+      return '<option value="' + esc(e.code) + '"' +
+        (e.code === code ? " selected" : "") + '>' + esc(label) + '</option>';
+    }).join("");
+  }
 
   function touched(){
     saveLocal();
@@ -456,13 +494,57 @@
       "Paint log — Bench & Table";
   }
 
+  el.logName.addEventListener("keydown", function(e){
+    if (e.key === "Enter") el.logName.blur();
+  });
+
   el.logName.addEventListener("change", function(){
     var name = el.logName.value.trim().slice(0, 60);
     if (name === doc.label) return;
     doc.label = name;
     el.logName.value = name;
     document.title = (name ? name + " — " : "") + "Paint log — Bench & Table";
+    touchHistory(code, name);
     touched();
+  });
+
+  el.switchPick.addEventListener("change", function(){
+    var picked = el.switchPick.value;
+    if (!picked || picked === code) return;
+    go(picked, blank(picked));
+  });
+
+  el.deleteLog.addEventListener("click", function(){
+    var label = doc.label ? '"' + doc.label + '"' : "This log";
+    if (!window.confirm(
+      label + " (" + code + ") will be deleted for good — every device, " +
+      "not just this one. The code stops working and nothing can bring it " +
+      "back. Delete it?"
+    )) return;
+
+    window.PaintLogSync.remove(code).then(function(ok){
+      if (!ok){
+        window.alert("Couldn't reach the server to delete it. Try again once you're online.");
+        return;
+      }
+      var goneCode = code;
+      removeFromHistory(goneCode);
+      if (sync){ sync.close(); sync = null; }
+      store.write(null);
+
+      var remaining = loadHistory();
+      if (remaining.length){
+        go(remaining[0].code, blank(remaining[0].code));
+      } else {
+        code = null;
+        doc  = null;
+        if (window.history && window.history.replaceState){
+          window.history.replaceState(null, "", "/roster.html");
+        }
+        el.body.hidden  = true;
+        el.start.hidden = false;
+      }
+    });
   });
 
   el.codeOk.addEventListener("click", function(){
@@ -537,6 +619,7 @@
     doc  = cleanDoc(nextDoc, code);
     putCodeInUrl();
     saveLocal();
+    touchHistory(code, doc.label);
     showCode();
     el.start.hidden = true;
     el.body.hidden = false;
@@ -549,6 +632,7 @@
         if (code !== nextCode) return; // a different log is on screen now
         doc = cleanDoc(window.PaintLogSync.merge(doc, server), code);
         saveLocal();
+        touchHistory(code, doc.label);
         showName();
         render();
       }
