@@ -149,6 +149,7 @@
     startErr:  document.getElementById("start-err"),
     body:      document.getElementById("logbody"),
     codeVal:   document.getElementById("codeval"),
+    logName:   document.getElementById("logname"),
     codeWrite: document.getElementById("codewrite"),
     codeOk:    document.getElementById("codeok"),
     codeCopy:  document.getElementById("codecopy"),
@@ -442,7 +443,27 @@
   function showCode(){
     el.codeVal.textContent = code;
     el.codeWrite.hidden = ack.read() === code;
+    showName();
   }
+
+  /* the name is only written back on change, so a poll landing mid-type
+     doesn't yank the field out from under the person typing in it. */
+  function showName(){
+    if (document.activeElement !== el.logName){
+      el.logName.value = doc.label || "";
+    }
+    document.title = (doc.label ? doc.label + " — " : "") +
+      "Paint log — Bench & Table";
+  }
+
+  el.logName.addEventListener("change", function(){
+    var name = el.logName.value.trim().slice(0, 60);
+    if (name === doc.label) return;
+    doc.label = name;
+    el.logName.value = name;
+    document.title = (name ? name + " — " : "") + "Paint log — Bench & Table";
+    touched();
+  });
 
   el.codeOk.addEventListener("click", function(){
     ack.write(code);
@@ -528,6 +549,7 @@
         if (code !== nextCode) return; // a different log is on screen now
         doc = cleanDoc(window.PaintLogSync.merge(doc, server), code);
         saveLocal();
+        showName();
         render();
       }
     });

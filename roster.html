@@ -49,7 +49,12 @@ themeColor: "#242220"
 <div id="logbody" hidden>
 
 <section class="logcode" id="logcode">
-  <p class="plabel">Your log code</p>
+  <p class="plabel"><label for="logname">This log</label></p>
+  <input class="logname" id="logname" type="text" maxlength="60"
+    placeholder="Name it — e.g. Josh's Tyranids" autocomplete="off"
+    enterkeyhint="done">
+
+  <p class="plabel plabel-code">Your log code</p>
   <p class="codeval"><output id="codeval"></output></p>
 
   <div class="codewrite" id="codewrite" hidden>
