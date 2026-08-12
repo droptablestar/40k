@@ -38,16 +38,24 @@
   var FIELDS = [
     { group: "attack", key: "attacks",   label: "Attacks",        min: 1, max: 60, value: 10,
       diceKey: "attacksDice" },
+    { group: "attack", key: "rapidFire", label: "Rapid Fire",     min: 0, max: 6,  value: 0, fmt: bonusFmt,
+      hint: "Extra attacks at half range" },
     { group: "attack", key: "hit",       label: "Hit roll",       min: 2, max: 6,  value: 3, fmt: plus,
       hint: "Ballistic or weapon skill" },
-    { group: "attack", key: "sustained", label: "Sustained Hits", min: 0, max: 3,  value: 0, fmt: sustainedFmt,
+    { group: "attack", key: "sustained", label: "Sustained Hits", min: 0, max: 3,  value: 0, fmt: bonusFmt,
       hint: "Extra hits on an unmodified hit roll of 6" },
+    { group: "attack", key: "anti",      label: "Anti",           min: 2, max: 7,  value: 7, fmt: saveFmt,
+      hint: "Wound rolls of this or more always wound" },
     { group: "attack", key: "strength",  label: "Strength",       min: 1, max: 24, value: 4 },
     { group: "attack", key: "ap",        label: "Armour piercing", min: -4, max: 0, value: 0, fmt: ap },
     { group: "attack", key: "damage",    label: "Damage",         min: 1, max: 12, value: 1,
       diceKey: "damageDice" },
+    { group: "attack", key: "minDamage", label: "Minimum damage", min: 0, max: 12, value: 0, fmt: bonusFmt,
+      hint: "Damage per hit can't roll below this" },
 
     { group: "target", key: "toughness", label: "Toughness",      min: 1, max: 16, value: 4 },
+    { group: "target", key: "models",    label: "Models in unit", min: 1, max: 30, value: 5,
+      hint: "For Blast's +1 attack per five models" },
     { group: "target", key: "save",      label: "Save",           min: 2, max: 7,  value: 3, fmt: saveFmt },
     { group: "target", key: "invuln",    label: "Invulnerable",   min: 2, max: 7,  value: 7, fmt: saveFmt,
       hint: "Ignores armour piercing" },
@@ -57,11 +65,18 @@
   ];
 
   var TOGGLES = [
-    { key: "cover",       label: "Target in cover",  note: "−1 to hit" },
-    { key: "ignoreCover", label: "Ignores cover",    note: "Cancels the −1 above" },
-    { key: "reroll1",     label: "Re-roll hit rolls of 1", note: "" },
-    { key: "torrent",     label: "Torrent",          note: "Auto-hits, no hit roll" },
-    { key: "devWounds",   label: "Devastating Wounds", note: "Wound rolls of 6 skip the save" }
+    { key: "cover",         label: "Target in cover",    note: "−1 to hit" },
+    { key: "ignoreCover",   label: "Ignores cover",      note: "Cancels the −1 above" },
+    { key: "heavy",         label: "Heavy",               note: "+1 to hit while stationary" },
+    { key: "reroll1",       label: "Re-roll hit rolls of 1", note: "" },
+    { key: "rerollAllHits", label: "Re-roll all hit rolls", note: "Replaces re-roll 1s above" },
+    { key: "halfRange",     label: "Within half range",  note: "Applies Rapid Fire above" },
+    { key: "blast",         label: "Blast",               note: "Applies models in unit above" },
+    { key: "torrent",       label: "Torrent",             note: "Auto-hits, no hit roll" },
+    { key: "lethalHits",    label: "Lethal Hits",         note: "Hit rolls of 6 auto-wound" },
+    { key: "devWounds",     label: "Devastating Wounds",  note: "Wound rolls of 6 skip the save" },
+    { key: "lance",         label: "Charged (Lance)",     note: "+1 to wound" },
+    { key: "rerollWound1",  label: "Re-roll wound rolls of 1", note: "Twin-linked" }
   ];
 
   var state = {};
@@ -75,7 +90,7 @@
   function plus(v) { return v + "+"; }
   function ap(v) { return v === 0 ? "0" : "−" + Math.abs(v); }
   function saveFmt(v) { return v >= 7 ? "—" : v + "+"; }
-  function sustainedFmt(v) { return v === 0 ? "—" : "+" + v; }
+  function bonusFmt(v) { return v === 0 ? "—" : "+" + v; }
 
   // A field paired with a dice-roll selector (Attacks, Damage) shows the
   // dice notation instead of its own number once that selector leaves
@@ -87,27 +102,38 @@
 
   /* ---------- the maths ---------- */
 
-  /* A modified hit roll of 6 always hits, a 1 always misses, so cover's -1
-     never takes a 6+ shooter past "6+" and never improves a 2+. Torrent
-     skips the roll (so Sustained Hits, which keys off a natural 6, can't
-     trigger). Faces sort into miss / hit / hit-via-6 (the last is what
-     Sustained Hits reads). A re-rolled 1 is a fresh roll over all three
-     buckets, so each scales by 7/6, then 1/6 comes back out of "miss" for
-     the original 1 it replaces. */
-  function hitOutcome() {
-    if (state.torrent) return { need: null, p1: 1, p6: 0, pMiss: 0, torrent: true };
-    var need = state.hit + (state.cover && !state.ignoreCover ? 1 : 0);
+  /* A modified roll of 6 always succeeds and a 1 always fails, so a +1/-1
+     modifier can't push a 6+ need past "6+" or improve a 2+. Faces sort
+     into miss / mid-success / success-via-6 (the last is what Sustained
+     Hits and Lethal Hits read). "ones" re-rolls just a natural 1, a fresh
+     roll over all three buckets, so each scales by 7/6 with 1/6 coming
+     back out of "miss" for the original 1 it replaces. "all" re-rolls
+     every miss, so misses only compound with themselves. */
+  function rollBuckets(need, reroll) {
     if (need > 6) need = 6;
     if (need < 2) need = 2;
     var midHits = 0, f;
     for (f = 2; f <= 5; f++) if (f >= need) midHits++;
-    var p1 = midHits / 6, p6 = 1 / 6, pMiss = 1 - p1 - p6;
-    if (state.reroll1) {
-      p1 = p1 * 7 / 6;
-      p6 = p6 * 7 / 6;
-      pMiss = pMiss * 7 / 6 - 1 / 6;
+    var pLow = midHits / 6, pHigh = 1 / 6, pMiss = 1 - pLow - pHigh;
+    if (reroll === "ones") {
+      return { pLow: pLow * 7 / 6, pHigh: pHigh * 7 / 6, pMiss: pMiss * 7 / 6 - 1 / 6 };
     }
-    return { need: need, p1: p1, p6: p6, pMiss: pMiss, torrent: false };
+    if (reroll === "all") {
+      return { pLow: pLow + pMiss * pLow, pHigh: pHigh + pMiss * pHigh, pMiss: pMiss * pMiss };
+    }
+    return { pLow: pLow, pHigh: pHigh, pMiss: pMiss };
+  }
+
+  // Torrent skips the roll (so Sustained/Lethal Hits, which key off a
+  // natural 6, can't trigger). Heavy's +1 lands before cover's -1, same
+  // as a datasheet reads top to bottom.
+  function hitOutcome() {
+    if (state.torrent) return { need: null, p1: 1, p6: 0, pMiss: 0, torrent: true };
+    var need = state.hit - (state.heavy ? 1 : 0) +
+      (state.cover && !state.ignoreCover ? 1 : 0);
+    var reroll = state.rerollAllHits ? "all" : (state.reroll1 ? "ones" : "none");
+    var b = rollBuckets(need, reroll);
+    return { need: Math.max(2, Math.min(6, need)), p1: b.pLow, p6: b.pHigh, pMiss: b.pMiss, torrent: false };
   }
 
   /* Strength vs Toughness, in the same order as the chart on /charts.html.
@@ -168,17 +194,35 @@
     return out;
   }
 
+  // Slides a pmf `n` places up the index axis (adds a flat bonus to the
+  // quantity it describes).
+  function shiftPmf(pmf, n) {
+    if (!n) return pmf;
+    var shifted = new Array(pmf.length + n), i;
+    for (i = 0; i < n; i++) shifted[i] = 0;
+    for (i = 0; i < pmf.length; i++) shifted[i + n] = pmf[i];
+    return shifted;
+  }
+
   // pmf of "roll `preset.n` dice of `preset.sides` and add `preset.mod`".
   function diceDist(preset) {
     var die = dieDist(preset.sides), pmf = [1], i;
     for (i = 0; i < preset.n; i++) pmf = convolve(pmf, die);
-    if (preset.mod) {
-      var shifted = new Array(pmf.length + preset.mod);
-      for (i = 0; i < preset.mod; i++) shifted[i] = 0;
-      for (i = 0; i < pmf.length; i++) shifted[i + preset.mod] = pmf[i];
-      pmf = shifted;
+    return shiftPmf(pmf, preset.mod);
+  }
+
+  // Folds every index below `min` up to `min` — a minimum-damage floor
+  // applied to a per-hit damage pmf before Feel No Pain thins it.
+  function floorPmf(pmf, min) {
+    if (!min) return pmf;
+    var len = Math.max(pmf.length, min + 1), out = new Array(len), i, idx;
+    for (i = 0; i < len; i++) out[i] = 0;
+    for (i = 0; i < pmf.length; i++) {
+      if (!pmf[i]) continue;
+      idx = i < min ? min : i;
+      out[idx] += pmf[i];
     }
-    return pmf;
+    return out;
   }
 
   function expectedValue(pmf) {
@@ -253,50 +297,78 @@
 
   function compute() {
     var hit = hitOutcome();
-    var wNeed = woundNeed(state.strength, state.toughness);
+
+    // Lance eases the wound need by 1; Anti then caps it at Y+ regardless
+    // of Strength vs Toughness.
+    var wNeed = woundNeed(state.strength, state.toughness) - (state.lance ? 1 : 0);
+    if (wNeed < 2) wNeed = 2;
+    if (state.anti < 7 && state.anti < wNeed) wNeed = state.anti;
     var sNeed = saveUsed();
 
-    var pWound = (7 - wNeed) / 6;
+    var woundReroll = state.rerollWound1 ? "ones" : "none";
+    var wb = rollBuckets(wNeed, woundReroll);
+    var pWound = wb.pLow + wb.pHigh;
     var pFail = sNeed >= 7 ? 1 : (sNeed - 1) / 6;
 
     // An attack yields 0, 1, or 1+Sustained hits — the last only on a
     // natural 6, so it needs its own bucket, not a plain hit/miss flag.
+    // Rapid Fire and Blast both just add flat bonus attacks, so they fold
+    // into one shift applied wherever the attack count is produced.
     var sustained = hit.torrent ? 0 : state.sustained;
     var extra = 1 + sustained;
+    var bonusAttacks = (state.halfRange ? state.rapidFire : 0) +
+      (state.blast ? Math.floor(state.models / 5) : 0);
+
     var attackHitPmf = new Array(Math.max(2, extra + 1)), i;
     for (i = 0; i < attackHitPmf.length; i++) attackHitPmf[i] = 0;
     attackHitPmf[0] = hit.pMiss;
     attackHitPmf[1] += hit.p1;
     attackHitPmf[extra] += hit.p6;
 
-    var attacksLabel, expectedAttacks, hitsPmf;
+    // Devastating Wounds: a natural 6 to wound skips the save; anything
+    // else still has to beat it as normal. A Lethal Hit skips the wound
+    // roll entirely (so it can't roll the 6 Devastating Wounds needs)
+    // and goes straight to the save.
+    var pNon6Wound = pWound - wb.pHigh;
+    var pThroughNormal = state.devWounds ?
+      (wb.pHigh * 1 + pNon6Wound * pFail) : (pWound * pFail);
+    var pThroughSix = state.lethalHits ? pFail : pThroughNormal;
+
+    // Each attack's wounds-through count is resolved as one random
+    // variable right here, not as a global hit total split into streams
+    // afterward — normal/six hit totals from the same attacks are
+    // correlated, and building each stream's total separately then
+    // combining loses that, corrupting the tail (kill%, capped damage)
+    // even though the mean comes out right. Resolving per attack and
+    // convolving across independent attacks avoids the problem outright.
+    var sixThroughPmf = binomial(extra, pThroughSix);
+    var attackThroughPmf = new Array(extra + 1);
+    for (i = 0; i <= extra; i++) attackThroughPmf[i] = hit.p6 * sixThroughPmf[i];
+    attackThroughPmf[0] += hit.pMiss + hit.p1 * (1 - pThroughNormal);
+    attackThroughPmf[1] += hit.p1 * pThroughNormal;
+
+    var attacksLabel, hitsPmf, kPmf;
     if (state.attacksDice === 0) {
-      expectedAttacks = state.attacks;
-      hitsPmf = repeatConvolve(attackHitPmf, state.attacks);
-      attacksLabel = String(state.attacks);
+      var n = state.attacks + bonusAttacks;
+      hitsPmf = repeatConvolve(attackHitPmf, n);
+      kPmf = repeatConvolve(attackThroughPmf, n);
+      attacksLabel = String(n);
     } else {
       var attacksPreset = DICE_PRESETS[state.attacksDice];
-      var attacksPmf = diceDist(attacksPreset);
-      expectedAttacks = expectedValue(attacksPmf);
+      var attacksPmf = shiftPmf(diceDist(attacksPreset), bonusAttacks);
       hitsPmf = mixedRepeat(attacksPmf, attackHitPmf);
-      attacksLabel = attacksPreset.label;
+      kPmf = mixedRepeat(attacksPmf, attackThroughPmf);
+      attacksLabel = attacksPreset.label + (bonusAttacks ? "+" + bonusAttacks : "");
     }
-
-    // Devastating Wounds: a natural 6 to wound skips the save; anything
-    // else still has to beat it as normal.
-    var p6w = 1 / 6, pNon6Wound = pWound - p6w;
-    var pThroughPerHit = state.devWounds ?
-      (p6w * 1 + pNon6Wound * pFail) : (pWound * pFail);
-
-    var kPmf = mixedBinomial(hitsPmf, pThroughPerHit);
     var maxK = kPmf.length - 1;
 
     // Feel No Pain thins each damage point independently, so a fixed
     // Damage of D becomes a binomial over D "kept" points — this folds
     // the old fixed-vs-dice split into one path, since a fixed value is
-    // just a pmf with all its mass on one number.
-    var baseDamagePmf = state.damageDice === 0 ?
-      deltaAt(state.damage) : diceDist(DICE_PRESETS[state.damageDice]);
+    // just a pmf with all its mass on one number. A minimum-damage floor
+    // applies to the raw roll first, before Feel No Pain thins it.
+    var baseDamagePmf = floorPmf(state.damageDice === 0 ?
+      deltaAt(state.damage) : diceDist(DICE_PRESETS[state.damageDice]), state.minDamage);
     var pFnpIgnore = state.fnp >= 7 ? 0 : (7 - state.fnp) / 6;
     var perHitDamagePmf = mixedBinomial(baseDamagePmf, 1 - pFnpIgnore);
 
@@ -328,10 +400,13 @@
       woundNeed: wNeed,
       saveNeed: sNeed,
       devWounds: state.devWounds,
+      lethalHits: state.lethalHits,
+      lance: state.lance,
+      anti: state.anti,
       fnp: state.fnp,
       pFnpIgnore: pFnpIgnore,
       attacksLabel: attacksLabel,
-      // The base per-roll chances, as fractions. Sustained Hits and
+      // The base per-roll chances, as fractions. Sustained/Lethal Hits and
       // Devastating Wounds live in the pmfs above, not in these.
       pHit: hit.torrent ? 1 : hit.p1 + hit.p6,
       pWound: pWound,
@@ -442,11 +517,15 @@
       '<span><b>' + one(r.wounds) + '</b> wounds</span>' +
       '<span><b>' + one(r.through) + '</b> get through</span>';
 
-    var hitName = r.torrent ? "auto-hits" :
-      "to hit " + r.hitNeed + "+" + (state.reroll1 ? ", re-roll 1s" : "");
+    var hitName = r.torrent ? "auto-hits" : "to hit " + r.hitNeed + "+" +
+      (state.rerollAllHits ? ", re-roll misses" : (state.reroll1 ? ", re-roll 1s" : ""));
     if (r.sustained > 0) hitName += ", sustained hits +" + r.sustained;
+    if (r.lethalHits) hitName += ", lethal on 6s";
     var woundName = "to wound " + r.woundNeed + "+" +
-      (r.devWounds ? ", devastating on 6s" : "");
+      (state.rerollWound1 ? ", re-roll 1s" : "") +
+      (r.devWounds ? ", devastating on 6s" : "") +
+      (r.lance ? ", lance" : "") +
+      (r.anti < 7 ? ", anti " + r.anti + "+" : "");
 
     var steps = stepHtml(r.pHit, hitName) +
       stepHtml(r.pWound, woundName) +
