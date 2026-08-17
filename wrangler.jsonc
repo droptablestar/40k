@@ -7,8 +7,5 @@
   },
   "assets": {
     "directory": "_site"
-  },
-  "compatibility_flags": [
-    "nodejs_compat"
-  ]
+  }
 }

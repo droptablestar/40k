@@ -1,0 +1,318 @@
+{
+  "_comment": "Characterises assets/js/tracker.js load() as it exists today. Do not use these to justify changing tracker.js in this slice -- classification 'throws' fixtures document defects intentionally left in place until the approved behaviour changes in the tracker-hardening slice.",
+  "storageKey": "benchtable:battle:v1",
+  "cases": [
+    {
+      "name": "valid-v1-preserved",
+      "classification": "valid",
+      "input": {
+        "round": 3,
+        "active": 1,
+        "armies": [
+          { "name": "Josh", "cp": 4, "vp": 12 },
+          { "name": "Sam", "cp": 2, "vp": 8 }
+        ]
+      },
+      "expectedState": {
+        "round": 3,
+        "active": 1,
+        "armies": [
+          { "name": "Josh", "cp": 4, "vp": 12 },
+          { "name": "Sam", "cp": 2, "vp": 8 }
+        ]
+      }
+    },
+    {
+      "name": "unknown-properties-retained",
+      "classification": "tolerated-extension",
+      "input": {
+        "round": 2,
+        "active": 0,
+        "note": "extra top-level field from a future version",
+        "armies": [
+          { "name": "Josh", "cp": 1, "vp": 0, "colour": "violet" },
+          { "name": "Sam", "cp": 0, "vp": 0 }
+        ]
+      },
+      "expectedState": {
+        "round": 2,
+        "active": 0,
+        "note": "extra top-level field from a future version",
+        "armies": [
+          { "name": "Josh", "cp": 1, "vp": 0, "colour": "violet" },
+          { "name": "Sam", "cp": 0, "vp": 0 }
+        ]
+      }
+    },
+    {
+      "name": "round-non-numeric-string-becomes-NaN",
+      "classification": "malformed-recovery",
+      "input": {
+        "round": "abc",
+        "active": 0,
+        "armies": [
+          { "name": "Player one", "cp": 0, "vp": 0 },
+          { "name": "Player two", "cp": 0, "vp": 0 }
+        ]
+      },
+      "expectedState": {
+        "round": null,
+        "roundIsNaN": true,
+        "active": 0,
+        "armies": [
+          { "name": "Player one", "cp": 0, "vp": 0 },
+          { "name": "Player two", "cp": 0, "vp": 0 }
+        ]
+      }
+    },
+    {
+      "name": "round-fraction-not-coerced-to-integer",
+      "classification": "malformed-recovery",
+      "input": {
+        "round": 3.7,
+        "active": 0,
+        "armies": [
+          { "name": "Player one", "cp": 0, "vp": 0 },
+          { "name": "Player two", "cp": 0, "vp": 0 }
+        ]
+      },
+      "expectedState": {
+        "round": 3.7,
+        "active": 0,
+        "armies": [
+          { "name": "Player one", "cp": 0, "vp": 0 },
+          { "name": "Player two", "cp": 0, "vp": 0 }
+        ]
+      }
+    },
+    {
+      "name": "round-numeric-string-accepted",
+      "classification": "tolerated-extension",
+      "input": {
+        "round": "3",
+        "active": 0,
+        "armies": [
+          { "name": "Player one", "cp": 0, "vp": 0 },
+          { "name": "Player two", "cp": 0, "vp": 0 }
+        ]
+      },
+      "expectedState": {
+        "round": "3",
+        "active": 0,
+        "armies": [
+          { "name": "Player one", "cp": 0, "vp": 0 },
+          { "name": "Player two", "cp": 0, "vp": 0 }
+        ]
+      }
+    },
+    {
+      "name": "cp-negative-passes-through",
+      "classification": "malformed-recovery",
+      "input": {
+        "round": 1,
+        "active": 0,
+        "armies": [
+          { "name": "Player one", "cp": -5, "vp": 0 },
+          { "name": "Player two", "cp": 0, "vp": 0 }
+        ]
+      },
+      "expectedState": {
+        "round": 1,
+        "active": 0,
+        "armies": [
+          { "name": "Player one", "cp": -5, "vp": 0 },
+          { "name": "Player two", "cp": 0, "vp": 0 }
+        ]
+      }
+    },
+    {
+      "name": "cp-numeric-string-accepted",
+      "classification": "tolerated-extension",
+      "input": {
+        "round": 1,
+        "active": 0,
+        "armies": [
+          { "name": "Player one", "cp": "12", "vp": 0 },
+          { "name": "Player two", "cp": 0, "vp": 0 }
+        ]
+      },
+      "expectedState": {
+        "round": 1,
+        "active": 0,
+        "armies": [
+          { "name": "Player one", "cp": 12, "vp": 0 },
+          { "name": "Player two", "cp": 0, "vp": 0 }
+        ]
+      }
+    },
+    {
+      "name": "armies-string-of-length-two-throws",
+      "classification": "throws",
+      "input": {
+        "round": 1,
+        "active": 0,
+        "armies": "ab"
+      },
+      "expectedError": "TypeError",
+      "note": "saved.armies.length === 2 passes the guard; .forEach is not a function on a string. The tracker renders nothing."
+    },
+    {
+      "name": "armies-null-entries-throws",
+      "classification": "throws",
+      "input": {
+        "round": 1,
+        "active": 0,
+        "armies": [null, null]
+      },
+      "expectedError": "TypeError",
+      "note": "strict mode: reading .name off null throws inside the forEach callback."
+    },
+    {
+      "name": "armies-non-object-entries-throws",
+      "classification": "throws",
+      "input": {
+        "round": 1,
+        "active": 0,
+        "armies": [1, 2]
+      },
+      "expectedError": "TypeError",
+      "note": "strict mode: assigning a.name on a number throws inside the forEach callback."
+    },
+    {
+      "name": "armies-array-like-object-throws",
+      "classification": "throws",
+      "input": {
+        "round": 1,
+        "active": 0,
+        "armies": { "length": 2 }
+      },
+      "expectedError": "TypeError",
+      "note": "length === 2 passes the guard; a plain object has no .forEach."
+    },
+    {
+      "name": "armies-sparse-array-renders-stray-comma",
+      "classification": "malformed-recovery",
+      "input": {
+        "round": 1,
+        "active": 0,
+        "armies": [null, null, null]
+      },
+      "note": "the plan's ground-truth table records `armies: [,,]` (a sparse array of length 2) as not throwing and rendering a stray comma; JSON has no sparse-array literal, so this fixture cannot reproduce that exact input shape and is recorded as a gap rather than guessed."
+    },
+    {
+      "name": "active-only-accepts-literal-1",
+      "classification": "valid",
+      "input": {
+        "round": 1,
+        "active": "1",
+        "armies": [
+          { "name": "Player one", "cp": 0, "vp": 0 },
+          { "name": "Player two", "cp": 0, "vp": 0 }
+        ]
+      },
+      "expectedState": {
+        "round": 1,
+        "active": 0,
+        "armies": [
+          { "name": "Player one", "cp": 0, "vp": 0 },
+          { "name": "Player two", "cp": 0, "vp": 0 }
+        ]
+      }
+    },
+    {
+      "name": "army-name-string-passes-through-untruncated",
+      "classification": "valid",
+      "input": {
+        "round": 1,
+        "active": 0,
+        "armies": [
+          { "name": "A very long army name that is not truncated by normalisation at all", "cp": 0, "vp": 0 },
+          { "name": "Player two", "cp": 0, "vp": 0 }
+        ]
+      },
+      "expectedState": {
+        "round": 1,
+        "active": 0,
+        "armies": [
+          { "name": "A very long army name that is not truncated by normalisation at all", "cp": 0, "vp": 0 },
+          { "name": "Player two", "cp": 0, "vp": 0 }
+        ]
+      }
+    },
+    {
+      "name": "invalid-json-survived",
+      "classification": "malformed-recovery",
+      "rawStoredValue": "{not valid json",
+      "expectedState": {
+        "round": 1,
+        "active": 0,
+        "armies": [
+          { "name": "Player one", "cp": 0, "vp": 0 },
+          { "name": "Player two", "cp": 0, "vp": 0 }
+        ]
+      },
+      "note": "store.read() catches the JSON.parse throw and returns null; load() falls back to blankGame()."
+    },
+    {
+      "name": "missing-armies-resets-to-blank-game",
+      "classification": "malformed-recovery",
+      "input": {
+        "round": 4,
+        "active": 1
+      },
+      "expectedState": {
+        "round": 1,
+        "active": 0,
+        "armies": [
+          { "name": "Player one", "cp": 0, "vp": 0 },
+          { "name": "Player two", "cp": 0, "vp": 0 }
+        ]
+      }
+    },
+    {
+      "name": "storage-unavailable-at-startup",
+      "classification": "malformed-recovery",
+      "storageUnavailable": true,
+      "expectedState": {
+        "round": 1,
+        "active": 0,
+        "armies": [
+          { "name": "Player one", "cp": 0, "vp": 0 },
+          { "name": "Player two", "cp": 0, "vp": 0 }
+        ]
+      },
+      "expectedUi": {
+        "nostoreHidden": false,
+        "savedText": "Session only"
+      },
+      "note": "the __bt_test probe throw sets store.usable = false; load() then reads from the null in-memory store and falls back to blankGame()."
+    },
+    {
+      "name": "write-failure-after-startup",
+      "classification": "malformed-recovery",
+      "storageUnavailable": false,
+      "writeThrowsAfterStartup": true,
+      "input": {
+        "round": 1,
+        "active": 0,
+        "armies": [
+          { "name": "Player one", "cp": 1, "vp": 0 },
+          { "name": "Player two", "cp": 0, "vp": 0 }
+        ]
+      },
+      "expectedState": {
+        "round": 1,
+        "active": 0,
+        "armies": [
+          { "name": "Player one", "cp": 1, "vp": 0 },
+          { "name": "Player two", "cp": 0, "vp": 0 }
+        ]
+      },
+      "expectedUi": {
+        "nostoreHidden": true,
+        "savedText": "Saved locally"
+      },
+      "note": "current behaviour: store.write() silently swallows the setItem exception (quota/private mode) and shows no warning -- this is approved behaviour change 6 in the cleanup plan (visible 'Session only' warning on write failure), not yet implemented. This fixture records what happens today, before that change lands."
+    }
+  ]
+}

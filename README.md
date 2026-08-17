@@ -24,9 +24,11 @@ CLAUDE.md for the full front matter field reference and design system.
 
 ## Build
 
+Node and npm versions are pinned in `.nvmrc` and `package.json`.
+
 ```bash
 npm install
-npx @11ty/eleventy          # one-off build → _site/
+npm run build                # clean _site/, layout check, build, route check
 npx @11ty/eleventy --serve  # local dev server with live reload
 ```
 

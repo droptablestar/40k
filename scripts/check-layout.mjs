@@ -16,9 +16,11 @@
  */
 
 import { readdirSync, readFileSync } from "node:fs";
-import { join } from "node:path";
+import { fileURLToPath } from "node:url";
+import { dirname, join } from "node:path";
 
-const DIRS = ["assets", "assets/css"];
+const root = join(dirname(fileURLToPath(import.meta.url)), "..");
+const ASSETS_DIR = join(root, "assets");
 const failures = [];
 
 function check(file) {
@@ -31,11 +33,15 @@ function check(file) {
   });
 }
 
-for (const dir of DIRS) {
-  for (const name of readdirSync(dir)) {
-    if (name.endsWith(".css")) check(join(dir, name));
+function walk(dir) {
+  for (const entry of readdirSync(dir, { withFileTypes: true })) {
+    const path = join(dir, entry.name);
+    if (entry.isDirectory()) walk(path);
+    else if (entry.name.endsWith(".css")) check(path);
   }
 }
+
+walk(ASSETS_DIR);
 
 if (failures.length) {
   console.error("\n  Layout check failed — max-width on content.\n");

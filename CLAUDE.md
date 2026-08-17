@@ -53,13 +53,25 @@ structure existed.
 
 ## Building
 
+Node and npm versions are pinned in `.nvmrc` and `package.json`'s `engines`/
+`packageManager` fields. `npm run check:toolchain` fails loudly on a mismatch
+instead of letting a version drift surface as a confusing build failure.
+
 ```bash
 npm install
-npm run build               # layout check, then build into _site/
-npm run check               # layout check on its own
-npx @11ty/eleventy          # build without the check
+npm run check:toolchain     # confirm Node/npm match the pinned versions
+npm run build                # clean _site/, layout check, build, route check
+npm run check:source        # layout check on its own
+npm run clean                 # remove _site/ without building
 npx @11ty/eleventy --serve  # local dev server with live reload
 ```
+
+`npm run build` always removes `_site/` first — Eleventy does not clean its
+own output, so a renamed or deleted page/asset otherwise keeps serving from a
+stale file. The final step compares the build against
+`tests/contracts/generated-routes.json`, which lists every intended generated
+page and passthrough asset; update that file in the same PR as any route
+change.
 
 Nunjucks (`.njk`) is the template engine for both `_includes/base.njk` and the
 `.html` content files (configured via `htmlTemplateEngine` in `.eleventy.js`).
@@ -165,7 +177,7 @@ removed repeatedly and it is the single most common layout bug on this site.
 
 `assets/style.css` declares `max-width:none` once for `.hero h1`, `.hero p`,
 `.section > h2`, `.sub` and `.hero-lede`; per-page CSS should not re-declare
-it. `npm run check` (which `npm run build` runs first) fails on any
+it. `npm run check:source` (which `npm run build` runs first) fails on any
 `max-width` in a stylesheet that is not a media query, not `none`/`100%`, and
 not marked with a trailing `max-width-ok` comment. Add that marker only for a
 genuine non-text cap — a tooltip panel, an image — and say why in the comment.
