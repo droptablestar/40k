@@ -3,7 +3,7 @@
     `sections:` front matter — the same list its in-page jump nav is built
     from (see jump.njk), so the two cannot drift apart. Pages with no
     `sections:` (Charts, Tracker) render as a plain link. -#}
-{% macro navitem(url, label, all) %}
+{% macro navitem(url, label, all) -%}
           <div class="nav-item-group">
             <a href="{{ url }}">{{ label }}</a>
             {%- for item in all %}{% if item.url == url and item.data.sections %}
@@ -14,7 +14,7 @@
             </div>
             {%- endif %}{% endfor %}
           </div>
-{% endmacro %}
+{%- endmacro %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
