@@ -23,6 +23,7 @@ painting.html                 Painting guide: beginner track
 painting-reference.html       Painting guide: technique reference
 tracker.html                  Battle tracker: CP, VP, round, per-unit damage
 _includes/base.njk            Shared layout: <head>, sitebar/nav, main/wrap, footer
+_includes/rule-ref.njk        ruleRef() macro: a citation link into the Core Rules PDF
 assets/style.css               Shared design tokens and components (loaded on every page)
 assets/css/{page}.css          Per-page CSS, one file per top-level page
 assets/js/tracker.js           Tracker's vanilla JS logic
@@ -87,6 +88,22 @@ entry missing its detail page.
 `_data/site.js` holds facts shared across pages that used to be duplicated
 in front matter — currently just `site.coreRules`, the official Core Rules
 PDF URL.
+
+## Components
+
+Reusable markup lives in `_includes/` as a Nunjucks macro, imported with
+`with context` (macros don't see the calling page's data-cascade context —
+`site.coreRules`, front matter, etc. — unless told to). Only extract a
+component where the markup is genuinely identical across call sites; keep
+parameters explicit and pass rich prose through a call block rather than
+adding string flags.
+
+`ruleRef(num, title, page)` in `_includes/rule-ref.njk` renders a citation
+link into the Core Rules PDF (`keywords.html`, `turn-order.html`,
+`rules-changes.html`). `num` and `title` pass through Nunjucks's default
+escaping, so write them as plain text — not pre-escaped HTML entities like
+`&minus;`, which would render literally as `&minus;` instead of the
+character it names.
 
 ## Building
 

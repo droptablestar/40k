@@ -16,6 +16,7 @@ sections:
   - { id: keywords, label: "Keywords" }
   - { id: terms, label: "Terms they use" }
 ---
+{%- from "rule-ref.njk" import ruleRef with context -%}
 <header class="hero">
   <p class="eyebrow">At the table</p>
   <h1>Every word on the datasheet, in one list.</h1>
@@ -90,7 +91,7 @@ sections:
             <p>Scouts is the odd one out. Where models in a unit have different
               Scouts distances, you have to use the <b>lowest</b> one not shared
               by every model in the unit.</p>
-            <a class="rule-ref" href="{{ site.coreRules }}#page=78" rel="noopener"><span class="rule-num">24.02</span><span class="rule-title">Duplicated Abilities</span><span class="rule-go">Core Rules p.78 &rarr;</span></a>
+            {{ ruleRef("24.02", "Duplicated Abilities", 78) }}
           </div>
         </details>
       </li>
@@ -105,7 +106,7 @@ sections:
               attached, like [LETHAL HITS: VEHICLE]. The ability then only
               applies when the target unit has one of those keywords. Against
               anything else the weapon fires as if the ability weren't there.</p>
-            <a class="rule-ref" href="{{ site.coreRules }}#page=78" rel="noopener"><span class="rule-num">24.01</span><span class="rule-title">Abilities — how weapon abilities are written</span><span class="rule-go">Core Rules p.78 &rarr;</span></a>
+            {{ ruleRef("24.01", "Abilities — how weapon abilities are written", 78) }}
           </div>
         </details>
       </li>
@@ -122,8 +123,8 @@ sections:
               [ANTI-PSYKER], however the damage gets allocated. The models
               themselves don't gain each other's keywords, but attacks target
               units, not models.</p>
-            <a class="rule-ref" href="{{ site.coreRules }}#page=67" rel="noopener"><span class="rule-num">19.03</span><span class="rule-title">Keywords in Attached Units</span><span class="rule-go">Core Rules p.67 &rarr;</span></a>
-            <a class="rule-ref" href="{{ site.coreRules }}#page=87" rel="noopener"><span class="rule-num">—</span><span class="rule-title">Mixed Keywords in Units (rules appendix)</span><span class="rule-go">Core Rules p.87 &rarr;</span></a>
+            {{ ruleRef("19.03", "Keywords in Attached Units", 67) }}
+            {{ ruleRef("—", "Mixed Keywords in Units (rules appendix)", 87) }}
           </div>
         </details>
       </li>
@@ -154,7 +155,7 @@ sections:
             <p>On its own that changes nothing: a critical wound is still just a
               wound. It matters because other abilities key off critical wounds
               — [DEVASTATING WOUNDS] most of all.</p>
-            <a class="rule-ref" href="{{ site.coreRules }}#page=79" rel="noopener"><span class="rule-num">24.03</span><span class="rule-title">[ANTI]</span><span class="rule-go">Core Rules p.79 &rarr;</span></a>
+            {{ ruleRef("24.03", "[ANTI]", 79) }}
           </div>
         </details>
       </li>
@@ -170,8 +171,8 @@ sections:
               shoot, using assault shooting. The catch: while shooting that way
               you may only fire the [ASSAULT] weapons, so the rest of the unit's
               guns sit the phase out.</p>
-            <a class="rule-ref" href="{{ site.coreRules }}#page=79" rel="noopener"><span class="rule-num">24.04</span><span class="rule-title">[ASSAULT]</span><span class="rule-go">Core Rules p.79 &rarr;</span></a>
-            <a class="rule-ref" href="{{ site.coreRules }}#page=35" rel="noopener"><span class="rule-num">10.05</span><span class="rule-title">Assault Shooting — the restrictions</span><span class="rule-go">Core Rules p.35 &rarr;</span></a>
+            {{ ruleRef("24.04", "[ASSAULT]", 79) }}
+            {{ ruleRef("10.05", "Assault Shooting — the restrictions", 35) }}
           </div>
         </details>
       </li>
@@ -189,7 +190,7 @@ sections:
               instead.</p>
             <p>Blast weapons can never target a unit that is engaged, including
               one your own unit is engaged with.</p>
-            <a class="rule-ref" href="{{ site.coreRules }}#page=79" rel="noopener"><span class="rule-num">24.05</span><span class="rule-title">[BLAST]</span><span class="rule-go">Core Rules p.79 &rarr;</span></a>
+            {{ ruleRef("24.05", "[BLAST]", 79) }}
           </div>
         </details>
       </li>
@@ -205,7 +206,7 @@ sections:
               five models in the target unit, rounding down. It only pays out if
               you point <b>all</b> of that weapon's attacks at a single unit —
               split them between two targets and you get nothing.</p>
-            <a class="rule-ref" href="{{ site.coreRules }}#page=79" rel="noopener"><span class="rule-num">24.06</span><span class="rule-title">[CLEAVE]</span><span class="rule-go">Core Rules p.79 &rarr;</span></a>
+            {{ ruleRef("24.06", "[CLEAVE]", 79) }}
           </div>
         </details>
       </li>
@@ -224,8 +225,8 @@ sections:
               normally, it picks either its close-quarters weapons or its other
               ranged weapons for that phase, not both. Monsters and vehicles are
               exempt from that restriction.</p>
-            <a class="rule-ref" href="{{ site.coreRules }}#page=80" rel="noopener"><span class="rule-num">24.07</span><span class="rule-title">[CLOSE-QUARTERS]</span><span class="rule-go">Core Rules p.80 &rarr;</span></a>
-            <a class="rule-ref" href="{{ site.coreRules }}#page=35" rel="noopener"><span class="rule-num">10.06</span><span class="rule-title">Close-quarters Shooting</span><span class="rule-go">Core Rules p.35 &rarr;</span></a>
+            {{ ruleRef("24.07", "[CLOSE-QUARTERS]", 80) }}
+            {{ ruleRef("10.06", "Close-quarters Shooting", 35) }}
           </div>
         </details>
       </li>
@@ -244,7 +245,7 @@ sections:
               model, and any mortal wounds left over after that model dies are
               lost. A Damage 3 weapon that kills a 2-wound model wastes the
               third.</p>
-            <a class="rule-ref" href="{{ site.coreRules }}#page=80" rel="noopener"><span class="rule-num">24.10</span><span class="rule-title">[DEVASTATING WOUNDS]</span><span class="rule-go">Core Rules p.80 &rarr;</span></a>
+            {{ ruleRef("24.10", "[DEVASTATING WOUNDS]", 80) }}
           </div>
         </details>
       </li>
@@ -262,7 +263,7 @@ sections:
               normal melee weapons.</p>
             <p>Usually a mount, a tail, a headbutt — something the model does
               alongside whatever it's holding.</p>
-            <a class="rule-ref" href="{{ site.coreRules }}#page=81" rel="noopener"><span class="rule-num">24.11</span><span class="rule-title">[EXTRA ATTACKS]</span><span class="rule-go">Core Rules p.81 &rarr;</span></a>
+            {{ ruleRef("24.11", "[EXTRA ATTACKS]", 81) }}
           </div>
         </details>
       </li>
@@ -278,8 +279,8 @@ sections:
               hazardous weapon you chose to fire or fight with. A 1 or 2 costs
               your own unit a mortal wound — three of them if the unit is a
               single monster or vehicle model.</p>
-            <a class="rule-ref" href="{{ site.coreRules }}#page=81" rel="noopener"><span class="rule-num">24.15</span><span class="rule-title">[HAZARDOUS]</span><span class="rule-go">Core Rules p.81 &rarr;</span></a>
-            <a class="rule-ref" href="{{ site.coreRules }}#page=24" rel="noopener"><span class="rule-num">06.03</span><span class="rule-title">Hazard Rolls — what a failed roll costs</span><span class="rule-go">Core Rules p.24 &rarr;</span></a>
+            {{ ruleRef("24.15", "[HAZARDOUS]", 81) }}
+            {{ ruleRef("06.03", "Hazard Rolls — what a failed roll costs", 24) }}
           </div>
         </details>
       </li>
@@ -299,7 +300,7 @@ sections:
               arriving from reserves, or being tied up in melee each cost you
               the bonus. Nothing here is about being a vehicle — infantry with
               heavy weapons get it on the same terms.</p>
-            <a class="rule-ref" href="{{ site.coreRules }}#page=82" rel="noopener"><span class="rule-num">24.16</span><span class="rule-title">[HEAVY]</span><span class="rule-go">Core Rules p.82 &rarr;</span></a>
+            {{ ruleRef("24.16", "[HEAVY]", 82) }}
           </div>
         </details>
       </li>
@@ -315,7 +316,7 @@ sections:
               from terrain or from anything that hands out cover, Stealth and
               the Smokescreen stratagem included. In 11th that means it removes
               a &minus;1 to hit, not an improved save.</p>
-            <a class="rule-ref" href="{{ site.coreRules }}#page=82" rel="noopener"><span class="rule-num">24.18</span><span class="rule-title">[IGNORES COVER]</span><span class="rule-go">Core Rules p.82 &rarr;</span></a>
+            {{ ruleRef("24.18", "[IGNORES COVER]", 82) }}
           </div>
         </details>
       </li>
@@ -334,8 +335,8 @@ sections:
               and one of your other units can see the target.</p>
             <p>The unit must be unengaged and must not have advanced. Its other
               weapons can still shoot visible targets normally.</p>
-            <a class="rule-ref" href="{{ site.coreRules }}#page=82" rel="noopener"><span class="rule-num">24.19</span><span class="rule-title">[INDIRECT FIRE]</span><span class="rule-go">Core Rules p.82 &rarr;</span></a>
-            <a class="rule-ref" href="{{ site.coreRules }}#page=35" rel="noopener"><span class="rule-num">10.07</span><span class="rule-title">Indirect Shooting — the penalties</span><span class="rule-go">Core Rules p.35 &rarr;</span></a>
+            {{ ruleRef("24.19", "[INDIRECT FIRE]", 82) }}
+            {{ ruleRef("10.07", "Indirect Shooting — the penalties", 35) }}
           </div>
         </details>
       </li>
@@ -350,7 +351,7 @@ sections:
             <p>+1 to the wound roll if the attacking model's unit made a charge
               move this turn. Charging first, then fighting with a lance weapon,
               is the whole plan for a lot of melee units.</p>
-            <a class="rule-ref" href="{{ site.coreRules }}#page=82" rel="noopener"><span class="rule-num">24.21</span><span class="rule-title">[LANCE]</span><span class="rule-go">Core Rules p.82 &rarr;</span></a>
+            {{ ruleRef("24.21", "[LANCE]", 82) }}
           </div>
         </details>
       </li>
@@ -368,7 +369,7 @@ sections:
               auto-wound never becomes a critical wound, so taking it switches
               off [DEVASTATING WOUNDS] and anything else that triggers on
               critical wounds.</p>
-            <a class="rule-ref" href="{{ site.coreRules }}#page=82" rel="noopener"><span class="rule-num">24.23</span><span class="rule-title">[LETHAL HITS]</span><span class="rule-go">Core Rules p.82 &rarr;</span></a>
+            {{ ruleRef("24.23", "[LETHAL HITS]", 82) }}
           </div>
         </details>
       </li>
@@ -385,7 +386,7 @@ sections:
               Damage D6 does D6+2 inside half range and D6 outside it.</p>
             <p>Half range is measured once, at target selection — models moving
               afterwards don't change it.</p>
-            <a class="rule-ref" href="{{ site.coreRules }}#page=83" rel="noopener"><span class="rule-num">24.25</span><span class="rule-title">[MELTA]</span><span class="rule-go">Core Rules p.83 &rarr;</span></a>
+            {{ ruleRef("24.25", "[MELTA]", 83) }}
           </div>
         </details>
       </li>
@@ -400,7 +401,7 @@ sections:
             <p>The weapon can be selected to attack with once in the whole
               game. If the model is destroyed and later returned to the unit, a
               one-shot weapon it already fired stays spent.</p>
-            <a class="rule-ref" href="{{ site.coreRules }}#page=83" rel="noopener"><span class="rule-num">24.26</span><span class="rule-title">[ONE SHOT]</span><span class="rule-go">Core Rules p.83 &rarr;</span></a>
+            {{ ruleRef("24.26", "[ONE SHOT]", 83) }}
           </div>
         </details>
       </li>
@@ -416,7 +417,7 @@ sections:
               renaming the ability as 11th edition goes on, so older datasheets
               say Pistol and newer ones say Close-quarters — read them as the
               same thing.</p>
-            <a class="rule-ref" href="{{ site.coreRules }}#page=83" rel="noopener"><span class="rule-num">24.27</span><span class="rule-title">[PISTOL]</span><span class="rule-go">Core Rules p.83 &rarr;</span></a>
+            {{ ruleRef("24.27", "[PISTOL]", 83) }}
           </div>
         </details>
       </li>
@@ -434,7 +435,7 @@ sections:
               these attacks at that character's allocation group directly.</p>
             <p>It lasts until those attacks are done or that character is
               destroyed, whichever comes first.</p>
-            <a class="rule-ref" href="{{ site.coreRules }}#page=84" rel="noopener"><span class="rule-num">24.28</span><span class="rule-title">[PRECISION]</span><span class="rule-go">Core Rules p.84 &rarr;</span></a>
+            {{ ruleRef("24.28", "[PRECISION]", 84) }}
           </div>
         </details>
       </li>
@@ -451,7 +452,7 @@ sections:
               cover's &minus;1. Wound roll modifiers are untouched.</p>
             <p>Attacks made with these weapons count as psychic attacks, which
               other rules (defences against psykers, mostly) look for by name.</p>
-            <a class="rule-ref" href="{{ site.coreRules }}#page=84" rel="noopener"><span class="rule-num">24.29</span><span class="rule-title">[PSYCHIC]</span><span class="rule-go">Core Rules p.84 &rarr;</span></a>
+            {{ ruleRef("24.29", "[PSYCHIC]", 84) }}
           </div>
         </details>
       </li>
@@ -466,7 +467,7 @@ sections:
             <p>X extra attack dice if the target was within half the weapon's
               Range when you selected targets. A Rapid Fire 1 weapon with
               Attacks 1 fires twice inside half range.</p>
-            <a class="rule-ref" href="{{ site.coreRules }}#page=84" rel="noopener"><span class="rule-num">24.30</span><span class="rule-title">[RAPID FIRE]</span><span class="rule-go">Core Rules p.84 &rarr;</span></a>
+            {{ ruleRef("24.30", "[RAPID FIRE]", 84) }}
           </div>
         </details>
       </li>
@@ -481,7 +482,7 @@ sections:
             <p>Each critical hit scores X additional hits on top of itself.
               [SUSTAINED HITS 2] on a critical hit means three hits total, all
               of which then roll to wound as normal.</p>
-            <a class="rule-ref" href="{{ site.coreRules }}#page=85" rel="noopener"><span class="rule-num">24.36</span><span class="rule-title">[SUSTAINED HITS]</span><span class="rule-go">Core Rules p.85 &rarr;</span></a>
+            {{ ruleRef("24.36", "[SUSTAINED HITS]", 85) }}
           </div>
         </details>
       </li>
@@ -496,7 +497,7 @@ sections:
             <p>The attack hits automatically — no hit roll at all. Flamers, and
               anything else that sprays. Nothing that modifies hit rolls matters
               against it, cover included, since there's no roll to modify.</p>
-            <a class="rule-ref" href="{{ site.coreRules }}#page=85" rel="noopener"><span class="rule-num">24.37</span><span class="rule-title">[TORRENT]</span><span class="rule-go">Core Rules p.85 &rarr;</span></a>
+            {{ ruleRef("24.37", "[TORRENT]", 85) }}
           </div>
         </details>
       </li>
@@ -510,7 +511,7 @@ sections:
           <div class="strat-body">
             <p>Re-roll the wound roll. Note it is the <em>wound</em> roll, not
               the hit roll — a common table mix-up.</p>
-            <a class="rule-ref" href="{{ site.coreRules }}#page=85" rel="noopener"><span class="rule-num">24.38</span><span class="rule-title">[TWIN-LINKED]</span><span class="rule-go">Core Rules p.85 &rarr;</span></a>
+            {{ ruleRef("24.38", "[TWIN-LINKED]", 85) }}
           </div>
         </details>
       </li>
@@ -540,7 +541,7 @@ sections:
               dice value, roll separately for each unit.</p>
             <p>Order matters: passengers get their emergency disembark move
               first, then the demise roll, then the wreck comes off the table.</p>
-            <a class="rule-ref" href="{{ site.coreRules }}#page=80" rel="noopener"><span class="rule-num">24.08</span><span class="rule-title">Deadly Demise</span><span class="rule-go">Core Rules p.80 &rarr;</span></a>
+            {{ ruleRef("24.08", "Deadly Demise", 80) }}
           </div>
         </details>
       </li>
@@ -556,7 +557,7 @@ sections:
               the battlefield more than 8" horizontally from every enemy unit —
               including inside your opponent's deployment zone.</p>
             <p>Every model in the unit needs the ability for it to work.</p>
-            <a class="rule-ref" href="{{ site.coreRules }}#page=80" rel="noopener"><span class="rule-num">24.09</span><span class="rule-title">Deep Strike</span><span class="rule-go">Core Rules p.80 &rarr;</span></a>
+            {{ ruleRef("24.09", "Deep Strike", 80) }}
           </div>
         </details>
       </li>
@@ -573,7 +574,7 @@ sections:
               attack, so a Damage 3 hit gets three separate rolls.</p>
             <p>It works against mortal wounds too, which is what makes it the
               best defence in the game against [DEVASTATING WOUNDS].</p>
-            <a class="rule-ref" href="{{ site.coreRules }}#page=81" rel="noopener"><span class="rule-num">24.12</span><span class="rule-title">Feel No Pain</span><span class="rule-go">Core Rules p.81 &rarr;</span></a>
+            {{ ruleRef("24.12", "Feel No Pain", 81) }}
           </div>
         </details>
       </li>
@@ -590,8 +591,8 @@ sections:
             <p>You don't need the ability printed on a datasheet to get it — any
               unit that made a charge move this turn counts as Fights First for
               that phase.</p>
-            <a class="rule-ref" href="{{ site.coreRules }}#page=81" rel="noopener"><span class="rule-num">24.13</span><span class="rule-title">Fights First</span><span class="rule-go">Core Rules p.81 &rarr;</span></a>
-            <a class="rule-ref" href="{{ site.coreRules }}#page=40" rel="noopener"><span class="rule-num">12.04</span><span class="rule-title">Fight — where the step sits in the phase</span><span class="rule-go">Core Rules p.40 &rarr;</span></a>
+            {{ ruleRef("24.13", "Fights First", 81) }}
+            {{ ruleRef("12.04", "Fight — where the step sits in the phase", 40) }}
           </div>
         </details>
       </li>
@@ -607,7 +608,7 @@ sections:
               one ranged weapon each; the transport fires those weapons as well
               as its own. Those passengers then can't shoot for the rest of the
               turn, and [ONE SHOT] weapons can't be picked this way.</p>
-            <a class="rule-ref" href="{{ site.coreRules }}#page=81" rel="noopener"><span class="rule-num">24.14</span><span class="rule-title">Firing Deck</span><span class="rule-go">Core Rules p.81 &rarr;</span></a>
+            {{ ruleRef("24.14", "Firing Deck", 81) }}
           </div>
         </details>
       </li>
@@ -622,7 +623,7 @@ sections:
             <p>When the unit takes to the skies, it doesn't pay the usual 2"
               off its move. Only useful on something that can FLY in the first
               place.</p>
-            <a class="rule-ref" href="{{ site.coreRules }}#page=82" rel="noopener"><span class="rule-num">24.17</span><span class="rule-title">Hover</span><span class="rule-go">Core Rules p.82 &rarr;</span></a>
+            {{ ruleRef("24.17", "Hover", 82) }}
           </div>
         </details>
       </li>
@@ -638,7 +639,7 @@ sections:
               battlefield more than 8" horizontally from your opponent's
               deployment zone and from every enemy unit. Every model in the unit
               needs the ability.</p>
-            <a class="rule-ref" href="{{ site.coreRules }}#page=82" rel="noopener"><span class="rule-num">24.20</span><span class="rule-title">Infiltrators</span><span class="rule-go">Core Rules p.82 &rarr;</span></a>
+            {{ ruleRef("24.20", "Infiltrators", 82) }}
           </div>
         </details>
       </li>
@@ -657,7 +658,7 @@ sections:
             <p>The attached unit uses the bodyguard models' highest Toughness
               when attacked, and has every keyword of both halves. Which units
               can lead which is listed in the app, not in the core rules.</p>
-            <a class="rule-ref" href="{{ site.coreRules }}#page=66" rel="noopener"><span class="rule-num">19.01</span><span class="rule-title">Forming Attached Units — Leader 24.22 / Support 24.34</span><span class="rule-go">Core Rules p.66 &rarr;</span></a>
+            {{ ruleRef("19.01", "Forming Attached Units — Leader 24.22 / Support 24.34", 66) }}
           </div>
         </details>
       </li>
@@ -675,7 +676,7 @@ sections:
               distance.</p>
             <p>It switches off entirely while the model is part of an attached
               unit — joining a squad costs it the protection.</p>
-            <a class="rule-ref" href="{{ site.coreRules }}#page=83" rel="noopener"><span class="rule-num">24.24</span><span class="rule-title">Lone Operative</span><span class="rule-go">Core Rules p.83 &rarr;</span></a>
+            {{ ruleRef("24.24", "Lone Operative", 83) }}
           </div>
         </details>
       </li>
@@ -696,8 +697,8 @@ sections:
               inside it has Scouts. Every model in the unit needs the ability,
               and where models have different distances you use the lowest one
               not shared by all of them.</p>
-            <a class="rule-ref" href="{{ site.coreRules }}#page=84" rel="noopener"><span class="rule-num">24.31</span><span class="rule-title">Scouts</span><span class="rule-go">Core Rules p.84 &rarr;</span></a>
-            <a class="rule-ref" href="{{ site.coreRules }}#page=84" rel="noopener"><span class="rule-num">24.32</span><span class="rule-title">Scout Move — the 8" restriction</span><span class="rule-go">Core Rules p.84 &rarr;</span></a>
+            {{ ruleRef("24.31", "Scouts", 84) }}
+            {{ ruleRef("24.32", "Scout Move — the 8\" restriction", 84) }}
           </div>
         </details>
       </li>
@@ -715,8 +716,8 @@ sections:
             <p>It does not stack with real cover. Both give the same single
               &minus;1, so a Stealth unit standing in terrain is still at
               &minus;1, not &minus;2.</p>
-            <a class="rule-ref" href="{{ site.coreRules }}#page=85" rel="noopener"><span class="rule-num">24.33</span><span class="rule-title">Stealth</span><span class="rule-go">Core Rules p.85 &rarr;</span></a>
-            <a class="rule-ref" href="{{ site.coreRules }}#page=50" rel="noopener"><span class="rule-num">13.08</span><span class="rule-title">Benefit of Cover — one fixed &minus;1</span><span class="rule-go">Core Rules p.50 &rarr;</span></a>
+            {{ ruleRef("24.33", "Stealth", 85) }}
+            {{ ruleRef("13.08", "Benefit of Cover — one fixed −1", 50) }}
           </div>
         </details>
       </li>
@@ -733,7 +734,7 @@ sections:
             <p>It can also declare it's forcing its way through dense terrain —
               take the MOBILE keyword for that move, then roll a D6 when the
               move ends and get battle-shocked on a 1.</p>
-            <a class="rule-ref" href="{{ site.coreRules }}#page=85" rel="noopener"><span class="rule-num">24.35</span><span class="rule-title">Super-heavy Walker</span><span class="rule-go">Core Rules p.85 &rarr;</span></a>
+            {{ ruleRef("24.35", "Super-heavy Walker", 85) }}
           </div>
         </details>
       </li>
@@ -765,7 +766,7 @@ sections:
             <p>It can't charge, and only flying units can charge it or hit it in
               melee. Plunging Fire doesn't apply to it in either direction, and
               it can't perform actions.</p>
-            <a class="rule-ref" href="{{ site.coreRules }}#page=74" rel="noopener"><span class="rule-num">23.01–23.04</span><span class="rule-title">Aircraft</span><span class="rule-go">Core Rules p.74 &rarr;</span></a>
+            {{ ruleRef("23.01–23.04", "Aircraft", 74) }}
           </div>
         </details>
       </li>
@@ -798,8 +799,8 @@ sections:
               character is protected by the squad" actually means mechanically.</p>
             <p>[PRECISION] is the way around it, and the Duel stratagem hands
               [PRECISION] to a character's own melee weapons.</p>
-            <a class="rule-ref" href="{{ site.coreRules }}#page=19" rel="noopener"><span class="rule-num">05.03</span><span class="rule-title">Save Rolls — allocation order</span><span class="rule-go">Core Rules p.19 &rarr;</span></a>
-            <a class="rule-ref" href="{{ site.coreRules }}#page=84" rel="noopener"><span class="rule-num">24.28</span><span class="rule-title">[PRECISION]</span><span class="rule-go">Core Rules p.84 &rarr;</span></a>
+            {{ ruleRef("05.03", "Save Rolls — allocation order", 19) }}
+            {{ ruleRef("24.28", "[PRECISION]", 84) }}
           </div>
         </details>
       </li>
@@ -815,7 +816,7 @@ sections:
               phase, pick an unengaged enemy unit within 8" and visible, roll six
               D6, and each 4+ is a mortal wound. The unit must be unengaged and
               must not have advanced.</p>
-            <a class="rule-ref" href="{{ site.coreRules }}#page=56" rel="noopener"><span class="rule-num">15.05</span><span class="rule-title">Explosives (core stratagem)</span><span class="rule-go">Core Rules p.56 &rarr;</span></a>
+            {{ ruleRef("15.05", "Explosives (core stratagem)", 56) }}
           </div>
         </details>
       </li>
@@ -833,7 +834,7 @@ sections:
               vehicles included — and through every category of terrain.</p>
             <p>Hover removes the 2" cost. You choose per move, so a flying unit
               can also just walk.</p>
-            <a class="rule-ref" href="{{ site.coreRules }}#page=71" rel="noopener"><span class="rule-num">21.03</span><span class="rule-title">Flying Models</span><span class="rule-go">Core Rules p.71 &rarr;</span></a>
+            {{ ruleRef("21.03", "Flying Models", 71) }}
           </div>
         </details>
       </li>
@@ -847,7 +848,7 @@ sections:
           <div class="strat-body">
             <p>Emplacements and buildings you bring as units. Like aircraft,
               they can't perform actions.</p>
-            <a class="rule-ref" href="{{ site.coreRules }}#page=58" rel="noopener"><span class="rule-num">16.01</span><span class="rule-title">Performing Actions — who cannot</span><span class="rule-go">Core Rules p.58 &rarr;</span></a>
+            {{ ruleRef("16.01", "Performing Actions — who cannot", 58) }}
           </div>
         </details>
       </li>
@@ -861,7 +862,7 @@ sections:
             <p>Mostly large models without a base. You measure to and from the
               closest point of the model itself rather than a base — so a wing or
               a gun barrel counts for range.</p>
-            <a class="rule-ref" href="{{ site.coreRules }}#page=62" rel="noopener"><span class="rule-num">17.02</span><span class="rule-title">Frame</span><span class="rule-go">Core Rules p.62 &rarr;</span></a>
+            {{ ruleRef("17.02", "Frame", 62) }}
           </div>
         </details>
       </li>
@@ -879,8 +880,8 @@ sections:
             <p>They are also the only models that can be hidden — sitting in a
               terrain area with a dense feature in it, having not shot this turn
               or last turn, they can't be seen from beyond 15".</p>
-            <a class="rule-ref" href="{{ site.coreRules }}#page=48" rel="noopener"><span class="rule-num">13.06</span><span class="rule-title">Terrain and Movement</span><span class="rule-go">Core Rules p.48 &rarr;</span></a>
-            <a class="rule-ref" href="{{ site.coreRules }}#page=50" rel="noopener"><span class="rule-num">13.09</span><span class="rule-title">Hidden</span><span class="rule-go">Core Rules p.50 &rarr;</span></a>
+            {{ ruleRef("13.06", "Terrain and Movement", 48) }}
+            {{ ruleRef("13.09", "Hidden", 50) }}
           </div>
         </details>
       </li>
@@ -896,7 +897,7 @@ sections:
               infantry can. Rarely printed on a datasheet — it usually turns up
               as something a rule grants for the duration of one move, as
               Super-heavy Walker does.</p>
-            <a class="rule-ref" href="{{ site.coreRules }}#page=48" rel="noopener"><span class="rule-num">13.06</span><span class="rule-title">Terrain and Movement</span><span class="rule-go">Core Rules p.48 &rarr;</span></a>
+            {{ ruleRef("13.06", "Terrain and Movement", 48) }}
           </div>
         </details>
       </li>
@@ -915,8 +916,8 @@ sections:
             <p>They also have a harder time getting cover: standing inside a
               ruin's footprint isn't enough, something has to actually be
               blocking line of sight to them.</p>
-            <a class="rule-ref" href="{{ site.coreRules }}#page=62" rel="noopener"><span class="rule-num">17.01–17.03</span><span class="rule-title">Monsters and Vehicles</span><span class="rule-go">Core Rules p.62 &rarr;</span></a>
-            <a class="rule-ref" href="{{ site.coreRules }}#page=50" rel="noopener"><span class="rule-num">13.08</span><span class="rule-title">Benefit of Cover</span><span class="rule-go">Core Rules p.50 &rarr;</span></a>
+            {{ ruleRef("17.01–17.03", "Monsters and Vehicles", 62) }}
+            {{ ruleRef("13.08", "Benefit of Cover", 50) }}
           </div>
         </details>
       </li>
@@ -934,8 +935,8 @@ sections:
               they inflict count as psychic attacks.</p>
             <p>Attach a psyker character to a squad and the whole attached unit
               has the keyword.</p>
-            <a class="rule-ref" href="{{ site.coreRules }}#page=72" rel="noopener"><span class="rule-num">22.03</span><span class="rule-title">Psychic Abilities</span><span class="rule-go">Core Rules p.72 &rarr;</span></a>
-            <a class="rule-ref" href="{{ site.coreRules }}#page=67" rel="noopener"><span class="rule-num">19.03</span><span class="rule-title">Keywords in Attached Units</span><span class="rule-go">Core Rules p.67 &rarr;</span></a>
+            {{ ruleRef("22.03", "Psychic Abilities", 72) }}
+            {{ ruleRef("19.03", "Keywords in Attached Units", 67) }}
           </div>
         </details>
       </li>
@@ -951,7 +952,7 @@ sections:
               opponent's Shooting phase, and for that phase the unit has the
               benefit of cover — as does anything the smoke unit is blocking
               sight to.</p>
-            <a class="rule-ref" href="{{ site.coreRules }}#page=57" rel="noopener"><span class="rule-num">15.10</span><span class="rule-title">Smokescreen (core stratagem)</span><span class="rule-go">Core Rules p.57 &rarr;</span></a>
+            {{ ruleRef("15.10", "Smokescreen (core stratagem)", 57) }}
           </div>
         </details>
       </li>
@@ -968,8 +969,8 @@ sections:
               one — both of which everything else is barred from. They can't be
               targeted by Fire Overwatch, and Super-heavy Walkers can't walk
               through them.</p>
-            <a class="rule-ref" href="{{ site.coreRules }}#page=58" rel="noopener"><span class="rule-num">16.01</span><span class="rule-title">Performing Actions — the exceptions</span><span class="rule-go">Core Rules p.58 &rarr;</span></a>
-            <a class="rule-ref" href="{{ site.coreRules }}#page=57" rel="noopener"><span class="rule-num">15.08</span><span class="rule-title">Fire Overwatch — excludes Titanic</span><span class="rule-go">Core Rules p.57 &rarr;</span></a>
+            {{ ruleRef("16.01", "Performing Actions — the exceptions", 58) }}
+            {{ ruleRef("15.08", "Fire Overwatch — excludes Titanic", 57) }}
           </div>
         </details>
       </li>
@@ -986,7 +987,7 @@ sections:
               without needing to stand on terrain.</p>
             <p>New to 11th edition, and one of the changes that most 10th-edition
               advice online doesn't know about.</p>
-            <a class="rule-ref" href="{{ site.coreRules }}#page=73" rel="noopener"><span class="rule-num">22.05</span><span class="rule-title">Plunging Fire</span><span class="rule-go">Core Rules p.73 &rarr;</span></a>
+            {{ ruleRef("22.05", "Plunging Fire", 73) }}
           </div>
         </details>
       </li>
@@ -1002,7 +1003,7 @@ sections:
               allowed inside. Dedicated transports are the ones bought as part of
               another unit's slot, and they're the ones that can make a scout
               move on behalf of a Scouts unit riding in them.</p>
-            <a class="rule-ref" href="{{ site.coreRules }}#page=64" rel="noopener"><span class="rule-num">18.01</span><span class="rule-title">Transport Capacity</span><span class="rule-go">Core Rules p.64 &rarr;</span></a>
+            {{ ruleRef("18.01", "Transport Capacity", 64) }}
           </div>
         </details>
       </li>
@@ -1017,7 +1018,7 @@ sections:
             <p>A vehicle that walks. In the core rules its one job is the
               Heroic Intervention stratagem, which only lets you pick a vehicle
               if that vehicle is a CHARACTER or a WALKER.</p>
-            <a class="rule-ref" href="{{ site.coreRules }}#page=57" rel="noopener"><span class="rule-num">15.11</span><span class="rule-title">Heroic Intervention (core stratagem)</span><span class="rule-go">Core Rules p.57 &rarr;</span></a>
+            {{ ruleRef("15.11", "Heroic Intervention (core stratagem)", 57) }}
           </div>
         </details>
       </li>
@@ -1046,7 +1047,7 @@ sections:
               applied. Rules that trigger on an "unmodified 6" can't be reached
               by adding 1 to a 5.</p>
             <p>An unmodified 1 always fails, whatever the modifiers say.</p>
-            <a class="rule-ref" href="{{ site.coreRules }}#page=18" rel="noopener"><span class="rule-num">05.01–05.02</span><span class="rule-title">Hit Rolls and Wound Rolls</span><span class="rule-go">Core Rules p.18 &rarr;</span></a>
+            {{ ruleRef("05.01–05.02", "Hit Rolls and Wound Rolls", 18) }}
           </div>
         </details>
       </li>
@@ -1065,7 +1066,7 @@ sections:
               [LETHAL HITS] fire on critical hits; [DEVASTATING WOUNDS] fires on
               critical wounds; [ANTI-X Y+] lowers the number needed for a
               critical wound.</p>
-            <a class="rule-ref" href="{{ site.coreRules }}#page=18" rel="noopener"><span class="rule-num">05.01–05.02</span><span class="rule-title">Hit Rolls and Wound Rolls</span><span class="rule-go">Core Rules p.18 &rarr;</span></a>
+            {{ ruleRef("05.01–05.02", "Hit Rolls and Wound Rolls", 18) }}
           </div>
         </details>
       </li>
@@ -1083,7 +1084,7 @@ sections:
               first and to non-characters before characters. When an attack does
               both normal damage and mortal wounds, resolve the normal damage
               first.</p>
-            <a class="rule-ref" href="{{ site.coreRules }}#page=24" rel="noopener"><span class="rule-num">06.02</span><span class="rule-title">Mortal Wounds</span><span class="rule-go">Core Rules p.24 &rarr;</span></a>
+            {{ ruleRef("06.02", "Mortal Wounds", 24) }}
           </div>
         </details>
       </li>
@@ -1100,7 +1101,7 @@ sections:
               range, both units are engaged with each other.</p>
             <p>"Unengaged" is a condition on a lot of the abilities above —
               [HEAVY], [INDIRECT FIRE], Fire Overwatch and actions all care.</p>
-            <a class="rule-ref" href="{{ site.coreRules }}#page=14" rel="noopener"><span class="rule-num">03.04</span><span class="rule-title">Engagement</span><span class="rule-go">Core Rules p.14 &rarr;</span></a>
+            {{ ruleRef("03.04", "Engagement", 14) }}
           </div>
         </details>
       </li>
@@ -1116,7 +1117,7 @@ sections:
               cover no longer improves your save.</p>
             <p>It is on or off, never doubled — qualifying twice (Stealth plus
               real terrain, say) is still one &minus;1.</p>
-            <a class="rule-ref" href="{{ site.coreRules }}#page=50" rel="noopener"><span class="rule-num">13.08</span><span class="rule-title">Benefit of Cover</span><span class="rule-go">Core Rules p.50 &rarr;</span></a>
+            {{ ruleRef("13.08", "Benefit of Cover", 50) }}
           </div>
         </details>
       </li>
@@ -1147,7 +1148,7 @@ sections:
               of the model, and the model is always within range of its own
               aura. A unit can sit under several different auras at once, but the
               same aura only ever applies to it once.</p>
-            <a class="rule-ref" href="{{ site.coreRules }}#page=72" rel="noopener"><span class="rule-num">22.01</span><span class="rule-title">Aura Abilities</span><span class="rule-go">Core Rules p.72 &rarr;</span></a>
+            {{ ruleRef("22.01", "Aura Abilities", 72) }}
           </div>
         </details>
       </li>
@@ -1163,7 +1164,7 @@ sections:
               Synapse, and so on. It only applies if the army faction you chose
               while mustering matches a faction keyword on that datasheet, which
               is what stops a mixed-faction list handing everyone everything.</p>
-            <a class="rule-ref" href="{{ site.coreRules }}#page=72" rel="noopener"><span class="rule-num">22.02</span><span class="rule-title">Faction Abilities</span><span class="rule-go">Core Rules p.72 &rarr;</span></a>
+            {{ ruleRef("22.02", "Faction Abilities", 72) }}
           </div>
         </details>
       </li>
@@ -1178,7 +1179,7 @@ sections:
             <p>An ability that comes from a piece of kit rather than from the
               unit. If a single model carries it, that model is the bearer and
               the ability dies with it — even inside an attached unit.</p>
-            <a class="rule-ref" href="{{ site.coreRules }}#page=72" rel="noopener"><span class="rule-num">22.04</span><span class="rule-title">Wargear Abilities</span><span class="rule-go">Core Rules p.72 &rarr;</span></a>
+            {{ ruleRef("22.04", "Wargear Abilities", 72) }}
           </div>
         </details>
       </li>
