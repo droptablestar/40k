@@ -1,0 +1,51 @@
+{
+  "generatedPages": [
+    "/charts.html",
+    "/factions.html",
+    "/factions/tyranids.html",
+    "/factions/tyranids/datasheets.html",
+    "/factions/tyranids/stratagems.html",
+    "/factions/world-eaters.html",
+    "/factions/world-eaters/stratagems.html",
+    "/index.html",
+    "/keywords.html",
+    "/painting-reference.html",
+    "/painting-table-ready.html",
+    "/painting.html",
+    "/references.html",
+    "/rules-changes.html",
+    "/tracker.html",
+    "/troubleshooting.html",
+    "/turn-order.html"
+  ],
+  "passthroughAssets": [
+    "/assets/css/charts.css",
+    "/assets/css/faction.css",
+    "/assets/css/factions.css",
+    "/assets/css/index.css",
+    "/assets/css/keywords.css",
+    "/assets/css/painting-reference.css",
+    "/assets/css/painting-table-ready.css",
+    "/assets/css/painting.css",
+    "/assets/css/references.css",
+    "/assets/css/rules-changes.css",
+    "/assets/css/tracker.css",
+    "/assets/css/troubleshooting.css",
+    "/assets/css/turn-order.css",
+    "/assets/img/hero.jpg",
+    "/assets/img/tyranids.webp",
+    "/assets/js/folds.js",
+    "/assets/js/heading-anchors.js",
+    "/assets/js/nav.js",
+    "/assets/js/reference-filter.js",
+    "/assets/js/sticky-offsets.js",
+    "/assets/js/tips.js",
+    "/assets/js/tracker.js",
+    "/assets/js/troubleshooting.js",
+    "/assets/style.css"
+  ],
+  "mustNotExist": [
+    "/odds.html",
+    "/roster.html"
+  ]
+}
