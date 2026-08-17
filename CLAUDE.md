@@ -84,15 +84,61 @@ rules. Eleventy itself fails the build if two source files write the same
 output path (`tests/unit/duplicate-output.test.mjs` proves this).
 
 GitHub Actions (`.github/workflows/ci.yml`) runs `npm ci`, `check:toolchain`,
-`build`, and `test:unit` on every push and pull request, on a pinned Ubuntu
-runner with third-party actions pinned by commit SHA. This is validation
-only — deployment stays entirely in Cloudflare Workers Builds, unaffected.
+`build`, `test:unit`, and `test:ui` on every push and pull request, on a
+pinned Ubuntu runner with third-party actions pinned by commit SHA. This is
+validation only — deployment stays entirely in Cloudflare Workers Builds,
+unaffected.
 
 Nunjucks (`.njk`) is the template engine for both `_includes/base.njk` and the
 `.html` content files (configured via `htmlTemplateEngine` in `.eleventy.js`).
 `assets/` is passthrough-copied into `_site/assets/` unchanged. `tests/` and
 `scripts/` are excluded from Eleventy's own input via `.eleventyignore` so
 fixture HTML files don't collide with real pages.
+
+## Browser tests
+
+Browser tests use Playwright (`@playwright/test@1.62.1`) to verify layout,
+interactivity, and state across device types and browsers. Four named projects
+test different platform/browser combinations:
+
+```
+functional-mobile-chromium     360px viewport, touch input (coarse pointer)
+functional-desktop-chromium    1280px viewport, mouse input (fine pointer)
+compat-firefox                 1280px, desktop (firefox-specific interactions)
+compat-webkit                  360px, touch (webkit-specific interactions)
+```
+
+Run tests locally:
+
+```bash
+npm run test:ui                          # all four projects
+npm run test:ui:functional               # mobile + desktop chromium
+npm run test:ui:compat                   # firefox + webkit
+npx playwright test --project=functional-mobile-chromium    # one project
+```
+
+Tests cover:
+- Horizontal overflow on all routes at both mobile and desktop widths
+- Tracker state persistence and offline interaction (counters, rounds, armies)
+- Layout fixture regression (nav height/colors, fonts, table widths, print behavior)
+- Mobile/touch navigation (tap to open dropdown, close on tap-outside, only one open)
+- Desktop/hover navigation (hover to open, Escape to close, click outside closes)
+- Deep link disclosure (hash fragment opens fold, printing opens all content,
+  state restores)
+- Jump link landing position (clears sticky bars)
+- Reference filtering on /keywords page
+
+Font fixtures are local copies (woff2 binaries in `tests/fixtures/fonts/`) so
+tests don't require network access. `tests/browser/helpers/network.mjs`
+intercepts Google Fonts requests and serves local files instead. Layout
+baseline (`tests/browser/fixtures/layout.json`) captures computed styles with
+±2px tolerance for pixel-dimension drift across renderer versions. Run
+`tests/browser/generate-layout-fixture.mjs` by hand after intentional layout
+changes to regenerate the baseline.
+
+Playwright config (`playwright.config.mjs`) defines a static server that
+resolves extensionless paths to `.html` files (matching Cloudflare's behavior)
+so tests run against production-like URLs.
 
 ## Deploying
 

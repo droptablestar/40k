@@ -36,6 +36,13 @@ npx @11ty/eleventy --serve  # local dev server with live reload
 CI (`.github/workflows/ci.yml`) runs the same build and test steps on every
 push and pull request.
 
+## Browser tests
+
+Playwright tests verify layout, interactivity, and state across device types
+and browsers. Run them with `npm run test:ui` — they test mobile/desktop
+viewports, touch/mouse input, and Firefox/webkit compatibility. See CLAUDE.md
+for detailed test coverage and per-project options.
+
 ## Tracker
 
 Vanilla JS (`assets/js/tracker.js`), state in `localStorage` under
