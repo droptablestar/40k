@@ -112,6 +112,7 @@
 <script src="/assets/js/tips.js" defer></script>
 <script src="/assets/js/heading-anchors.js" defer></script>
 <script src="/assets/js/folds.js" defer></script>
-{% if pageJs %}<script src="/assets/{{ pageJs }}" defer></script>
+{% if pageJs == "js/tracker.js" %}<script src="/assets/js/tracker-state.js" defer></script>
+{% endif %}{% if pageJs %}<script src="/assets/{{ pageJs }}" defer></script>
 {% endif %}</body>
 </html>

@@ -1,6 +1,7 @@
 {
-  "_comment": "Characterises assets/js/tracker.js load() as it exists today. Do not use these to justify changing tracker.js in this slice -- classification 'throws' fixtures document defects intentionally left in place until the approved behaviour changes in the tracker-hardening slice.",
+  "_comment": "Characterises assets/js/tracker-state.js normalize() as hardened in the tracker-persistence slice. Classifications: 'valid' (input already conforms), 'tolerated-extension' (unknown properties preserved untouched), 'recovered' (a malformed round/cp/vp field is defaulted or coerced), 'reset' (an invalid armies container resets the whole game to blankGame()).",
   "storageKey": "benchtable:battle:v1",
+  "probeKey": "benchtable:probe:v1",
   "cases": [
     {
       "name": "valid-v1-preserved",
@@ -45,8 +46,8 @@
       }
     },
     {
-      "name": "round-non-numeric-string-becomes-NaN",
-      "classification": "malformed-recovery",
+      "name": "round-non-numeric-string-recovers-to-default",
+      "classification": "recovered",
       "input": {
         "round": "abc",
         "active": 0,
@@ -56,18 +57,18 @@
         ]
       },
       "expectedState": {
-        "round": null,
-        "roundIsNaN": true,
+        "round": 1,
         "active": 0,
         "armies": [
           { "name": "Player one", "cp": 0, "vp": 0 },
           { "name": "Player two", "cp": 0, "vp": 0 }
         ]
-      }
+      },
+      "note": "approved behaviour change 1: malformed round falls back to 1 instead of becoming NaN."
     },
     {
-      "name": "round-fraction-not-coerced-to-integer",
-      "classification": "malformed-recovery",
+      "name": "round-fraction-rounds-to-nearest-integer",
+      "classification": "recovered",
       "input": {
         "round": 3.7,
         "active": 0,
@@ -77,17 +78,18 @@
         ]
       },
       "expectedState": {
-        "round": 3.7,
+        "round": 4,
         "active": 0,
         "armies": [
           { "name": "Player one", "cp": 0, "vp": 0 },
           { "name": "Player two", "cp": 0, "vp": 0 }
         ]
-      }
+      },
+      "note": "approved behaviour change 2: round is coerced to an integer in 1-5 (Math.round, then clamped)."
     },
     {
-      "name": "round-numeric-string-accepted",
-      "classification": "tolerated-extension",
+      "name": "round-numeric-string-recovers-to-default",
+      "classification": "recovered",
       "input": {
         "round": "3",
         "active": 0,
@@ -97,17 +99,18 @@
         ]
       },
       "expectedState": {
-        "round": "3",
+        "round": 1,
         "active": 0,
         "armies": [
           { "name": "Player one", "cp": 0, "vp": 0 },
           { "name": "Player two", "cp": 0, "vp": 0 }
         ]
-      }
+      },
+      "note": "approved behaviour change 4: numeric strings are treated as malformed rather than silently widening the schema."
     },
     {
-      "name": "cp-negative-passes-through",
-      "classification": "malformed-recovery",
+      "name": "cp-negative-recovers-to-zero",
+      "classification": "recovered",
       "input": {
         "round": 1,
         "active": 0,
@@ -120,14 +123,15 @@
         "round": 1,
         "active": 0,
         "armies": [
-          { "name": "Player one", "cp": -5, "vp": 0 },
+          { "name": "Player one", "cp": 0, "vp": 0 },
           { "name": "Player two", "cp": 0, "vp": 0 }
         ]
-      }
+      },
+      "note": "approved behaviour change 3: negative cp/vp fall back to 0."
     },
     {
-      "name": "cp-numeric-string-accepted",
-      "classification": "tolerated-extension",
+      "name": "cp-numeric-string-recovers-to-zero",
+      "classification": "recovered",
       "input": {
         "round": 1,
         "active": 0,
@@ -140,64 +144,101 @@
         "round": 1,
         "active": 0,
         "armies": [
-          { "name": "Player one", "cp": 12, "vp": 0 },
+          { "name": "Player one", "cp": 0, "vp": 0 },
           { "name": "Player two", "cp": 0, "vp": 0 }
         ]
-      }
+      },
+      "note": "approved behaviour change 4: numeric strings are treated as malformed rather than silently widening the schema."
     },
     {
-      "name": "armies-string-of-length-two-throws",
-      "classification": "throws",
+      "name": "armies-string-resets-to-blank-game",
+      "classification": "reset",
       "input": {
         "round": 1,
         "active": 0,
         "armies": "ab"
       },
-      "expectedError": "TypeError",
-      "note": "saved.armies.length === 2 passes the guard; .forEach is not a function on a string. The tracker renders nothing."
+      "expectedState": {
+        "round": 1,
+        "active": 0,
+        "armies": [
+          { "name": "Player one", "cp": 0, "vp": 0 },
+          { "name": "Player two", "cp": 0, "vp": 0 }
+        ]
+      },
+      "note": "approved behaviour change 5: an invalid armies container resets to a blank game instead of throwing. Previously: saved.armies.length === 2 passed the guard and .forEach was not a function on a string, so the tracker rendered nothing."
     },
     {
-      "name": "armies-null-entries-throws",
-      "classification": "throws",
+      "name": "armies-null-entries-reset-to-blank-game",
+      "classification": "reset",
       "input": {
         "round": 1,
         "active": 0,
         "armies": [null, null]
       },
-      "expectedError": "TypeError",
-      "note": "strict mode: reading .name off null throws inside the forEach callback."
+      "expectedState": {
+        "round": 1,
+        "active": 0,
+        "armies": [
+          { "name": "Player one", "cp": 0, "vp": 0 },
+          { "name": "Player two", "cp": 0, "vp": 0 }
+        ]
+      },
+      "note": "approved behaviour change 5. Previously: strict mode threw reading .name off null inside the forEach callback."
     },
     {
-      "name": "armies-non-object-entries-throws",
-      "classification": "throws",
+      "name": "armies-non-object-entries-reset-to-blank-game",
+      "classification": "reset",
       "input": {
         "round": 1,
         "active": 0,
         "armies": [1, 2]
       },
-      "expectedError": "TypeError",
-      "note": "strict mode: assigning a.name on a number throws inside the forEach callback."
+      "expectedState": {
+        "round": 1,
+        "active": 0,
+        "armies": [
+          { "name": "Player one", "cp": 0, "vp": 0 },
+          { "name": "Player two", "cp": 0, "vp": 0 }
+        ]
+      },
+      "note": "approved behaviour change 5. Previously: strict mode threw assigning a.name on a number inside the forEach callback."
     },
     {
-      "name": "armies-array-like-object-throws",
-      "classification": "throws",
+      "name": "armies-array-like-object-resets-to-blank-game",
+      "classification": "reset",
       "input": {
         "round": 1,
         "active": 0,
         "armies": { "length": 2 }
       },
-      "expectedError": "TypeError",
-      "note": "length === 2 passes the guard; a plain object has no .forEach."
+      "expectedState": {
+        "round": 1,
+        "active": 0,
+        "armies": [
+          { "name": "Player one", "cp": 0, "vp": 0 },
+          { "name": "Player two", "cp": 0, "vp": 0 }
+        ]
+      },
+      "note": "approved behaviour change 5. Previously: length === 2 passed the guard, but a plain object has no .forEach, so it threw."
     },
     {
-      "name": "armies-sparse-array-renders-stray-comma",
-      "classification": "malformed-recovery",
+      "name": "armies-wrong-length-resets-to-blank-game",
+      "classification": "reset",
       "input": {
         "round": 1,
         "active": 0,
         "armies": [null, null, null]
       },
-      "note": "the plan's ground-truth table records `armies: [,,]` (a sparse array of length 2) as not throwing and rendering a stray comma; JSON has no sparse-array literal, so this fixture cannot reproduce that exact input shape and is recorded as a gap rather than guessed."
+      "expectedState": {
+        "round": 1,
+        "active": 0,
+        "armies": [
+          { "name": "Player one", "cp": 0, "vp": 0 },
+          { "name": "Player two", "cp": 0, "vp": 0 }
+        ]
+      },
+      "note": "an armies array of the wrong length resets to a blank game, both before and after this slice. The plan's ground-truth table also records `armies: [,,]` (a true sparse array of length 2) as not throwing and rendering a stray comma; JSON has no sparse-array literal, so this fixture cannot reproduce that exact input shape and it remains an untested gap."
     },
     {
       "name": "active-only-accepts-literal-1",
@@ -241,7 +282,7 @@
     },
     {
       "name": "invalid-json-survived",
-      "classification": "malformed-recovery",
+      "classification": "reset",
       "rawStoredValue": "{not valid json",
       "expectedState": {
         "round": 1,
@@ -251,11 +292,11 @@
           { "name": "Player two", "cp": 0, "vp": 0 }
         ]
       },
-      "note": "store.read() catches the JSON.parse throw and returns null; load() falls back to blankGame()."
+      "note": "store.read() catches the JSON.parse throw and returns null; normalize(null) falls back to blankGame()."
     },
     {
       "name": "missing-armies-resets-to-blank-game",
-      "classification": "malformed-recovery",
+      "classification": "reset",
       "input": {
         "round": 4,
         "active": 1
@@ -271,7 +312,7 @@
     },
     {
       "name": "storage-unavailable-at-startup",
-      "classification": "malformed-recovery",
+      "classification": "reset",
       "storageUnavailable": true,
       "expectedState": {
         "round": 1,
@@ -285,11 +326,11 @@
         "nostoreHidden": false,
         "savedText": "Session only"
       },
-      "note": "the __bt_test probe throw sets store.usable = false; load() then reads from the null in-memory store and falls back to blankGame()."
+      "note": "the benchtable:probe:v1 probe throw sets store usable to false; load() then reads from the null in-memory store and falls back to blankGame()."
     },
     {
       "name": "write-failure-after-startup",
-      "classification": "malformed-recovery",
+      "classification": "reset",
       "storageUnavailable": false,
       "writeThrowsAfterStartup": true,
       "input": {
@@ -309,10 +350,10 @@
         ]
       },
       "expectedUi": {
-        "nostoreHidden": true,
-        "savedText": "Saved locally"
+        "nostoreHidden": false,
+        "savedText": "Session only"
       },
-      "note": "current behaviour: store.write() silently swallows the setItem exception (quota/private mode) and shows no warning -- this is approved behaviour change 6 in the cleanup plan (visible 'Session only' warning on write failure), not yet implemented. This fixture records what happens today, before that change lands."
+      "note": "approved behaviour change 6: when a write throws after startup (quota exceeded, storage revoked mid-session), the tracker keeps the latest state in memory, stops further localStorage writes for the page session, and shows the same 'Session only' warning used when the startup probe fails."
     }
   ]
 }

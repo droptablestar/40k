@@ -75,3 +75,61 @@ test("tracker interaction keeps working after the browser context goes offline",
   await expect(cp.locator("output")).toHaveText("1");
   await context.setOffline(false);
 });
+
+test("invalid JSON in storage recovers to a blank game instead of crashing", async ({ page }) => {
+  await page.evaluate((key) => window.localStorage.setItem(key, "{not valid json"), KEY);
+  await page.reload();
+
+  await expect(page.locator('.pip[data-round="1"]')).toHaveAttribute("aria-pressed", "true");
+  const cp = page.locator(".army").first().locator('.counter', { hasText: "Command points" });
+  await expect(cp.locator("output")).toHaveText("0");
+});
+
+test("storage unavailable at startup shows the Session only warning and stays usable", async ({
+  page,
+}) => {
+  await page.addInitScript(() => {
+    Object.defineProperty(window, "localStorage", {
+      get() {
+        throw new Error("blocked");
+      },
+    });
+  });
+  await page.reload();
+
+  await expect(page.locator("#nostore")).toBeVisible();
+  await expect(page.locator("#saved")).toHaveText("Session only");
+
+  const cp = page.locator(".army").first().locator('.counter', { hasText: "Command points" });
+  await cp.locator('[data-act="inc"]').click();
+  await expect(cp.locator("output")).toHaveText("1");
+});
+
+test("a write failure after startup shows the Session only warning and keeps the game usable", async ({
+  page,
+}) => {
+  await page.addInitScript(() => {
+    var orig = window.localStorage.setItem.bind(window.localStorage);
+    var realWrites = 0;
+    window.localStorage.setItem = function (key, value) {
+      if (key === "benchtable:battle:v1") {
+        realWrites++;
+        if (realWrites > 1) {
+          throw new DOMException("Quota exceeded", "QuotaExceededError");
+        }
+      }
+      return orig(key, value);
+    };
+  });
+  await page.reload();
+
+  await expect(page.locator("#nostore")).toBeHidden();
+  await expect(page.locator("#saved")).toHaveText("Saved locally");
+
+  const cp = page.locator(".army").first().locator('.counter', { hasText: "Command points" });
+  await cp.locator('[data-act="inc"]').click();
+
+  await expect(page.locator("#nostore")).toBeVisible();
+  await expect(page.locator("#saved")).toHaveText("Session only");
+  await expect(cp.locator("output")).toHaveText("1");
+});

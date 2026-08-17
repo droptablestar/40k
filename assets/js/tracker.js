@@ -1,18 +1,20 @@
 (function(){
   "use strict";
 
-  var KEY = "benchtable:battle:v1";
+  var T = window.BenchtableTracker;
+  var KEY = T.STORAGE_KEY;
+  var PROBE_KEY = T.PROBE_KEY;
 
   /* ---------- storage with in-memory fallback ---------- */
 
   var store = (function(){
     var memory = null, usable = true;
     try {
-      window.localStorage.setItem("__bt_test", "1");
-      window.localStorage.removeItem("__bt_test");
+      window.localStorage.setItem(PROBE_KEY, "1");
+      window.localStorage.removeItem(PROBE_KEY);
     } catch (e) { usable = false; }
     return {
-      usable: usable,
+      isUsable: function(){ return usable; },
       read: function(){
         if (!usable) return memory;
         try { return JSON.parse(window.localStorage.getItem(KEY)); }
@@ -21,45 +23,40 @@
       write: function(value){
         if (!usable) { memory = value; return; }
         try { window.localStorage.setItem(KEY, JSON.stringify(value)); }
-        catch (e) { /* quota or private mode; keep playing */ }
-      }
+        catch (e) {
+          // Quota exceeded or storage revoked mid-session (e.g. private
+          // mode). Stop touching localStorage for the rest of the page's
+          // life and keep the latest state in memory instead, so play
+          // continues -- the UI just stops claiming it's saved.
+          usable = false;
+          memory = value;
+          if (store.onWriteFailure) store.onWriteFailure();
+        }
+      },
+      onWriteFailure: null
     };
   })();
 
-  if (!store.usable) {
+  function showSessionOnly(){
     document.getElementById("nostore").hidden = false;
     document.getElementById("saved").textContent = "Session only";
   }
 
+  if (!store.isUsable()) {
+    showSessionOnly();
+  } else {
+    store.onWriteFailure = showSessionOnly;
+  }
+
   /* ---------- state ---------- */
 
-  function blankArmy(name){
-    return { name: name, cp: 0, vp: 0 };
-  }
-
-  function blankGame(){
-    return { round: 1, active: 0, armies: [blankArmy("Player one"),
-                                           blankArmy("Player two")] };
-  }
-
   function load(){
-    var saved = store.read();
-    if (!saved || !saved.armies || saved.armies.length !== 2) return blankGame();
-    // normalise anything missing so an old save cannot break the page
-    saved.round  = clamp(saved.round || 1, 1, 5);
-    saved.active = saved.active === 1 ? 1 : 0;
-    saved.armies.forEach(function(a){
-      a.name = typeof a.name === "string" ? a.name : "Player";
-      a.cp   = num(a.cp);
-      a.vp   = num(a.vp);
-    });
-    return saved;
+    return T.normalize(store.read());
   }
 
   var game = load();
 
   function num(v){ v = parseInt(v, 10); return isNaN(v) ? 0 : v; }
-  function clamp(v, lo, hi){ return Math.min(hi, Math.max(lo, v)); }
 
   function save(){ store.write(game); }
 
@@ -127,7 +124,7 @@
   });
 
   document.getElementById("advance").addEventListener("click", function(){
-    game.round = game.round >= 5 ? 5 : game.round + 1;
+    game.round = T.advanceRound(game.round);
     render();
   });
 
@@ -142,7 +139,7 @@
 
     if (act === "inc" || act === "dec"){
       var f = b.getAttribute("data-f");
-      a[f] = Math.max(0, a[f] + (act === "inc" ? 1 : -1));
+      a[f] = T.adjustCounter(a[f], act === "inc" ? 1 : -1);
     }
     else if (act === "turn"){ game.active = ai; }
     render();
@@ -158,7 +155,7 @@
 
   document.getElementById("newgame").addEventListener("click", function(){
     if (!window.confirm("Start a new game? Points and round all reset.")) return;
-    game = blankGame();
+    game = T.blankGame();
     render();
   });
 
