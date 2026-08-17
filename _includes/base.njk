@@ -4,12 +4,13 @@
     from (see jump.njk), so the two cannot drift apart. Pages with no
     `sections:` (Charts, Tracker) render as a plain link. -#}
 {% macro navitem(url, label, all) -%}
+          {%- set link = url | replace(".html", "") -%}
           <div class="nav-item-group">
-            <a href="{{ url }}">{{ label }}</a>
+            <a href="{{ link }}">{{ label }}</a>
             {%- for item in all %}{% if item.url == url and item.data.sections %}
             <div class="nav-subpanel">
               {%- for s in item.data.sections %}
-              <a href="{{ url }}#{{ s.id }}">{{ s.label }}</a>
+              <a href="{{ link }}#{{ s.id }}">{{ s.label }}</a>
               {%- endfor %}
             </div>
             {%- endif %}{% endfor %}
@@ -33,32 +34,32 @@
 
 <header class="sitebar">
   <div class="wrap">
-    <a class="mark" href="/index.html">Bench <b>&amp;</b> Table</a>
+    <a class="mark" href="/index">Bench <b>&amp;</b> Table</a>
 
     <div class="nav-drops">
       <details class="nav-drop">
         <summary{% if page.url.startsWith("/factions/") %} class="here"{% endif %}>Factions</summary>
         <div class="nav-panel">
           <div class="nav-item-group">
-            <a href="/factions/tyranids.html">Tyranids</a>
+            <a href="/factions/tyranids">Tyranids</a>
             <div class="nav-subpanel">
-              <a href="/factions/tyranids.html#identity">Identity</a>
-              <a href="/factions/tyranids.html#painting">Painting log</a>
-              <a href="/factions/tyranids.html#reference">Quick reference</a>
-              <a href="/factions/tyranids/datasheets.html">Datasheets</a>
-              <a href="/factions/tyranids/stratagems.html">Stratagems</a>
+              <a href="/factions/tyranids#identity">Identity</a>
+              <a href="/factions/tyranids#painting">Painting log</a>
+              <a href="/factions/tyranids#reference">Quick reference</a>
+              <a href="/factions/tyranids/datasheets">Datasheets</a>
+              <a href="/factions/tyranids/stratagems">Stratagems</a>
             </div>
           </div>
           <div class="nav-item-group">
-            <a href="/factions/world-eaters.html">World Eaters</a>
+            <a href="/factions/world-eaters">World Eaters</a>
             <div class="nav-subpanel">
-              <a href="/factions/world-eaters.html#identity">Identity</a>
-              <a href="/factions/world-eaters.html#painting">Painting log</a>
-              <a href="/factions/world-eaters.html#reference">Quick reference</a>
-              <a href="/factions/world-eaters/stratagems.html">Stratagems</a>
+              <a href="/factions/world-eaters#identity">Identity</a>
+              <a href="/factions/world-eaters#painting">Painting log</a>
+              <a href="/factions/world-eaters#reference">Quick reference</a>
+              <a href="/factions/world-eaters/stratagems">Stratagems</a>
             </div>
           </div>
-          <a class="nav-panel-more" href="/factions.html">Browse all factions &rarr;</a>
+          <a class="nav-panel-more" href="/factions">Browse all factions &rarr;</a>
         </div>
       </details>
       <details class="nav-drop">
@@ -83,8 +84,8 @@
 
     <div class="sitenav-wrap">
       <nav class="sitenav" aria-label="Sections">
-        <a href="/index.html"{% if page.url == "/" %} aria-current="page"{% endif %}>Start</a>
-        <a href="/tracker.html"{% if page.url == "/tracker.html" %} aria-current="page"{% endif %}>Tracker</a>
+        <a href="/index"{% if page.url == "/index.html" %} aria-current="page"{% endif %}>Start</a>
+        <a href="/tracker"{% if page.url == "/tracker.html" %} aria-current="page"{% endif %}>Tracker</a>
       </nav>
     </div>
   </div>
@@ -101,7 +102,7 @@
 <footer class="sitefoot">
   <div class="wrap">
     <p>Unofficial fan reference. Not affiliated with Games Workshop.</p>
-    <p><a href="/references.html">References</a></p>
+    <p><a href="/references">References</a></p>
     {% if extraFooter %}{{ extraFooter | safe }}
     {% endif %}</div>
 </footer>

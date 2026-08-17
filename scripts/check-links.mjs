@@ -10,7 +10,12 @@
  * through a 307 in production -- see the plan's ground-truth section --
  * but still resolves, so it is not treated as a broken link here). Every
  * other path (assets) maps to itself. Query strings are stripped before
- * resolution; fragments are checked against the target document's ids. */
+ * resolution; fragments are checked against the target document's ids.
+ *
+ * `a[href]` internal links must be extensionless -- a page link ending
+ * ".html" is flagged even if it would resolve, since canonical links are
+ * meant to avoid the 307 redirect entirely. Asset references (css/js/img)
+ * are unaffected. */
 
 import * as cheerio from "cheerio";
 import { readFileSync, existsSync, globSync } from "node:fs";
@@ -48,7 +53,7 @@ function idsOf(sitePath) {
   return ids;
 }
 
-function checkReference(rawUrl, currentSitePath, attrLabel, errors) {
+function checkReference(rawUrl, currentSitePath, attrLabel, errors, requireCanonical = false) {
   if (!rawUrl || isExternal(rawUrl)) return;
 
   const hashIndex = rawUrl.indexOf("#");
@@ -56,6 +61,11 @@ function checkReference(rawUrl, currentSitePath, attrLabel, errors) {
   let pathPart = hashIndex === -1 ? rawUrl : rawUrl.slice(0, hashIndex);
   const queryIndex = pathPart.indexOf("?");
   if (queryIndex !== -1) pathPart = pathPart.slice(0, queryIndex);
+
+  if (requireCanonical && pathPart.endsWith(".html")) {
+    errors.push(`${attrLabel} "${rawUrl}" -> internal link must be extensionless, not .html`);
+    return;
+  }
 
   let sitePath;
   if (pathPart === "") {
@@ -97,7 +107,9 @@ for (const file of files) {
   const $ = cheerio.load(readFileSync(fsPath, "utf8"));
   const errors = [];
 
-  $("a[href]").each((_, el) => checkReference($(el).attr("href"), file, "a[href]", errors));
+  $("a[href]").each((_, el) =>
+    checkReference($(el).attr("href"), file, "a[href]", errors, true)
+  );
   $("link[href]").each((_, el) => {
     const rel = ($(el).attr("rel") || "").toLowerCase();
     if (rel === "preconnect" || rel === "dns-prefetch") return;
