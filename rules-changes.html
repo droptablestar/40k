@@ -17,6 +17,7 @@ sections:
   - { id: wounds, label: "Wounds & vehicles" }
   - { id: psychic, label: "Psychic phase" }
 ---
+{%- from "rule-ref.njk" import ruleRef with context -%}
 <header class="hero">
   <p class="eyebrow">Before a game</p>
   <h1>What actually changed in 11th edition.</h1>
@@ -97,7 +98,7 @@ sections:
             and you can't use the exact same stratagem twice in that
             phase. Stacking multiple stratagems onto one unit in a single
             phase, which was possible in 10th, no longer works.</p>
-          <a class="rule-ref" href="{{ site.coreRules }}#page=54" rel="noopener"><span class="rule-num">15.01</span><span class="rule-title">Using Stratagems</span><span class="rule-go">Core Rules p.54 &rarr;</span></a>
+          {{ ruleRef("15.01", "Using Stratagems", 54) }}
         </div>
       </details>
     </li>
@@ -119,7 +120,7 @@ sections:
             you harder to hit in the first place — the attacker usually
             has to worsen their hit roll by 1 against a target with the
             benefit of cover.</p>
-          <a class="rule-ref" href="{{ site.coreRules }}#page=50" rel="noopener"><span class="rule-num">13.08</span><span class="rule-title">Benefit of Cover</span><span class="rule-go">Core Rules p.50 &rarr;</span></a>
+          {{ ruleRef("13.08", "Benefit of Cover", 50) }}
         </div>
       </details>
       <details>
@@ -136,8 +137,8 @@ sections:
             penalty, it grants <em>the benefit of cover</em>, and the benefit
             of cover is one fixed -1 however many times you qualify for
             it.</p>
-          <a class="rule-ref" href="{{ site.coreRules }}#page=85" rel="noopener"><span class="rule-num">24.33</span><span class="rule-title">Stealth — grants the benefit of cover</span><span class="rule-go">Core Rules p.85 &rarr;</span></a>
-          <a class="rule-ref" href="{{ site.coreRules }}#page=50" rel="noopener"><span class="rule-num">13.08</span><span class="rule-title">Benefit of Cover — where the -1 lives</span><span class="rule-go">Core Rules p.50 &rarr;</span></a>
+          {{ ruleRef("24.33", "Stealth — grants the benefit of cover", 85) }}
+          {{ ruleRef("13.08", "Benefit of Cover — where the -1 lives", 50) }}
         </div>
       </details>
       <details>
@@ -150,7 +151,7 @@ sections:
             through its footprint — if the line between two models
             crosses an Obscuring terrain area, they can't see each other,
             unless both are inside that same terrain area.</p>
-          <a class="rule-ref" href="{{ site.coreRules }}#page=50" rel="noopener"><span class="rule-num">13.10</span><span class="rule-title">Obscuring</span><span class="rule-go">Core Rules p.50 &rarr;</span></a>
+          {{ ruleRef("13.10", "Obscuring", 50) }}
         </div>
       </details>
       <details>
@@ -162,7 +163,7 @@ sections:
           <p>Terrain with the Solid keyword blocks line of sight through
             small gaps near ground level — a doorway or window in a ruin
             no longer gives you a sightline through the building.</p>
-          <a class="rule-ref" href="{{ site.coreRules }}#page=50" rel="noopener"><span class="rule-num">13.11</span><span class="rule-title">Solid</span><span class="rule-go">Core Rules p.50 &rarr;</span></a>
+          {{ ruleRef("13.11", "Solid", 50) }}
         </div>
       </details>
       <details>
@@ -175,7 +176,7 @@ sections:
             feature who haven't fired this turn or last turn can't be
             targeted by anything more than 15" away — they're effectively
             hidden until they shoot or an enemy gets close.</p>
-          <a class="rule-ref" href="{{ site.coreRules }}#page=50" rel="noopener"><span class="rule-num">13.09</span><span class="rule-title">Hidden</span><span class="rule-go">Core Rules p.50 &rarr;</span></a>
+          {{ ruleRef("13.09", "Hidden", 50) }}
         </div>
       </details>
       <details>
@@ -187,7 +188,7 @@ sections:
           <p>A unit with the Towering keyword within 12" of its target, or
             any unit standing on terrain 3" or taller, gets +1 to hit
             against targets at ground level.</p>
-          <a class="rule-ref" href="{{ site.coreRules }}#page=73" rel="noopener"><span class="rule-num">22.05</span><span class="rule-title">Plunging Fire</span><span class="rule-go">Core Rules p.73 &rarr;</span></a>
+          {{ ruleRef("22.05", "Plunging Fire", 73) }}
         </div>
       </details>
     </li>
@@ -210,7 +211,7 @@ sections:
             footprint of a terrain feature is the objective, and control
             is worked out from which models are actually standing in or
             on that terrain.</p>
-          <a class="rule-ref" href="{{ site.coreRules }}#page=52" rel="noopener"><span class="rule-num">14.01</span><span class="rule-title">Terrain Objectives</span><span class="rule-go">Core Rules p.52 &rarr;</span></a>
+          {{ ruleRef("14.01", "Terrain Objectives", 52) }}
         </div>
       </details>
       <details>
@@ -244,7 +245,7 @@ sections:
           <p>A unit tests for Battle-shock if it's at or below half its
             starting models, not strictly below half. A two-model unit
             that's lost one model can now be forced to test.</p>
-          <a class="rule-ref" href="{{ site.coreRules }}#page=30" rel="noopener"><span class="rule-num">08.03</span><span class="rule-title">Battle-shock</span><span class="rule-go">Core Rules p.30 &rarr;</span></a>
+          {{ ruleRef("08.03", "Battle-shock", 30) }}
         </div>
       </details>
       <details>
@@ -257,7 +258,7 @@ sections:
             recover — it doesn't automatically shake it off at the start
             of the next turn. A badly-shocked unit can stay useless for
             several turns in a row.</p>
-          <a class="rule-ref" href="{{ site.coreRules }}#page=30" rel="noopener"><span class="rule-num">08.03</span><span class="rule-title">Battle-shock</span><span class="rule-go">Core Rules p.30 &rarr;</span></a>
+          {{ ruleRef("08.03", "Battle-shock", 30) }}
         </div>
       </details>
     </li>
@@ -278,7 +279,7 @@ sections:
           <p>When a unit is attacked, its controller now declares the
             order damage will be allocated across the unit before making
             any save rolls. Characters still take damage last.</p>
-          <a class="rule-ref" href="{{ site.coreRules }}#page=19" rel="noopener"><span class="rule-num">05.03</span><span class="rule-title">Save Rolls</span><span class="rule-go">Core Rules p.19 &rarr;</span></a>
+          {{ ruleRef("05.03", "Save Rolls", 19) }}
         </div>
       </details>
       <details>
@@ -292,7 +293,7 @@ sections:
             because they're standing inside a ruin's footprint —
             infantry-scale units get an easier route to cover that
             vehicles don't.</p>
-          <a class="rule-ref" href="{{ site.coreRules }}#page=50" rel="noopener"><span class="rule-num">13.08</span><span class="rule-title">Benefit of Cover</span><span class="rule-go">Core Rules p.50 &rarr;</span></a>
+          {{ ruleRef("13.08", "Benefit of Cover", 50) }}
         </div>
       </details>
       <details>
@@ -309,7 +310,7 @@ sections:
             move, arriving from reserves, or being tied up in combat each
             cost you the bonus. It applies to any unit carrying Heavy
             weapons, not just vehicles.</p>
-          <a class="rule-ref" href="{{ site.coreRules }}#page=82" rel="noopener"><span class="rule-num">24.16</span><span class="rule-title">[Heavy]</span><span class="rule-go">Core Rules p.82 &rarr;</span></a>
+          {{ ruleRef("24.16", "[Heavy]", 82) }}
         </div>
       </details>
     </li>
@@ -331,7 +332,7 @@ sections:
             their Ballistic or Weapon Skill and to their hit roll —
             cutting through things like cover's -1 to hit. This doesn't
             extend to wound-roll modifiers.</p>
-          <a class="rule-ref" href="{{ site.coreRules }}#page=84" rel="noopener"><span class="rule-num">24.29</span><span class="rule-title">[Psychic]</span><span class="rule-go">Core Rules p.84 &rarr;</span></a>
+          {{ ruleRef("24.29", "[Psychic]", 84) }}
         </div>
       </details>
     </li>

@@ -1,0 +1,7 @@
+{#- Shared "jump to the official rule" link. Used across keywords, turn-order,
+    and rules-changes wherever a rule needs a citation into the Core Rules
+    PDF. `page` feeds both the PDF anchor and the visible "Core Rules p.N"
+    label, so the two can't drift apart. -#}
+{%- macro ruleRef(num, title, page) -%}
+<a class="rule-ref" href="{{ site.coreRules }}#page={{ page }}" rel="noopener"><span class="rule-num">{{ num }}</span><span class="rule-title">{{ title }}</span><span class="rule-go">Core Rules p.{{ page }} &rarr;</span></a>
+{%- endmacro -%}

@@ -18,6 +18,7 @@ sections:
   - { id: end, label: "End of turn" }
   - { id: their-turn, label: "Their turn" }
 ---
+{%- from "rule-ref.njk" import ruleRef with context -%}
 <header class="hero">
   <p class="eyebrow">At the table</p>
   <h1>What happens, in what order.</h1>
@@ -59,8 +60,8 @@ sections:
     </li>
   </ol>
 
-  <a class="rule-ref" href="{{ site.coreRules }}#page=28" rel="noopener"><span class="rule-num">07.01</span><span class="rule-title">The Battle Round — the three steps of a round</span><span class="rule-go">Core Rules p.28 &rarr;</span></a>
-  <a class="rule-ref" href="{{ site.coreRules }}#page=28" rel="noopener"><span class="rule-num">07.02</span><span class="rule-title">Player Turns — start of turn, five phases, end of turn</span><span class="rule-go">Core Rules p.28 &rarr;</span></a>
+  {{ ruleRef("07.01", "The Battle Round — the three steps of a round", 28) }}
+  {{ ruleRef("07.02", "Player Turns — start of turn, five phases, end of turn", 28) }}
 
   <p class="sub">The five phases, always in this order: <b>Command</b>,
     <b>Movement</b>, <b>Shooting</b>, <b>Charge</b>, <b>Fight</b>. Only the
@@ -118,9 +119,9 @@ sections:
       care about.</li>
   </ul>
 
-  <a class="rule-ref" href="{{ site.coreRules }}#page=30" rel="noopener"><span class="rule-num">08.00</span><span class="rule-title">Command Phase — all five steps</span><span class="rule-go">Core Rules p.30 &rarr;</span></a>
-  <a class="rule-ref" href="{{ site.coreRules }}#page=9" rel="noopener"><span class="rule-num">01.07</span><span class="rule-title">Battle-shock Rolls — and what being shocked does</span><span class="rule-go">Core Rules p.9 &rarr;</span></a>
-  <a class="rule-ref" href="{{ site.coreRules }}#page=56" rel="noopener"><span class="rule-num">15.04</span><span class="rule-title">Insane Bravery (core stratagem)</span><span class="rule-go">Core Rules p.56 &rarr;</span></a>
+  {{ ruleRef("08.00", "Command Phase — all five steps", 30) }}
+  {{ ruleRef("01.07", "Battle-shock Rolls — and what being shocked does", 9) }}
+  {{ ruleRef("15.04", "Insane Bravery (core stratagem)", 56) }}
 </section>
 
 <section class="section" id="movement">
@@ -200,9 +201,9 @@ sections:
       reserve at the end of round 3 is destroyed.</li>
   </ul>
 
-  <a class="rule-ref" href="{{ site.coreRules }}#page=32" rel="noopener"><span class="rule-num">09.00</span><span class="rule-title">Movement Phase — the three steps</span><span class="rule-go">Core Rules p.32 &rarr;</span></a>
-  <a class="rule-ref" href="{{ site.coreRules }}#page=33" rel="noopener"><span class="rule-num">09.04–09.07</span><span class="rule-title">Remain stationary, normal, advance, fall back</span><span class="rule-go">Core Rules p.33 &rarr;</span></a>
-  <a class="rule-ref" href="{{ site.coreRules }}#page=69" rel="noopener"><span class="rule-num">20.03</span><span class="rule-title">Arriving from Strategic Reserves — and the ingress move</span><span class="rule-go">Core Rules p.69 &rarr;</span></a>
+  {{ ruleRef("09.00", "Movement Phase — the three steps", 32) }}
+  {{ ruleRef("09.04–09.07", "Remain stationary, normal, advance, fall back", 33) }}
+  {{ ruleRef("20.03", "Arriving from Strategic Reserves — and the ingress move", 69) }}
 </section>
 
 <section class="section" id="shooting">
@@ -285,10 +286,10 @@ sections:
       see <a href="/rules-changes#terrain">what changed</a>.</li>
   </ul>
 
-  <a class="rule-ref" href="{{ site.coreRules }}#page=34" rel="noopener"><span class="rule-num">10.00</span><span class="rule-title">Shooting Phase — steps and normal shooting</span><span class="rule-go">Core Rules p.34 &rarr;</span></a>
-  <a class="rule-ref" href="{{ site.coreRules }}#page=35" rel="noopener"><span class="rule-num">10.05–10.07</span><span class="rule-title">Assault, close-quarters and indirect shooting</span><span class="rule-go">Core Rules p.35 &rarr;</span></a>
-  <a class="rule-ref" href="{{ site.coreRules }}#page=16" rel="noopener"><span class="rule-num">04.01</span><span class="rule-title">Making Attacks — select weapons, targets, resolve</span><span class="rule-go">Core Rules p.16 &rarr;</span></a>
-  <a class="rule-ref" href="{{ site.coreRules }}#page=18" rel="noopener"><span class="rule-num">05.01</span><span class="rule-title">Attack Sequence — hit, wound, save, damage</span><span class="rule-go">Core Rules p.18 &rarr;</span></a>
+  {{ ruleRef("10.00", "Shooting Phase — steps and normal shooting", 34) }}
+  {{ ruleRef("10.05–10.07", "Assault, close-quarters and indirect shooting", 35) }}
+  {{ ruleRef("04.01", "Making Attacks — select weapons, targets, resolve", 16) }}
+  {{ ruleRef("05.01", "Attack Sequence — hit, wound, save, damage", 18) }}
 </section>
 
 <section class="section" id="charge">
@@ -336,9 +337,9 @@ sections:
       where it is, in the open, having done nothing.</li>
   </ul>
 
-  <a class="rule-ref" href="{{ site.coreRules }}#page=36" rel="noopener"><span class="rule-num">11.02</span><span class="rule-title">Charge — declare, roll, attempt</span><span class="rule-go">Core Rules p.36 &rarr;</span></a>
-  <a class="rule-ref" href="{{ site.coreRules }}#page=37" rel="noopener"><span class="rule-num">11.04</span><span class="rule-title">Charge Move — targets, and where models must end up</span><span class="rule-go">Core Rules p.37 &rarr;</span></a>
-  <a class="rule-ref" href="{{ site.coreRules }}#page=81" rel="noopener"><span class="rule-num">24.13</span><span class="rule-title">Fights First</span><span class="rule-go">Core Rules p.81 &rarr;</span></a>
+  {{ ruleRef("11.02", "Charge — declare, roll, attempt", 36) }}
+  {{ ruleRef("11.04", "Charge Move — targets, and where models must end up", 37) }}
+  {{ ruleRef("24.13", "Fights First", 81) }}
 </section>
 
 <section class="section" id="fight">
@@ -395,9 +396,9 @@ sections:
       fight, piling in to reach someone new.</li>
   </ul>
 
-  <a class="rule-ref" href="{{ site.coreRules }}#page=38" rel="noopener"><span class="rule-num">12.00</span><span class="rule-title">Fight Phase — the five steps, and pile-in moves</span><span class="rule-go">Core Rules p.38 &rarr;</span></a>
-  <a class="rule-ref" href="{{ site.coreRules }}#page=40" rel="noopener"><span class="rule-num">12.04</span><span class="rule-title">Fight — Fights First, then alternating selection</span><span class="rule-go">Core Rules p.40 &rarr;</span></a>
-  <a class="rule-ref" href="{{ site.coreRules }}#page=42" rel="noopener"><span class="rule-num">12.08</span><span class="rule-title">Consolidation Move — the three modes</span><span class="rule-go">Core Rules p.42 &rarr;</span></a>
+  {{ ruleRef("12.00", "Fight Phase — the five steps, and pile-in moves", 38) }}
+  {{ ruleRef("12.04", "Fight — Fights First, then alternating selection", 40) }}
+  {{ ruleRef("12.08", "Consolidation Move — the three modes", 42) }}
 </section>
 
 <section class="section" id="end">
@@ -431,8 +432,8 @@ sections:
       an objective is holding nothing.</li>
   </ul>
 
-  <a class="rule-ref" href="{{ site.coreRules }}#page=52" rel="noopener"><span class="rule-num">14.02</span><span class="rule-title">Level of Control — who holds an objective, and when it's checked</span><span class="rule-go">Core Rules p.52 &rarr;</span></a>
-  <a class="rule-ref" href="{{ site.coreRules }}#page=28" rel="noopener"><span class="rule-num">07.03</span><span class="rule-title">End of Battle Round</span><span class="rule-go">Core Rules p.28 &rarr;</span></a>
+  {{ ruleRef("14.02", "Level of Control — who holds an objective, and when it's checked", 52) }}
+  {{ ruleRef("07.03", "End of Battle Round", 28) }}
 </section>
 
 <section class="section" id="their-turn">
@@ -447,7 +448,7 @@ sections:
       <span class="react-name">Smokescreen — 1CP</span>
       <p>One of your Smoke units gets the benefit of cover for the phase, and
         so does anything hiding behind it.</p>
-      <a class="rule-ref" href="{{ site.coreRules }}#page=57" rel="noopener"><span class="rule-num">15.10</span><span class="rule-title">Smokescreen</span><span class="rule-go">Core Rules p.57 &rarr;</span></a>
+      {{ ruleRef("15.10", "Smokescreen", 57) }}
     </li>
     <li>
       <span class="react-when">End of their Movement phase</span>
@@ -455,14 +456,14 @@ sections:
       <p>One of your unengaged units shoots one visible enemy unit within 24",
         hitting only on unmodified 6s. Usually pointed at whatever just moved
         into the open.</p>
-      <a class="rule-ref" href="{{ site.coreRules }}#page=57" rel="noopener"><span class="rule-num">15.08</span><span class="rule-title">Fire Overwatch</span><span class="rule-go">Core Rules p.57 &rarr;</span></a>
+      {{ ruleRef("15.08", "Fire Overwatch", 57) }}
     </li>
     <li>
       <span class="react-when">End of their Movement phase</span>
       <span class="react-name">Rapid Ingress — 1CP</span>
       <p>A unit in strategic reserves arrives early, on their turn instead of
         yours. Not in the first battle round.</p>
-      <a class="rule-ref" href="{{ site.coreRules }}#page=57" rel="noopener"><span class="rule-num">15.07</span><span class="rule-title">Rapid Ingress</span><span class="rule-go">Core Rules p.57 &rarr;</span></a>
+      {{ ruleRef("15.07", "Rapid Ingress", 57) }}
     </li>
     <li>
       <span class="react-when">End of their Charge phase</span>
@@ -470,7 +471,7 @@ sections:
       <p>One of your unengaged units within 12" of an enemy resolves a charge
         of its own — either into something that just charged, or, for an extra
         CP, into anything within 6".</p>
-      <a class="rule-ref" href="{{ site.coreRules }}#page=57" rel="noopener"><span class="rule-num">15.11</span><span class="rule-title">Heroic Intervention</span><span class="rule-go">Core Rules p.57 &rarr;</span></a>
+      {{ ruleRef("15.11", "Heroic Intervention", 57) }}
     </li>
     <li>
       <span class="react-when">During their Fight phase</span>
@@ -478,7 +479,7 @@ sections:
       <p>Right after an enemy unit finishes its attacks, one of your units
         gains Fights First and must be the next unit selected — it cuts in line
         ahead of the rest of their army.</p>
-      <a class="rule-ref" href="{{ site.coreRules }}#page=57" rel="noopener"><span class="rule-num">15.12</span><span class="rule-title">Counteroffensive</span><span class="rule-go">Core Rules p.57 &rarr;</span></a>
+      {{ ruleRef("15.12", "Counteroffensive", 57) }}
     </li>
     <li>
       <span class="react-when">Any phase, either turn</span>
@@ -486,7 +487,7 @@ sections:
       <p>Re-roll one dice you just rolled — a hit, wound, save, damage, advance,
         hazard or charge roll. Charge rolls re-roll both dice; everything else
         is one dice of the handful.</p>
-      <a class="rule-ref" href="{{ site.coreRules }}#page=56" rel="noopener"><span class="rule-num">15.02</span><span class="rule-title">Command Re-roll</span><span class="rule-go">Core Rules p.56 &rarr;</span></a>
+      {{ ruleRef("15.02", "Command Re-roll", 56) }}
     </li>
   </ul>
 
@@ -500,7 +501,7 @@ sections:
       11th</a>.</li>
   </ul>
 
-  <a class="rule-ref" href="{{ site.coreRules }}#page=54" rel="noopener"><span class="rule-num">15.01</span><span class="rule-title">Using Stratagems — costs, timing and restrictions</span><span class="rule-go">Core Rules p.54 &rarr;</span></a>
+  {{ ruleRef("15.01", "Using Stratagems — costs, timing and restrictions", 54) }}
 </section>
 
 <div class="note-box">
