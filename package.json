@@ -11,7 +11,10 @@
     "check:links": "node scripts/check-links.mjs",
     "build": "npm run clean && npm run check:source && eleventy && npm run check:routes && npm run check:html && npm run check:links",
     "test:unit": "node --test tests/unit/**/*.test.mjs",
-    "test": "npm run test:unit",
+    "test:ui:functional": "playwright test --project=functional-mobile-chromium --project=functional-desktop-chromium",
+    "test:ui:compat": "playwright test --project=compat-firefox --project=compat-webkit",
+    "test:ui": "npm run test:ui:functional && npm run test:ui:compat",
+    "test": "npm run test:unit && npm run test:ui",
     "serve": "npm run clean && npm run check:source && eleventy --serve"
   },
   "repository": {

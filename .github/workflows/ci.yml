@@ -18,3 +18,5 @@ jobs:
       - run: npm run check:toolchain
       - run: npm run build
       - run: npm run test:unit
+      - run: npx playwright install
+      - run: npm run test:ui

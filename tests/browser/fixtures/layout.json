@@ -1,0 +1,67 @@
+{
+  "tolerances": {
+    "*.width": 2,
+    "*.height": 2,
+    "note": "pixel dimensions may drift by up to the listed tolerance across renderer patch versions; everything else is an exact match"
+  },
+  "mobile": {
+    "nav": {
+      "position": "sticky",
+      "height": 126,
+      "backgroundColor": "rgba(36, 34, 32, 0.94)"
+    },
+    "navLink": {
+      "fontFamily": "\"IBM Plex Mono\", ui-monospace, monospace",
+      "fontSize": "11px",
+      "color": "rgb(191, 184, 168)"
+    },
+    "table": {
+      "width": 306,
+      "cellFontFamily": "\"IBM Plex Mono\", ui-monospace, monospace",
+      "cellFontVariantNumeric": "normal"
+    },
+    "tracker": {
+      "width": 306
+    },
+    "trackerOutput": {
+      "fontFamily": "\"IBM Plex Mono\", ui-monospace, monospace",
+      "fontVariantNumeric": "tabular-nums"
+    },
+    "print": {
+      "before": false,
+      "duringPrint": true,
+      "navDropDuringPrint": false,
+      "after": false
+    }
+  },
+  "desktop": {
+    "nav": {
+      "position": "sticky",
+      "height": 57,
+      "backgroundColor": "rgba(36, 34, 32, 0.94)"
+    },
+    "navLink": {
+      "fontFamily": "\"IBM Plex Mono\", ui-monospace, monospace",
+      "fontSize": "11px",
+      "color": "rgb(191, 184, 168)"
+    },
+    "table": {
+      "width": 1163,
+      "cellFontFamily": "\"IBM Plex Mono\", ui-monospace, monospace",
+      "cellFontVariantNumeric": "normal"
+    },
+    "tracker": {
+      "width": 1163
+    },
+    "trackerOutput": {
+      "fontFamily": "\"IBM Plex Mono\", ui-monospace, monospace",
+      "fontVariantNumeric": "tabular-nums"
+    },
+    "print": {
+      "before": false,
+      "duringPrint": true,
+      "navDropDuringPrint": false,
+      "after": false
+    }
+  }
+}
