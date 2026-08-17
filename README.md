@@ -28,9 +28,13 @@ Node and npm versions are pinned in `.nvmrc` and `package.json`.
 
 ```bash
 npm install
-npm run build                # clean _site/, layout check, build, route check
+npm run build                # clean _site/, layout check, build, HTML/link/route check
+npm run test:unit             # unit and regression tests
 npx @11ty/eleventy --serve  # local dev server with live reload
 ```
+
+CI (`.github/workflows/ci.yml`) runs the same build and test steps on every
+push and pull request.
 
 ## Tracker
 

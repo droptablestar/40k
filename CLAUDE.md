@@ -60,22 +60,37 @@ instead of letting a version drift surface as a confusing build failure.
 ```bash
 npm install
 npm run check:toolchain     # confirm Node/npm match the pinned versions
-npm run build                # clean _site/, layout check, build, route check
+npm run build                # clean _site/, layout check, build, HTML/link/route check
 npm run check:source        # layout check on its own
+npm run test:unit             # tracker and validator unit tests (Node's test runner)
 npm run clean                 # remove _site/ without building
 npx @11ty/eleventy --serve  # local dev server with live reload
 ```
 
 `npm run build` always removes `_site/` first — Eleventy does not clean its
 own output, so a renamed or deleted page/asset otherwise keeps serving from a
-stale file. The final step compares the build against
-`tests/contracts/generated-routes.json`, which lists every intended generated
-page and passthrough asset; update that file in the same PR as any route
-change.
+stale file. After the build, it runs three validators against `_site/`:
+`check:routes` compares the output to `tests/contracts/generated-routes.json`
+(update that file in the same PR as any route change); `check:html` runs
+`.htmlvalidate.json`'s ruleset (invalid nesting, duplicate IDs, invalid ARIA,
+missing required attributes, broken `details`/`summary`, nested interactive
+elements); `check:links` walks every internal link, stylesheet, script, and
+image/`srcset` reference with an HTML parser and resolves them the way
+Cloudflare serves them, not the way the Eleventy dev server tolerates them —
+see `scripts/check-links.mjs`'s header comment for the exact resolution
+rules. Eleventy itself fails the build if two source files write the same
+output path (`tests/unit/duplicate-output.test.mjs` proves this).
+
+GitHub Actions (`.github/workflows/ci.yml`) runs `npm ci`, `check:toolchain`,
+`build`, and `test:unit` on every push and pull request, on a pinned Ubuntu
+runner with third-party actions pinned by commit SHA. This is validation
+only — deployment stays entirely in Cloudflare Workers Builds, unaffected.
 
 Nunjucks (`.njk`) is the template engine for both `_includes/base.njk` and the
 `.html` content files (configured via `htmlTemplateEngine` in `.eleventy.js`).
-`assets/` is passthrough-copied into `_site/assets/` unchanged.
+`assets/` is passthrough-copied into `_site/assets/` unchanged. `tests/` and
+`scripts/` are excluded from Eleventy's own input via `.eleventyignore` so
+fixture HTML files don't collide with real pages.
 
 ## Deploying
 

@@ -7,7 +7,11 @@
     "clean": "node scripts/clean-output.mjs",
     "check:source": "node scripts/check-layout.mjs",
     "check:routes": "node scripts/check-routes.mjs",
-    "build": "npm run clean && npm run check:source && eleventy && npm run check:routes",
+    "check:html": "node scripts/check-html.mjs",
+    "check:links": "node scripts/check-links.mjs",
+    "build": "npm run clean && npm run check:source && eleventy && npm run check:routes && npm run check:html && npm run check:links",
+    "test:unit": "node --test tests/unit/**/*.test.mjs",
+    "test": "npm run test:unit",
     "serve": "npm run clean && npm run check:source && eleventy --serve"
   },
   "repository": {
@@ -28,6 +32,9 @@
   },
   "packageManager": "npm@11.12.1",
   "devDependencies": {
-    "@11ty/eleventy": "3.1.6"
+    "@11ty/eleventy": "3.1.6",
+    "@playwright/test": "1.62.1",
+    "cheerio": "1.2.0",
+    "html-validate": "11.7.0"
   }
 }
