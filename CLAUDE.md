@@ -45,6 +45,12 @@ pageCss                  path under assets/, e.g. css/painting.css
 pageJs                   path under assets/, e.g. js/tracker.js (optional)
 extraFooter               raw HTML appended to the shared footer (optional)
 themeColor                sets <meta name="theme-color"> (optional)
+navGroup                  top / painting / rules -- puts the page in that nav dropdown (optional)
+navLabel                  link text shown in the nav (required if navGroup is set)
+navOrder                  sort position within navGroup, ascending (required if navGroup is set)
+sections                  [{ id, label }] anchors shown as sub-links under this page in the nav (optional)
+factionSlug               registry slug from _data/factions.js (factions pages only)
+pageKind                  detail / datasheets / stratagems / factions-index (factions pages only)
 ```
 
 Page-specific CSS goes in `assets/css/{page}.css`, one file per page. Anything
@@ -52,6 +58,35 @@ reused across more than one page (e.g. the in-page jump nav) goes in
 `assets/style.css` instead of being duplicated — duplicated per-page CSS
 drifting out of sync was the direct cause of several bugs before this
 structure existed.
+
+## Navigation
+
+The sitebar/nav in `_includes/base.njk` is derived from front matter, not
+hardcoded per page. `scripts/nav-data.js` is a small, framework-free,
+unit-tested (`tests/unit/nav-data.test.mjs`) module of pure functions —
+registered as Nunjucks globals in `.eleventy.js` — that turn
+`collections.all` plus `_data/factions.js` into ready-to-render nav data:
+
+```
+navGroupItems(all, group)         items with navGroup === group, sorted by navOrder
+isGroupActive(url, all, group)    true if the current page belongs to that group
+factionGroups(all, factions)      registry entries joined with their detail/datasheets/stratagems pages
+factionsIndexUrl(all)             url of the one page with pageKind: factions-index
+isFactionsActive(url, all)        true on the factions index or any faction page
+```
+
+Adding a normal page to a nav dropdown needs only front matter
+(`navGroup`/`navLabel`/`navOrder`, plus `sections` for in-page anchors) — no
+template change. Adding a faction needs an entry in `_data/factions.js`
+(`slug`, `name`, `order`) plus pages declaring the matching `factionSlug` and
+`pageKind`; every faction must have a `pageKind: detail` page, and
+`factionGroups()` throws at build time (failing `npm run build`) on an
+unregistered slug, a duplicate `factionSlug`/`pageKind` pair, or a registry
+entry missing its detail page.
+
+`_data/site.js` holds facts shared across pages that used to be duplicated
+in front matter — currently just `site.coreRules`, the official Core Rules
+PDF URL.
 
 ## Building
 
