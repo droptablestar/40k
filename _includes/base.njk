@@ -2,19 +2,44 @@
     sections if it declared any. The section list comes from the page's own
     `sections:` front matter — the same list its in-page jump nav is built
     from (see jump.njk), so the two cannot drift apart. Pages with no
-    `sections:` (Charts, Tracker) render as a plain link. -#}
-{% macro navitem(url, label, all) -%}
-          {%- set link = url | replace(".html", "") -%}
+    `sections:` (Charts, Tracker) render as a plain link. Items come from
+    navGroupItems(), which reads each page's own navGroup/navLabel/navOrder
+    front matter — no page URL is duplicated here. -#}
+{% macro navGroupPanel(items) -%}
+{%- for item in items %}
           <div class="nav-item-group">
-            <a href="{{ link }}">{{ label }}</a>
-            {%- for item in all %}{% if item.url == url and item.data.sections %}
+            <a href="{{ item.url }}">{{ item.label }}</a>
+            {%- if item.sections.length %}
             <div class="nav-subpanel">
-              {%- for s in item.data.sections %}
-              <a href="{{ link }}#{{ s.id }}">{{ s.label }}</a>
+              {%- for s in item.sections %}
+              <a href="{{ item.url }}#{{ s.id }}">{{ s.label }}</a>
               {%- endfor %}
             </div>
-            {%- endif %}{% endfor %}
+            {%- endif %}
           </div>
+{%- endfor %}
+{%- endmacro %}
+
+{#- Faction dropdown: one entry per _data/factions.js registry entry, joined
+    against pages that declare a matching factionSlug. -#}
+{% macro factionsPanel(groups, indexUrl) -%}
+{%- for f in groups %}
+          <div class="nav-item-group">
+            <a href="{{ f.url }}">{{ f.name }}</a>
+            <div class="nav-subpanel">
+              {%- for s in f.sections %}
+              <a href="{{ f.url }}#{{ s.id }}">{{ s.label }}</a>
+              {%- endfor %}
+              {%- if f.datasheetsUrl %}
+              <a href="{{ f.datasheetsUrl }}">Datasheets</a>
+              {%- endif %}
+              {%- if f.stratagemsUrl %}
+              <a href="{{ f.stratagemsUrl }}">Stratagems</a>
+              {%- endif %}
+            </div>
+          </div>
+{%- endfor %}
+          <a class="nav-panel-more" href="{{ indexUrl }}">Browse all factions &rarr;</a>
 {%- endmacro %}
 <!DOCTYPE html>
 <html lang="en">
@@ -32,60 +57,37 @@
 {% endif %}</head>
 <body class="{{ bodyClass }}">
 
+{% set topItems = navGroupItems(collections.all, "top") %}
 <header class="sitebar">
   <div class="wrap">
-    <a class="mark" href="/index">Bench <b>&amp;</b> Table</a>
+    <a class="mark" href="{{ topItems[0].url }}">Bench <b>&amp;</b> Table</a>
 
     <div class="nav-drops">
       <details class="nav-drop">
-        <summary{% if page.url.startsWith("/factions/") %} class="here"{% endif %}>Factions</summary>
+        <summary{% if isFactionsActive(page.url, collections.all) %} class="here"{% endif %}>Factions</summary>
         <div class="nav-panel">
-          <div class="nav-item-group">
-            <a href="/factions/tyranids">Tyranids</a>
-            <div class="nav-subpanel">
-              <a href="/factions/tyranids#identity">Identity</a>
-              <a href="/factions/tyranids#painting">Painting log</a>
-              <a href="/factions/tyranids#reference">Quick reference</a>
-              <a href="/factions/tyranids/datasheets">Datasheets</a>
-              <a href="/factions/tyranids/stratagems">Stratagems</a>
-            </div>
-          </div>
-          <div class="nav-item-group">
-            <a href="/factions/world-eaters">World Eaters</a>
-            <div class="nav-subpanel">
-              <a href="/factions/world-eaters#identity">Identity</a>
-              <a href="/factions/world-eaters#painting">Painting log</a>
-              <a href="/factions/world-eaters#reference">Quick reference</a>
-              <a href="/factions/world-eaters/stratagems">Stratagems</a>
-            </div>
-          </div>
-          <a class="nav-panel-more" href="/factions">Browse all factions &rarr;</a>
+{{ factionsPanel(factionGroups(collections.all, factions), factionsIndexUrl(collections.all)) }}
         </div>
       </details>
       <details class="nav-drop">
-        <summary{% if page.url == "/painting.html" or page.url == "/painting-reference.html" or page.url == "/painting-table-ready.html" or page.url == "/troubleshooting.html" %} class="here"{% endif %}>Painting</summary>
+        <summary{% if isGroupActive(page.url, collections.all, "painting") %} class="here"{% endif %}>Painting</summary>
         <div class="nav-panel">
-          {{ navitem("/painting.html", "Painting, start to finish", collections.all) }}
-          {{ navitem("/painting-reference.html", "Technique reference", collections.all) }}
-          {{ navitem("/painting-table-ready.html", "Table-ready painting", collections.all) }}
-          {{ navitem("/troubleshooting.html", "When it goes wrong", collections.all) }}
+{{ navGroupPanel(navGroupItems(collections.all, "painting")) }}
         </div>
       </details>
       <details class="nav-drop">
-        <summary{% if page.url == "/turn-order.html" or page.url == "/charts.html" or page.url == "/keywords.html" or page.url == "/rules-changes.html" %} class="here"{% endif %}>Rules</summary>
+        <summary{% if isGroupActive(page.url, collections.all, "rules") %} class="here"{% endif %}>Rules</summary>
         <div class="nav-panel">
-          {{ navitem("/turn-order.html", "Turn order", collections.all) }}
-          {{ navitem("/keywords.html", "Keywords & abilities", collections.all) }}
-          {{ navitem("/charts.html", "Charts", collections.all) }}
-          {{ navitem("/rules-changes.html", "What changed in 11th", collections.all) }}
+{{ navGroupPanel(navGroupItems(collections.all, "rules")) }}
         </div>
       </details>
     </div>
 
     <div class="sitenav-wrap">
       <nav class="sitenav" aria-label="Sections">
-        <a href="/index"{% if page.url == "/index.html" %} aria-current="page"{% endif %}>Start</a>
-        <a href="/tracker"{% if page.url == "/tracker.html" %} aria-current="page"{% endif %}>Tracker</a>
+        {%- for item in topItems %}
+        <a href="{{ item.url }}"{% if item.rawUrl == page.url %} aria-current="page"{% endif %}>{{ item.label }}</a>
+        {%- endfor %}
       </nav>
     </div>
   </div>

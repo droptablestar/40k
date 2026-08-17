@@ -7,10 +7,9 @@ description: A plain-language reference for Warhammer 40,000 11th edition and
 bodyClass: s-index
 pageCss: css/index.css
 themeColor: "#242220"
-# The official 11th edition Core Rules PDF, hosted by Games Workshop. If GW
-# reissues the PDF this URL changes — check the downloads page and update it
-# here, once. Same URL as turn-order.html and rules-changes.html.
-coreRules: https://assets.warhammer-community.com/eng_01-06_warhammer40k_new40k_core_rules-was6fbu1ix-hfewhmxyiy.pdf
+navGroup: top
+navLabel: "Start"
+navOrder: 1
 extraFooter: |
   <p>Rules text belongs to GW — go read the free PDF.</p>
 ---
@@ -31,7 +30,7 @@ extraFooter: |
     <p class="eyebrow">Warhammer 40,000 · plain language layer</p>
     <h1>You don't need to know <em>all of it</em> yet.</h1>
     <p class="hero-lede">Everything here is written for someone who started this year.
-      No meta talk, no assumed vocabulary. <a href="{{ coreRules }}" rel="noopener"><b>The official rules are free</b></a> — this
+      No meta talk, no assumed vocabulary. <a href="{{ site.coreRules }}" rel="noopener"><b>The official rules are free</b></a> — this
       site is the plain-language layer on top, plus the hobby side nobody puts in
       the rulebook.</p>
     </div>
@@ -162,7 +161,7 @@ extraFooter: |
 
 <div class="note-box">
   <p><b>Where the real rules live.</b> Games Workshop publishes the 11th edition
-    Core Rules as a free <a href="{{ coreRules }}" rel="noopener">PDF</a> and in
+    Core Rules as a free <a href="{{ site.coreRules }}" rel="noopener">PDF</a> and in
     the Warhammer 40,000 app. Download them. This site summarises and explains;
     it does not replace them, and when the two disagree, the PDF wins.</p>
   <p>Datasheets for every unit are also free in the app. If a page here is out of
