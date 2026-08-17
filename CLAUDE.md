@@ -269,9 +269,15 @@ reference pages.
 ## Tracker
 
 Vanilla JS in `assets/js/tracker.js`, loaded by `tracker.html` via its
-`pageJs` front matter field. State in `localStorage` under
-`benchtable:battle:v1`, with an in-memory fallback and a visible banner when
-storage is blocked.
+`pageJs` front matter field. DOM wiring and rendering stay page-scoped here.
+Normalisation and state transitions (`normalize`, `advanceRound`,
+`adjustCounter`, `blankGame`, `blankArmy`) live behind a small stable
+boundary in `assets/js/tracker-state.js` — a UMD-lite module that works both
+as a Node/CommonJS module (for `tests/unit/tracker-state.test.mjs`, run via
+`npm run test:unit`) and as a plain `window.BenchtableTracker` global (loaded
+before `tracker.js` in `_includes/base.njk`), without introducing a bundler.
+
+State in `localStorage` under `benchtable:battle:v1`.
 
 ```js
 { round: 1, active: 0,
@@ -282,6 +288,44 @@ Command points, victory points, battle round, and whose turn it is — that's
 the whole surface. Per-unit damage tracking was tried and removed; the
 models-vs-wounds distinction was more confusing than useful, so use a
 physical damage tracker (dice, tokens) at the table instead.
+
+### v1 storage contract
+
+`normalize()` runs on anything read back from storage and recovers or resets
+malformed data instead of throwing:
+
+- Missing or non-numeric `round` -> `1`.
+- `round` outside 1-5 or fractional -> rounded and clamped into 1-5.
+- Numeric strings (`"3"`, `"12"`) count as malformed, not as a coercible
+  number — they fall back the same as any other invalid value, so the schema
+  never silently widens to accept strings.
+- Negative `cp`/`vp` -> `0`.
+- An invalid `armies` container (wrong shape, wrong length, non-object
+  entries) resets the whole game to `blankGame()` rather than throwing.
+- Unknown top-level or per-army properties pass through untouched
+  (tolerated-extension), so a future version can add fields this version
+  doesn't discard.
+
+`tests/fixtures/tracker-v1.json` is the source of truth: each case pairs a
+raw input with its exact expected recovered `expectedState`, classified as
+`valid`, `tolerated-extension`, `recovered`, or `reset`. Unit tests
+(`tests/unit/tracker-state.test.mjs`) run every fixture pair through
+`normalize()` with `assert.deepEqual`. Browser tests
+(`tests/browser/specs/shared/tracker.spec.mjs`) cover the DOM/localStorage
+integrated cases the unit tests can't: invalid JSON in storage,
+storage-unavailable-at-startup, and a write failure after startup.
+
+### Offline contract
+
+A storage probe (`benchtable:probe:v1`) runs at startup: write and
+immediately remove a sentinel key. If that throws, the tracker treats
+storage as unavailable for the rest of the page session, keeps state in
+memory instead, and shows the `#nostore` banner ("Session only"). If a write
+throws *after* a successful startup probe (quota exceeded, storage revoked
+mid-session, e.g. private mode), the tracker keeps the latest in-memory
+state, stops issuing further `localStorage` writes for the page session, and
+shows the same banner. Either way the game stays interactive — only the
+"this is saved" claim changes.
 
 Per-device. Two phones do not sync. If sync gets built, the plan is per-army
 write ownership — each phone writes only its own army, reads the other — over

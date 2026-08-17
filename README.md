@@ -45,10 +45,9 @@ for detailed test coverage and per-project options.
 
 ## Tracker
 
-Vanilla JS (`assets/js/tracker.js`), state in `localStorage` under
-`benchtable:battle:v1`. If storage is unavailable (private mode, blocked
-cookies) it falls back to in-memory state and shows a banner — the game still
-works, it just resets on reload.
+Vanilla JS (`assets/js/tracker.js`, plus the pure state helpers in
+`assets/js/tracker-state.js`), state in `localStorage` under
+`benchtable:battle:v1` (v1 contract below).
 
 State shape:
 
@@ -60,6 +59,35 @@ State shape:
 Command points, victory points, battle round, whose turn it is — that's it.
 Per-unit damage tracking was tried and removed (models-vs-wounds was more
 confusing than useful); track that on the table instead.
+
+### v1 storage contract
+
+Anything read back from `localStorage` is passed through `normalize()`
+before use, which recovers or resets malformed data instead of throwing:
+
+- Missing or non-numeric `round` -> falls back to `1`.
+- `round` outside 1-5 or fractional -> rounded and clamped into 1-5.
+- Numeric strings (`"3"`, `"12"`) are treated as malformed, not coerced —
+  they fall back the same as any other invalid value.
+- Negative `cp`/`vp` -> `0`.
+- An invalid `armies` container (wrong shape, wrong length, non-object
+  entries) resets the whole game to a blank two-army state rather than
+  throwing.
+- Unknown top-level or per-army properties are preserved untouched, so a
+  future version can add fields without this version discarding them.
+
+`tests/fixtures/tracker-v1.json` is the source of truth for these cases —
+each entry pairs a malformed input with its exact expected recovered state.
+
+### Offline contract
+
+A storage probe runs at startup (`benchtable:probe:v1`). If storage is
+unavailable (private mode, blocked cookies) the tracker falls back to
+in-memory state for the rest of the page session and shows a "Session only"
+banner — the game still works, it just resets on reload. If a write throws
+*after* startup (quota exceeded, storage revoked mid-session), the tracker
+keeps the latest state in memory, stops touching `localStorage` for the rest
+of the page session, and shows the same banner.
 
 **It is per-device.** Two phones do not sync. Either one person tracks the whole
 game, or each player tracks their own army and you compare VP at the end.
