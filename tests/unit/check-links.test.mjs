@@ -30,3 +30,8 @@ test("a missing srcset resource fails the check", () => {
   const stderr = runExpectFailure("tests/fixtures/link-checker/bad");
   assert.match(stderr, /missing\.jpg/);
 });
+
+test("an internal a[href] ending in .html fails the check", () => {
+  const stderr = runExpectFailure("tests/fixtures/link-checker/non-canonical");
+  assert.match(stderr, /must be extensionless/);
+});

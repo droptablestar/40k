@@ -37,6 +37,8 @@ Front matter fields a page can set:
 ```
 layout: base.njk        always this
 permalink: /foo.html     explicit, so output filenames never drift from routes
+                          (permalinks keep .html; links to the page do not —
+                          write internal hrefs as /foo, extensionless)
 title / description      <title> and meta description
 bodyClass                s-painting or s-rules (sets the section accent)
 pageCss                  path under assets/, e.g. css/painting.css
