@@ -31,8 +31,10 @@ pageKind: stratagems
 <div class="strat-group" id="stratagems">
   <h2>Berzerker Warband — Stratagems</h2>
   <ul class="strat-list">
-    {%- for entry in stratagems | selectattr("factionSlug", "equalto", "world-eaters") | selectattr("group", "equalto", "stratagems") | sort(attribute="order") %}
+    {%- for entry in stratagems | sort(attribute="order") %}
+    {%- if entry.factionSlug == "world-eaters" and entry.group == "stratagems" %}
     {{ stratagem(entry) }}
+    {%- endif %}
     {%- endfor %}
   </ul>
 </div>
