@@ -26,6 +26,11 @@ _includes/base.njk            Shared layout: <head>, sitebar/nav, main/wrap, foo
 _includes/rule-ref.njk        ruleRef() macro: a citation link into the Core Rules PDF
 _includes/tip.njk             tip() macro: a tap-to-expand ability/weapon-tag explanation
 _includes/note-block.njk      noteBlock() macro: an editorial-aside <div>, body via call block
+_includes/stratagem.njk       stratagem() macro: renders one _data/stratagems.js entry
+_includes/datasheet-parts.njk unitName/statLine/keywordList/weaponTable/traitList macros for _data/datasheets.js
+_data/stratagems.js           Stratagem entries: id, faction, group, name, cp, cpStatus, timing, summary, order
+_data/datasheets.js           Unit datasheet entries: stats, keywords, weapons, traits
+_data/abilityTips.js          Shared ability/weapon-tag tip registry, referenced by id
 assets/style.css               Shared design tokens and components (loaded on every page)
 assets/css/{page}.css          Per-page CSS, one file per top-level page
 assets/js/tracker.js           Tracker's vanilla JS logic
@@ -116,6 +121,60 @@ cleanly (the faction pages).
 default escaping, so write them as plain text — not pre-escaped HTML
 entities like `&minus;` or `&Prime;`, which would render literally as
 `&minus;` instead of the character they name.
+
+### Nunjucks pitfalls already hit
+
+This project's bundled Nunjucks (via `@11ty/eleventy`) is not full Jinja2.
+Verify behavior empirically (`node` + `nunjucks.Environment().renderString()`)
+before relying on it — these have already produced silent, no-error wrong
+output that passed `npm run build`:
+
+- `selectattr(arr, attr, test, value)` — the bundled version is
+  `selectattr(arr, attr)`, a truthy-only check on `item[attr]`. Any `test`/
+  `value` arguments are silently ignored, so `selectattr("x", "equalto", y)`
+  filters nothing. Use `{% for %}{% if %}...{% endif %}{% endfor %}` instead.
+- Inline `{% for x in y if cond %}` is not supported; it silently renders
+  empty. Use nested `{% for %}{% if %}...{% endif %}{% endfor %}`.
+- `{% set %}` inside a `{% for %}` does not leak to the outer scope (this one
+  matches standard Jinja2/Nunjucks scoping, but is easy to forget). Don't
+  build a page-level lookup by setting variables from inside a loop; filter
+  at the point of use instead.
+- `sort(attribute="x")` and `first`/`list` work as expected.
+
+## Data-driven content
+
+`_data/stratagems.js` and `_data/datasheets.js` hold structured content
+rendered by macros rather than hand-authored per-page markup, validated at
+build time (`scripts/check-stratagems.mjs`, `scripts/check-datasheets.mjs`).
+Both scopes are narrow on purpose: stratagems only (not enhancements or
+secondary objectives, which carry no CP field) and the Tyranid Assault Brood
+datasheets. Adding an entry to either file is a data-only edit; the page
+template doesn't change.
+
+`_data/stratagems.js`: `{ id, factionSlug, group, name, cp, cpStatus, timing,
+summary, order }`. Uncertainty is structural, never a display string:
+`{ cp: null, cpStatus: "unverified" }`, not `cp: "unclear"`. `stratagem(entry)`
+in `_includes/stratagem.njk` renders it; an unverified cost renders as
+`<abbr title="CP cost not confirmed">CP unclear</abbr>` so it stays
+accessible.
+
+`_data/datasheets.js`: one entry per unit — `stats` (`m`/`t`/`sv`/`w`/`ld`/
+`oc`), `keywords` (`{ type: "plain", text }` or `{ type: "ref", ref }`),
+`weapons` (each with a `tags` array of ability refs), `traits` (unit-specific
+`{ name, body }` abilities), `order`. Narrative that doesn't reduce to a data
+field (an intro paragraph, a loadout note) is written directly in the page
+template between macro calls instead of being modeled — see the Tyrant Guard
+block in `factions/tyranids/datasheets.html`. `ref` values look up
+`_data/abilityTips.js`, a shared registry of ability/weapon-tag tip text
+(`{ id, label, body }`); definitions genuinely identical across units (e.g.
+"Synapse" for most units) are shared by id, definitions that differ by
+context (the Parasite of Mortrex's own Synapse wording) get their own id
+rather than being forced to match.
+
+`tests/unit/datasheet-parts.test.mjs` renders each `datasheet-parts.njk`
+macro directly (via `nunjucks.Environment` + `FileSystemLoader`, no Eleventy)
+with hostile input (`<script>`, quotes, `&`) and asserts the output is
+escaped.
 
 ## Building
 

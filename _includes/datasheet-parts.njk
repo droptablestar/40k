@@ -1,0 +1,54 @@
+{#- Fact-rendering macros for a unit from _data/datasheets.js. Narrative
+    (an intro paragraph, a loadout note) is deliberately NOT modeled here --
+    it's written directly in the page template between these macro calls,
+    since it doesn't reduce to a data field cleanly. -#}
+{%- from "tip.njk" import tip -%}
+
+{%- macro abilityTip(ref, abilityTips) -%}
+  {%- for a in abilityTips -%}
+    {%- if a.id == ref -%}{{ tip(a.label, a.body) }}{%- endif -%}
+  {%- endfor -%}
+{%- endmacro -%}
+
+{%- macro unitName(unit) -%}
+{{ unit.name }}{% if unit.modelCount %} <em>(x{{ unit.modelCount }})</em>{% endif %}
+{%- endmacro -%}
+
+{%- macro statLine(stats) -%}
+<span class="strat-meta"><span class="stat"><span class="k">M</span>{{ stats.m }}</span><span class="stat"><span class="k">T</span>{{ stats.t }}</span><span class="stat"><span class="k">Sv</span>{{ stats.sv }}</span><span class="stat"><span class="k">W</span>{{ stats.w }}</span><span class="stat"><span class="k">Ld</span>{{ stats.ld }}</span><span class="stat"><span class="k">OC</span>{{ stats.oc }}</span></span>
+{%- endmacro -%}
+
+{%- macro keywordList(keywords, abilityTips) -%}
+<ul class="kw-list">
+  {%- for kw in keywords %}
+  <li>{% if kw.type == "ref" %}{{ abilityTip(kw.ref, abilityTips) }}{% else %}{{ kw.text }}{% endif %}</li>
+  {%- endfor %}
+</ul>
+{%- endmacro -%}
+
+{%- macro weaponTable(weapons, abilityTips) -%}
+<table class="wpn-table">
+  <thead>
+    <tr><th>Weapon</th><th>Range</th><th>A</th><th>Skill</th><th>S</th><th>AP</th><th>D</th></tr>
+  </thead>
+  <tbody>
+    {%- for w in weapons %}
+    <tr>
+      <td>{{ w.name }}{% if w.tags.length %}<div class="wpn-tags">{% for ref in w.tags %}{{ abilityTip(ref, abilityTips) }}{% if not loop.last %} &middot; {% endif %}{% endfor %}</div>{% endif %}</td>
+      <td>{{ w.range }}</td><td>{{ w.attacks }}</td><td>{{ w.skill }}</td><td>{{ w.strength }}</td><td>{{ w.ap }}</td><td>{{ w.damage }}</td>
+    </tr>
+    {%- endfor %}
+  </tbody>
+</table>
+{%- endmacro -%}
+
+{%- macro traitList(traits) -%}
+{%- if traits.length %}<dl class="ability-list">
+  {%- for t in traits %}
+  <div>
+    <dt>{{ t.name }}</dt>
+    <dd>{{ t.body }}</dd>
+  </div>
+  {%- endfor %}
+</dl>{%- endif %}
+{%- endmacro -%}
