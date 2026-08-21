@@ -30,8 +30,10 @@ pageKind: stratagems
 <div class="strat-group" id="stratagems">
   <h2>Stratagems (1 CP each)</h2>
   <ul class="strat-list">
-    {%- for entry in stratagems | selectattr("factionSlug", "equalto", "tyranids") | selectattr("group", "equalto", "stratagems") | sort(attribute="order") %}
+    {%- for entry in stratagems | sort(attribute="order") %}
+    {%- if entry.factionSlug == "tyranids" and entry.group == "stratagems" %}
     {{ stratagem(entry) }}
+    {%- endif %}
     {%- endfor %}
   </ul>
 </div>
