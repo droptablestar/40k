@@ -13,6 +13,7 @@ sections:
   - { id: painting, label: "Painting log" }
   - { id: reference, label: "Quick reference" }
 ---
+{%- from "note-block.njk" import noteBlock -%}
 <a class="crumb" href="/factions">&larr; Factions</a>
 
 <header class="hero">
@@ -81,14 +82,14 @@ sections:
     </li>
   </ul>
 
-  <div class="note-block">
+  {% call noteBlock() -%}
     <b>No box or roster picked yet.</b> Unlike the Tyranids page, this
     isn't scoped to a specific Combat Patrol box — the source material is
     the full World Eaters codex, so there's no fixed model list to
     pre-populate here. Once you know which models you're actually
     building, list them in this section the same way the Tyranids page
     does.
-  </div>
+  {%- endcall %}
 </section>
 
 <section class="section" id="reference">
@@ -103,11 +104,11 @@ sections:
     </a>
   </div>
 
-  <div class="note-block">
+  {% call noteBlock() -%}
     <b>No datasheets section yet.</b> The Tyranids datasheets page works
     because Combat Patrol hands you a fixed, small roster. The full World
     Eaters codex has dozens of units — picking a handful to feature would
     mean guessing which ones you actually play. Tell me which units matter
     and this becomes a real reference instead of a placeholder.
-  </div>
+  {%- endcall %}
 </section>

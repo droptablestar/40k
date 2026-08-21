@@ -1,0 +1,14 @@
+{#- Renders one entry from _data/stratagems.js. An unverified CP cost is
+    read from entry.cpStatus, never typed as display text, and uses <abbr
+    title> so the uncertainty survives for screen readers too. -#}
+{%- macro stratagem(entry) -%}
+<li>
+  <details>
+    <summary>
+      <span class="strat-name">{{ entry.name }}</span>
+      <span class="strat-meta">{% if entry.cpStatus == "confirmed" %}{{ entry.cp }} CP{% else %}<abbr class="cp-unverified" title="CP cost not confirmed">CP unclear</abbr>{% endif %} &middot; {{ entry.timing }}</span>
+    </summary>
+    <div class="strat-body">{{ entry.summary }}</div>
+  </details>
+</li>
+{%- endmacro -%}

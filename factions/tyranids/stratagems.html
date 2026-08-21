@@ -10,6 +10,8 @@ pageJs: js/reference-filter.js
 factionSlug: tyranids
 pageKind: stratagems
 ---
+{%- from "note-block.njk" import noteBlock -%}
+{%- from "stratagem.njk" import stratagem -%}
 <a class="crumb" href="/factions/tyranids">&larr; Tyranids</a>
 
 <header class="hero">
@@ -28,39 +30,9 @@ pageKind: stratagems
 <div class="strat-group" id="stratagems">
   <h2>Stratagems (1 CP each)</h2>
   <ul class="strat-list">
-    <li>
-      <details>
-        <summary>
-          <span class="strat-name">Sensory Amalgamation</span>
-          <span class="strat-meta">1 CP · Enemy shoot/fight</span>
-        </summary>
-        <div class="strat-body">Right after an enemy declares targets
-          against one of your Infantry units, make that unit harder to hit
-          for the rest of the phase.</div>
-      </details>
-    </li>
-    <li>
-      <details>
-        <summary>
-          <span class="strat-name">Scything Terror</span>
-          <span class="strat-meta">1 CP · Fight phase</span>
-        </summary>
-        <div class="strat-body">Give one of your units that hasn't fought
-          yet this phase better melee hit consistency for the rest of the
-          phase.</div>
-      </details>
-    </li>
-    <li>
-      <details>
-        <summary>
-          <span class="strat-name">Ravenous Rampage</span>
-          <span class="strat-meta">1 CP · Your charge phase</span>
-        </summary>
-        <div class="strat-body">Lets a unit that hasn't charged yet this
-          phase declare a charge even though it Advanced this turn —
-          normally those don't mix.</div>
-      </details>
-    </li>
+    {%- for entry in stratagems | selectattr("factionSlug", "equalto", "tyranids") | selectattr("group", "equalto", "stratagems") | sort(attribute="order") %}
+    {{ stratagem(entry) }}
+    {%- endfor %}
   </ul>
 </div>
 
@@ -124,10 +96,10 @@ pageKind: stratagems
 
 <p id="ref-empty" class="ref-empty" hidden>No stratagems match that search.</p>
 
-<div class="note-block">
+{% call noteBlock() -%}
   Sourced from the Assault Brood Combat Patrol's own rules-card PDF — the
   version that actually matters, since this isn't in the app or any
   standalone PDF online yet. Worded here in our own language, not copied;
   check the card itself for exact numbers before a tournament or anything
   that matters.
-</div>
+{%- endcall %}

@@ -10,6 +10,8 @@ pageJs: js/reference-filter.js
 factionSlug: world-eaters
 pageKind: stratagems
 ---
+{%- from "note-block.njk" import noteBlock -%}
+{%- from "stratagem.njk" import stratagem -%}
 <a class="crumb" href="/factions/world-eaters">&larr; World Eaters</a>
 
 <header class="hero">
@@ -29,72 +31,9 @@ pageKind: stratagems
 <div class="strat-group" id="stratagems">
   <h2>Berzerker Warband — Stratagems</h2>
   <ul class="strat-list">
-    <li>
-      <details>
-        <summary>
-          <span class="strat-name">Blood Offering</span>
-          <span class="strat-meta">1 CP &middot; Any phase</span>
-        </summary>
-        <div class="strat-body">If a World Eaters unit holding an
-          objective is destroyed, you can keep control of that objective
-          until your opponent's control there exceeds yours.</div>
-      </details>
-    </li>
-    <li>
-      <details>
-        <summary>
-          <span class="strat-name">Hack and Slash</span>
-          <span class="strat-meta">1 CP &middot; Fight phase</span>
-        </summary>
-        <div class="strat-body">Give a unit that charged this turn and
-          hasn't fought yet +1 to the Armour Penetration of its melee
-          weapons for the phase.</div>
-      </details>
-    </li>
-    <li>
-      <details>
-        <summary>
-          <span class="strat-name">Frenzied Resilience</span>
-          <span class="strat-meta">1 CP &middot; Enemy shoot/fight</span>
-        </summary>
-        <div class="strat-body">Right after an enemy declares targets
-          against one of your units, subtract 1 from the Damage of attacks
-          allocated to it for the rest of the phase.</div>
-      </details>
-    </li>
-    <li>
-      <details>
-        <summary>
-          <span class="strat-name">Skulls for the Skull Throne!</span>
-          <span class="strat-meta">CP unclear &middot; Fight phase</span>
-        </summary>
-        <div class="strat-body">Right after a unit destroys a Character or
-          Monster in the Fight phase, make a Blessings of Khorne roll and
-          activate an extra Blessing for the rest of the round.</div>
-      </details>
-    </li>
-    <li>
-      <details>
-        <summary>
-          <span class="strat-name">Apoplectic Frenzy</span>
-          <span class="strat-meta">CP unclear &middot; Movement phase</span>
-        </summary>
-        <div class="strat-body">Right after a Khorne Berzerkers unit
-          Advances, it can still declare a charge this turn despite
-          having Advanced.</div>
-      </details>
-    </li>
-    <li>
-      <details>
-        <summary>
-          <span class="strat-name">Berzerker's Wrath</span>
-          <span class="strat-meta">CP unclear &middot; Enemy shooting</span>
-        </summary>
-        <div class="strat-body">When a Khorne Berzerkers unit makes a
-          Blood Surge move after being shot, it moves a flat 8" instead
-          of rolling a D6.</div>
-      </details>
-    </li>
+    {%- for entry in stratagems | selectattr("factionSlug", "equalto", "world-eaters") | selectattr("group", "equalto", "stratagems") | sort(attribute="order") %}
+    {{ stratagem(entry) }}
+    {%- endfor %}
   </ul>
 </div>
 
@@ -149,9 +88,9 @@ pageKind: stratagems
 
 <p id="ref-empty" class="ref-empty" hidden>No results match that search.</p>
 
-<div class="note-block">
+{% call noteBlock() -%}
   Sourced from the World Eaters codex in the shared drive. Weapon/ability
   numbers are reference data; ability names are paraphrased, not copied.
   Some stratagem CP costs weren't legible in the text extraction — check
   the codex or app before spending CP on those specifically.
-</div>
+{%- endcall %}
