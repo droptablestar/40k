@@ -332,8 +332,7 @@ Type scale: six sizes, defined as `--fs-micro` (9px) through `--fs-base`
 (16px) in `assets/style.css`. Every `font-size` on the site should be one of
 these — new sizes don't get invented ad hoc. Fluid `clamp()` is its own tier
 for display headings (hero `h1`, `.section > h2`) and stays outside this
-scale. `.mark`'s 12px is the one deliberate one-off (the brand mark sits a
-half-step above `--fs-xs`); don't add others without a real reason.
+scale.
 
 ```
 --fs-micro:9px    decorative tags — "not written yet", pending marks
@@ -343,6 +342,20 @@ half-step above `--fs-xs`); don't add others without a real reason.
 --fs-md:15px      component labels — card titles, list item names
 --fs-base:16px    primary reading text
 ```
+
+`assets/style.css` sets the hero lede paragraph's default (`.hero p`) once;
+a page needing a genuinely different value declares its own `.hero p` in its
+per-page CSS, which still wins since page CSS loads after `style.css`.
+
+`npm run check:source` fails on any `font-size` literal that isn't a
+`var(--fs-*)` token, and on any hex colour literal in a per-page stylesheet
+(`assets/style.css` itself is exempt — it's the token source). Mark a literal
+that's genuinely correct with a trailing (or line-above) comment containing
+`fs-ok` or `color-ok` and a reason: no token fits (`.mark`'s 12px brand mark,
+a couple of `14px`/`14.5px` table-density fits), it's a display-sized glyph or
+counter rather than body text (the tracker's `30px` counter, the `#` heading
+anchor), or it's a decorative gradient/mask stop rather than a themeable
+surface colour. Don't add the marker to make an error go away — say why.
 
 Interactive `.card` links get a folded top-right corner (`a.card::before`,
 a CSS border-triangle) instead of a hover-only cue or a generic accent
@@ -388,6 +401,12 @@ glanceable layouts over dense information.
 
 Visible keyboard focus. `prefers-reduced-motion` respected. Print styles on
 reference pages.
+
+`assets/js/folds.js`, loaded globally from `base.njk`, is the one
+print-disclosure implementation: it opens every `details:not([open])` (except
+`.nav-drop`, which is chrome) before printing and restores prior state after.
+Don't add a page-specific print handler — this already covers any `<details>`
+on any page, including a page-specific class like troubleshooting's old `.fix`.
 
 ## Tracker
 

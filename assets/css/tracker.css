@@ -6,13 +6,13 @@
   letter-spacing:-.03em;margin:0 0 10px;
 }
 
-.lead p{margin:0;color:var(--bone-dim);font-size:14.5px;}
+.lead p{margin:0;color:var(--bone-dim);font-size:14.5px;} /* fs-ok: no token matches */
 
 .warn{
   margin:0 0 18px;padding:12px 16px;
   background:rgba(229,132,102,.12);
   border-left:2px solid var(--rust);
-  font-size:13.5px;color:var(--bone-dim);
+  font-size:var(--fs-sm);color:var(--bone-dim);
 }
 
 .warn[hidden]{display:none;}
@@ -29,7 +29,7 @@
 }
 
 .rlabel{
-  font-family:var(--mono);font-size:10px;letter-spacing:.18em;
+  font-family:var(--mono);font-size:var(--fs-2xs);letter-spacing:.18em;
   text-transform:uppercase;color:var(--bone-dim);
 }
 
@@ -38,7 +38,7 @@
 .pip{
   width:38px;height:38px;border:1px solid var(--line);
   background:transparent;color:var(--bone-dim);
-  font-family:var(--mono);font-size:14px;cursor:pointer;
+  font-family:var(--mono);font-size:14px; /* fs-ok: no token matches */ cursor:pointer;
   transition:all .15s ease;
 }
 
@@ -70,7 +70,7 @@
 .army-head input{
   flex:1;min-width:0;background:transparent;border:0;
   color:var(--bone);font-family:var(--display);font-weight:700;
-  font-size:20px;letter-spacing:-.015em;padding:2px 0;
+  font-size:20px; /* fs-ok: display-sized army name input, not body text */ letter-spacing:-.015em;padding:2px 0;
 }
 
 .army-head input:focus{outline:none;border-bottom:1px solid var(--accent);}
@@ -78,7 +78,7 @@
 .turnflag{
   display:inline-flex;align-items:center;justify-content:center;
   min-height:34px;
-  font-family:var(--mono);font-size:9px;letter-spacing:.16em;
+  font-family:var(--mono);font-size:var(--fs-micro);letter-spacing:.16em;
   text-transform:uppercase;color:var(--accent);
   border:1px solid var(--accent);padding:3px 7px;
   background:transparent;cursor:pointer;white-space:nowrap;
@@ -93,14 +93,14 @@
 .counter{background:var(--ground-3);padding:12px 10px;text-align:center;}
 
 .counter .cname{
-  font-family:var(--mono);font-size:9px;letter-spacing:.18em;
+  font-family:var(--mono);font-size:var(--fs-micro);letter-spacing:.18em;
   text-transform:uppercase;color:var(--bone-dim);margin-bottom:6px;
 }
 
 .counter .row{display:flex;align-items:center;justify-content:center;gap:6px;}
 
 .counter output{
-  font-family:var(--mono);font-weight:600;font-size:30px;
+  font-family:var(--mono);font-weight:600;font-size:30px; /* fs-ok: large display numeral, not body text */
   font-variant-numeric:tabular-nums;
   color:var(--accent);min-width:2.4ch;line-height:1;
 }
@@ -108,7 +108,7 @@
 .step{
   width:38px;height:38px;flex:0 0 auto;
   background:transparent;border:1px solid var(--line);
-  color:var(--bone);font-size:19px;line-height:1;cursor:pointer;
+  color:var(--bone);font-size:19px; /* fs-ok: +/- button glyph, not body text */ line-height:1;cursor:pointer;
   transition:background .14s ease,border-color .14s ease;
 }
 
@@ -120,7 +120,7 @@
 .actions{display:flex;flex-wrap:wrap;gap:8px;margin-top:26px;}
 
 .btn{
-  font-family:var(--mono);font-size:11px;letter-spacing:.14em;
+  font-family:var(--mono);font-size:var(--fs-xs);letter-spacing:.14em;
   text-transform:uppercase;background:transparent;
   border:1px solid var(--line);color:var(--bone-dim);
   padding:11px 16px;cursor:pointer;
@@ -130,7 +130,7 @@
 .btn.danger:hover{color:var(--rust);border-color:var(--rust);}
 
 .saved{
-  font-family:var(--mono);font-size:10px;letter-spacing:.14em;
+  font-family:var(--mono);font-size:var(--fs-2xs);letter-spacing:.14em;
   text-transform:uppercase;color:var(--bone-dim);
   align-self:center;margin-left:auto;
 }

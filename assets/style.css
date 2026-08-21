@@ -112,6 +112,11 @@ body{
 .hero h1, .hero h2, .hero p,
 .section > h2, .sub, .hero-lede{max-width:none;}
 
+/* Shared default for the hero's lede paragraph. Duplicated verbatim across
+   7 per-page files before this; pages with a genuinely different value keep
+   their own .hero p rule, which still wins since page CSS loads after this. */
+.hero p{margin:0;color:var(--bone-dim);font-size:var(--fs-md);}
+
 a{color:var(--accent);}
 
 :focus-visible{outline:2px solid var(--accent);outline-offset:3px;}
@@ -146,7 +151,7 @@ a{color:var(--accent);}
 
 .mark{
   font-family:var(--mono);
-  font-size:12px; /* deliberate one-off: sits a step above --fs-xs as the brand mark */
+  font-size:12px; /* fs-ok: sits a step above --fs-xs as the brand mark, no token for it */
   letter-spacing:.2em;
   text-transform:uppercase;
   color:var(--bone);
@@ -223,7 +228,7 @@ a{color:var(--accent);}
 }
 
 .nav-drop summary::-webkit-details-marker{display:none;}
-.nav-drop summary::after{content:"▾";font-size:9px;}
+.nav-drop summary::after{content:"▾";font-size:var(--fs-micro);}
 .nav-drop summary:hover{color:var(--bone);}
 .nav-drop summary.here{color:var(--bone);border-bottom-color:var(--accent);}
 .nav-drop[open] summary{color:var(--bone);}
@@ -490,7 +495,7 @@ a{color:var(--accent);}
   display:inline-block;
   margin-left:12px;
   font-family:var(--mono);
-  font-size:22px;
+  font-size:22px; /* fs-ok: decorative "#" glyph, not body text */
   font-weight:400;
   color:var(--accent);
   vertical-align:middle;
