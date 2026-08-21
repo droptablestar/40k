@@ -13,7 +13,6 @@
 }
 
 .hero h1 em{font-style:normal;color:var(--accent);}
-.hero p{margin:0;color:var(--bone-dim);font-size:15px;}
 
 /* the crumbs linking to sibling pages read as a separate affordance from
    the same-page jump nav above them, not more pills in the same row */
@@ -32,11 +31,11 @@
 }
 
 .kit li:last-child{border-bottom:1px solid var(--line);}
-.kit b{font-weight:600;font-size:14.5px;display:block;margin-bottom:2px;}
-.kit span{font-size:13.5px;color:var(--bone-dim);line-height:1.45;}
+.kit b{font-weight:600;font-size:14.5px; /* fs-ok: no token matches */ display:block;margin-bottom:2px;}
+.kit span{font-size:var(--fs-sm);color:var(--bone-dim);line-height:1.45;}
 
 .kit em{
-  font-style:normal;font-family:var(--mono);font-size:11px;
+  font-style:normal;font-family:var(--mono);font-size:var(--fs-xs);
   color:var(--accent);white-space:nowrap;
 }
 

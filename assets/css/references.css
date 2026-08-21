@@ -13,7 +13,7 @@
 
 .hero p{
   margin:0;
-  font-size:17px;
+  font-size:17px; /* fs-ok: no token matches */
   color:var(--bone-dim);
 }
 

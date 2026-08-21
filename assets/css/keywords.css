@@ -2,6 +2,10 @@
    it is shared components: .ref-search, .strat-list disclosures, .rule-ref.
    What's here is the bits that only this page has. */
 
+/* This page's hero paragraph reads at the base size, not the shared .hero p
+   default in style.css -- pin it explicitly so it doesn't drift. */
+.hero p{margin:0;color:var(--bone);font-size:var(--fs-base);}
+
 /* Live result count under the search box. Mono and tabular so the number
    doesn't jitter as it counts down while you type. */
 .ref-count{

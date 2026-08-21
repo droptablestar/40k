@@ -13,9 +13,8 @@
 }
 
 .hero h1 em{font-style:normal;color:var(--accent);}
-.hero p{margin:0;color:var(--bone-dim);font-size:15px;}
 
-.section p{color:var(--bone-dim);font-size:14.5px;line-height:1.6;}
+.section p{color:var(--bone-dim);font-size:14.5px; /* fs-ok: no token matches */ line-height:1.6;}
 .section p + p{margin-top:16px;}
 
 @media (max-width:820px){

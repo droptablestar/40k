@@ -10,7 +10,6 @@
   letter-spacing:-.03em;
   margin:0 0 14px;
 }
-.hero p{margin:0;color:var(--bone-dim);font-size:15px;}
 
 /* ---------- change-list: collapsed name + tag, expandable detail ---------- */
 
@@ -34,18 +33,18 @@
   content:"+";
   font-family:var(--mono);
   color:var(--accent);
-  font-size:16px;
+  font-size:var(--fs-base);
   width:16px;
   flex:none;
 }
 
 .change-list details[open] summary::before{content:"–";}
 
-.change-name{font-weight:600;font-size:14.5px;flex:1;}
+.change-name{font-weight:600;font-size:14.5px; /* fs-ok: no token matches */ flex:1;}
 
 .change-tag{
   font-family:var(--mono);
-  font-size:10px;
+  font-size:var(--fs-2xs);
   letter-spacing:.14em;
   text-transform:uppercase;
   color:var(--bone-dim);
@@ -53,7 +52,7 @@
 }
 
 .change-body{padding:0 0 18px 32px;}
-.change-body p{margin:0;color:var(--bone-dim);font-size:14px;line-height:1.55;}
+.change-body p{margin:0;color:var(--bone-dim);font-size:14px; /* fs-ok: no token matches */ line-height:1.55;}
 .change-body p + p{margin-top:10px;}
 
 @media (max-width:560px){

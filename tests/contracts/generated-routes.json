@@ -42,11 +42,11 @@
     "/assets/js/tips.js",
     "/assets/js/tracker-state.js",
     "/assets/js/tracker.js",
-    "/assets/js/troubleshooting.js",
     "/assets/style.css"
   ],
   "mustNotExist": [
     "/odds.html",
-    "/roster.html"
+    "/roster.html",
+    "/assets/js/troubleshooting.js"
   ]
 }
