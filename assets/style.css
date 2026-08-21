@@ -854,6 +854,12 @@ a.card:hover::before{border-color:transparent var(--accent) transparent transpar
   font-weight:700;
 }
 .strat-meta .stat:last-child{margin-right:0;}
+
+.cp-unverified{
+  color:var(--rust);
+  border-bottom:1px dashed var(--rust);
+  text-decoration:none;
+}
 .strat-meta .stat .k{
   color:var(--bone-dim);
   font-weight:500;

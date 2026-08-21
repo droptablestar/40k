@@ -24,6 +24,8 @@ painting-reference.html       Painting guide: technique reference
 tracker.html                  Battle tracker: CP, VP, round, per-unit damage
 _includes/base.njk            Shared layout: <head>, sitebar/nav, main/wrap, footer
 _includes/rule-ref.njk        ruleRef() macro: a citation link into the Core Rules PDF
+_includes/tip.njk             tip() macro: a tap-to-expand ability/weapon-tag explanation
+_includes/note-block.njk      noteBlock() macro: an editorial-aside <div>, body via call block
 assets/style.css               Shared design tokens and components (loaded on every page)
 assets/css/{page}.css          Per-page CSS, one file per top-level page
 assets/js/tracker.js           Tracker's vanilla JS logic
@@ -91,19 +93,29 @@ PDF URL.
 
 ## Components
 
-Reusable markup lives in `_includes/` as a Nunjucks macro, imported with
-`with context` (macros don't see the calling page's data-cascade context —
-`site.coreRules`, front matter, etc. — unless told to). Only extract a
+Reusable markup lives in `_includes/` as a Nunjucks macro. Only extract a
 component where the markup is genuinely identical across call sites; keep
 parameters explicit and pass rich prose through a call block rather than
-adding string flags.
+adding string flags. If the macro reads data-cascade context (`site.*`,
+front matter) rather than only its own parameters, import it `with context`
+— macros don't see the calling page's context otherwise.
 
 `ruleRef(num, title, page)` in `_includes/rule-ref.njk` renders a citation
 link into the Core Rules PDF (`keywords.html`, `turn-order.html`,
-`rules-changes.html`). `num` and `title` pass through Nunjucks's default
-escaping, so write them as plain text — not pre-escaped HTML entities like
-`&minus;`, which would render literally as `&minus;` instead of the
-character it names.
+`rules-changes.html`; imported `with context` for `site.coreRules`).
+
+`tip(label, body)` in `_includes/tip.njk` renders a tap-to-expand ability or
+weapon-tag explanation (`factions/tyranids/datasheets.html`).
+
+`noteBlock()` in `_includes/note-block.njk` wraps a call block in an
+editorial-aside `<div>` — used where the body carries multi-paragraph prose
+or inline markup (`<b>`, `<code>`) that a string parameter can't hold
+cleanly (the faction pages).
+
+`num`/`title`/`label`/`body` string parameters pass through Nunjucks's
+default escaping, so write them as plain text — not pre-escaped HTML
+entities like `&minus;` or `&Prime;`, which would render literally as
+`&minus;` instead of the character they name.
 
 ## Building
 

@@ -13,6 +13,7 @@ sections:
   - { id: painting, label: "Painting log" }
   - { id: reference, label: "Quick reference" }
 ---
+{%- from "note-block.njk" import noteBlock -%}
 <a class="crumb" href="/factions">&larr; Factions</a>
 
 <header class="hero">
@@ -94,23 +95,23 @@ sections:
     </li>
   </ul>
 
-  <div class="note-block">
+  {% call noteBlock() -%}
     The kit also includes bits for a Pyrovore (instead of the Biovore),
     Hive Guard (instead of Tyrant Guard), and Spore Mines — build options
     from the wider Tyranids range. This Combat Patrol's own rules only use
     Parasite of Mortrex, Genestealers, Biovore, and Tyrant Guard, so that's
     what's tracked above; add a row here if you build and use one of the
     alternates instead.
-  </div>
+  {%- endcall %}
 
-  <div class="note-block">
+  {% call noteBlock() -%}
     <b>Photos aren't attached yet.</b> This site has no backend and no
     accounts, so there's nowhere durable to put uploaded images yet — that
     needs a storage decision (likely committing images into the repo) before
     photos get added here. For now this section is a hand-edited log; add
     rows directly in <code>factions/tyranids.html</code> as units get
     painted.
-  </div>
+  {%- endcall %}
 </section>
 
 <section class="section" id="reference">

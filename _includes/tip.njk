@@ -1,0 +1,5 @@
+{#- Inline "what does this mean" disclosure -- a short ability/weapon-tag
+    explanation the reader can tap open without leaving the datasheet. -#}
+{%- macro tip(label, body) -%}
+<details class="tip"><summary>{{ label }}</summary><div class="tip-panel">{{ body }}</div></details>
+{%- endmacro -%}

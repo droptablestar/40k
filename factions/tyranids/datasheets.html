@@ -10,6 +10,8 @@ pageJs: js/reference-filter.js
 factionSlug: tyranids
 pageKind: datasheets
 ---
+{%- from "tip.njk" import tip -%}
+{%- from "note-block.njk" import noteBlock -%}
 <a class="crumb" href="/factions/tyranids">&larr; Tyranids</a>
 
 <header class="hero">
@@ -48,12 +50,12 @@ pageKind: datasheets
         <div class="strat-body">
           <ul class="kw-list">
             <li>Infantry</li><li>Character</li>
-            <li><details class="tip"><summary>Fly</summary><div class="tip-panel">Before it moves, you can declare it takes to the skies: it moves through models and terrain and ignores vertical distance, but loses 2&Prime; off that move.</div></details></li>
-            <li><details class="tip"><summary>Synapse</summary><div class="tip-panel">Within 6&Prime; of this model, other Tyranids test battle-shock on 3D6 instead of 2D6.</div></details></li>
-            <li><details class="tip"><summary>Shadow in the Warp</summary><div class="tip-panel">Once per battle, force every enemy unit on the battlefield to take a battle-shock test.</div></details></li>
-            <li><details class="tip"><summary>Deep Strike</summary><div class="tip-panel">When it arrives from reserves, it can be set up anywhere on the battlefield more than 8&Prime; horizontally from every enemy unit — including in your opponent's deployment zone.</div></details></li>
-            <li><details class="tip"><summary>Lone Operative</summary><div class="tip-panel">Enemies can't see it at all unless they're within 12&Prime;, so it can't be shot from further away. Stops working while it's leading another unit.</div></details></li>
-            <li><details class="tip"><summary>Stealth</summary><div class="tip-panel">Counts as having the benefit of cover against every ranged attack, even in the open. It doesn't stack with real cover — both give the same &minus;1.</div></details></li>
+            <li>{{ tip("Fly", "Before it moves, you can declare it takes to the skies: it moves through models and terrain and ignores vertical distance, but loses 2″ off that move.") }}</li>
+            <li>{{ tip("Synapse", "Within 6″ of this model, other Tyranids test battle-shock on 3D6 instead of 2D6.") }}</li>
+            <li>{{ tip("Shadow in the Warp", "Once per battle, force every enemy unit on the battlefield to take a battle-shock test.") }}</li>
+            <li>{{ tip("Deep Strike", "When it arrives from reserves, it can be set up anywhere on the battlefield more than 8″ horizontally from every enemy unit — including in your opponent's deployment zone.") }}</li>
+            <li>{{ tip("Lone Operative", "Enemies can't see it at all unless they're within 12″, so it can't be shot from further away. Stops working while it's leading another unit.") }}</li>
+            <li>{{ tip("Stealth", "Counts as having the benefit of cover against every ranged attack, even in the open. It doesn't stack with real cover — both give the same −1.") }}</li>
           </ul>
 
           <table class="wpn-table">
@@ -62,7 +64,7 @@ pageKind: datasheets
             </thead>
             <tbody>
               <tr>
-                <td>Barbed ovipositor<div class="wpn-tags"><details class="tip"><summary>Anti-Infantry 3+</summary><div class="tip-panel">Against Infantry, an unmodified Wound roll of 3+ counts as a critical wound instead of needing a 6.</div></details> &middot; <details class="tip"><summary>Extra Attacks</summary><div class="tip-panel">Fought in addition to the model's other weapons, not instead of them.</div></details></div></td>
+                <td>Barbed ovipositor<div class="wpn-tags">{{ tip("Anti-Infantry 3+", "Against Infantry, an unmodified Wound roll of 3+ counts as a critical wound instead of needing a 6.") }} &middot; {{ tip("Extra Attacks", "Fought in addition to the model's other weapons, not instead of them.") }}</div></td>
                 <td>Melee</td><td>2</td><td>2+</td><td>3</td><td>-2</td><td>3</td>
               </tr>
               <tr>
@@ -91,7 +93,7 @@ pageKind: datasheets
         <div class="strat-body">
           <ul class="kw-list">
             <li>Infantry</li>
-            <li><details class="tip"><summary>Synapse</summary><div class="tip-panel">Within 6&Prime; of a synapse model, this unit tests battle-shock on 3D6 instead of 2D6.</div></details></li>
+            <li>{{ tip("Synapse", "Within 6″ of a synapse model, this unit tests battle-shock on 3D6 instead of 2D6.") }}</li>
             <li>5+ Invulnerable save</li>
           </ul>
 
@@ -131,7 +133,7 @@ pageKind: datasheets
         <div class="strat-body">
           <ul class="kw-list">
             <li>Infantry</li>
-            <li><details class="tip"><summary>Synapse</summary><div class="tip-panel">Within 6&Prime; of a synapse model, this unit tests battle-shock on 3D6 instead of 2D6.</div></details></li>
+            <li>{{ tip("Synapse", "Within 6″ of a synapse model, this unit tests battle-shock on 3D6 instead of 2D6.") }}</li>
           </ul>
 
           <table class="wpn-table">
@@ -140,7 +142,7 @@ pageKind: datasheets
             </thead>
             <tbody>
               <tr>
-                <td>Spore Mine launcher<div class="wpn-tags"><details class="tip"><summary>Blast</summary><div class="tip-panel">Gets +1 attack for every 5 models (rounding down) in the target unit.</div></details> &middot; <details class="tip"><summary>Devastating Wounds</summary><div class="tip-panel">A critical wound skips saves entirely and deals mortal wounds equal to this weapon's Damage.</div></details> &middot; <details class="tip"><summary>Heavy</summary><div class="tip-panel">+1 to Hit in your Shooting phase, if the unit is unengaged, didn't arrive this turn, and no model in it moved more than 3&Prime;.</div></details></div></td>
+                <td>Spore Mine launcher<div class="wpn-tags">{{ tip("Blast", "Gets +1 attack for every 5 models (rounding down) in the target unit.") }} &middot; {{ tip("Devastating Wounds", "A critical wound skips saves entirely and deals mortal wounds equal to this weapon's Damage.") }} &middot; {{ tip("Heavy", "+1 to Hit in your Shooting phase, if the unit is unengaged, didn't arrive this turn, and no model in it moved more than 3″.") }}</div></td>
                 <td>48&Prime;</td><td>D3</td><td>4+</td><td>6</td><td>-1</td><td>2</td>
               </tr>
               <tr>
@@ -169,7 +171,7 @@ pageKind: datasheets
         <div class="strat-body">
           <ul class="kw-list">
             <li>Infantry</li>
-            <li><details class="tip"><summary>Synapse</summary><div class="tip-panel">Within 6&Prime; of a synapse model, this unit tests battle-shock on 3D6 instead of 2D6.</div></details></li>
+            <li>{{ tip("Synapse", "Within 6″ of a synapse model, this unit tests battle-shock on 3D6 instead of 2D6.") }}</li>
           </ul>
 
           <p>Your durable synapse bodyguards — high toughness and wounds
@@ -186,7 +188,7 @@ pageKind: datasheets
                 <td>Melee</td><td>3</td><td>3+</td><td>5</td><td>-1</td><td>2</td>
               </tr>
               <tr>
-                <td>Crushing claws and rending claws<div class="wpn-tags"><details class="tip"><summary>Twin-linked</summary><div class="tip-panel">You may re-roll the Wound roll for this weapon's attacks.</div></details></div></td>
+                <td>Crushing claws and rending claws<div class="wpn-tags">{{ tip("Twin-linked", "You may re-roll the Wound roll for this weapon's attacks.") }}</div></td>
                 <td>Melee</td><td>2</td><td>4+</td><td>8</td><td>-2</td><td>2</td>
               </tr>
               <tr>
@@ -203,8 +205,8 @@ pageKind: datasheets
 
 <p id="ref-empty" class="ref-empty" hidden>No datasheets match that search.</p>
 
-<div class="note-block">
+{% call noteBlock() -%}
   Sourced from the Assault Brood Combat Patrol's own rules-card PDF. Weapon
   numbers are reproduced as reference data (not rules text); ability names
   are paraphrased. Check the card for anything exact.
-</div>
+{%- endcall %}

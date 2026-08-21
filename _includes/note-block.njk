@@ -1,0 +1,8 @@
+{#- Editorial aside on a faction page -- provenance, caveats, "not built yet"
+    notes. Body is a call block, not a string parameter, since these carry
+    multi-paragraph prose with inline markup (<b>, <code>). -#}
+{%- macro noteBlock() -%}
+<div class="note-block">
+{{ caller() }}
+</div>
+{%- endmacro -%}
