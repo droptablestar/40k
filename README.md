@@ -10,17 +10,20 @@ Live at `40k.middleearth.rocks` and `40k.droptablestar.workers.dev`.
 
 ```
 index.html                 Landing page, grouped by when you'd reach for a page
-painting.html               Painting guide: beginner track
-painting-reference.html     Painting guide: technique reference
-tracker.html                 Battle tracker: CP, VP, round, whose turn it is
+pages/tracker.html          Battle tracker: CP, VP, round, whose turn it is
+pages/painting/              Painting guide pages (beginner track, technique
+                             reference, table-ready checklist, troubleshooting)
+pages/rules/                 Rules reference pages
+pages/factions/               Faction index and per-faction pages
 _includes/base.njk          Shared layout: head, nav, footer
 assets/style.css             Shared design tokens and components
 assets/css/{page}.css        Per-page CSS
 assets/js/tracker.js         Tracker's vanilla JS
 ```
 
-Each `.html` file at the root is front matter + body content only. See
-CLAUDE.md for the full front matter field reference and design system.
+Each page's `.html` file is front matter + body content only. See CLAUDE.md
+for the full front matter field reference, the `pages/` grouping rationale,
+and the design system.
 
 ## Build
 

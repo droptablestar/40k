@@ -19,9 +19,12 @@ Live at `40k.middleearth.rocks` and `40k.droptablestar.workers.dev`.
 
 ```
 index.html                    Landing page (content + front matter, no <head>/nav/footer)
-painting.html                 Painting guide: beginner track
-painting-reference.html       Painting guide: technique reference
-tracker.html                  Battle tracker: CP, VP, round, per-unit damage
+pages/tracker.html            Battle tracker: CP, VP, round, whose turn it is
+pages/painting/               Painting guide pages (painting, painting-reference,
+                               painting-table-ready, troubleshooting)
+pages/rules/                  Rules reference pages (keywords, references,
+                               rules-changes, turn-order, charts)
+pages/factions/                Faction index and per-faction detail/datasheets/stratagems pages
 _includes/base.njk            Shared layout: <head>, sitebar/nav, main/wrap, footer
 _includes/rule-ref.njk        ruleRef() macro: a citation link into the Core Rules PDF
 _includes/tip.njk             tip() macro: a tap-to-expand ability/weapon-tag explanation
@@ -38,9 +41,15 @@ assets/js/tracker.js           Tracker's vanilla JS logic
 wrangler.jsonc                 Cloudflare Worker config (assets.directory: _site)
 ```
 
-Each top-level `.html` file at the repo root is front matter + body content
-only — no `<head>`, header, or footer. Those live once in `_includes/base.njk`.
-Front matter fields a page can set:
+Each page's `.html` file (`index.html` at the repo root, everything else under
+`pages/`) is front matter + body content only — no `<head>`, header, or
+footer. Those live once in `_includes/base.njk`. Pages are grouped under
+`pages/` by nav section (`painting/`, `rules/`) or by feature (`factions/`);
+`pages/tracker.html` and the root `index.html` aren't grouped further since
+neither belongs to a nav dropdown section. Source location is purely
+organizational — each page's `permalink` front matter fixes its output route,
+so moving a file under `pages/` never changes its URL. Front matter fields a
+page can set:
 
 ```
 layout: base.njk        always this
