@@ -10,7 +10,6 @@ factionSlug: world-eaters
 pageKind: detail
 sections:
   - { id: identity, label: "Identity" }
-  - { id: painting, label: "Painting log" }
   - { id: reference, label: "Quick reference" }
 ---
 {%- from "note-block.njk" import noteBlock -%}
@@ -28,7 +27,6 @@ sections:
 
 <nav class="jump" aria-label="On this page">
   <a href="#identity">Identity</a>
-  <a href="#painting">Painting log</a>
   <a href="#reference">Quick reference</a>
 </nav>
 
@@ -70,37 +68,20 @@ sections:
   </div>
 </section>
 
-<section class="section" id="painting">
-  <h2>Painting log</h2>
-  <p class="sub">What's actually painted, and what was used to paint it —
-    kept here so the next model matches the last one.</p>
-
-  <ul class="paint-log">
-    <li>
-      <div><b>— nothing logged yet</b></div>
-      <div class="paints">add a row here once a model is painted</div>
-    </li>
-  </ul>
-
-  {% call noteBlock() -%}
-    <b>No box or roster picked yet.</b> Unlike the Tyranids page, this
-    isn't scoped to a specific Combat Patrol box — the source material is
-    the full World Eaters codex, so there's no fixed model list to
-    pre-populate here. Once you know which models you're actually
-    building, list them in this section the same way the Tyranids page
-    does.
-  {%- endcall %}
-</section>
-
 <section class="section" id="reference">
   <h2>Quick reference</h2>
   <p class="sub">Stratagems and enhancements for the Berzerker Warband
-    detachment, searchable.</p>
+    detachment, plus the painting log — searchable or logged on their own
+    pages.</p>
 
   <div class="cards">
     <a class="card" href="/factions/world-eaters/stratagems">
       <h3>Stratagems</h3>
       <p>6 Berzerker Warband stratagems and 4 enhancements — searchable.</p>
+    </a>
+    <a class="card" href="/factions/world-eaters/painting">
+      <h3>Painting log</h3>
+      <p>What's actually painted, and what was used to paint it.</p>
     </a>
   </div>
 

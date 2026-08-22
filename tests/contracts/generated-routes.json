@@ -2,10 +2,13 @@
   "generatedPages": [
     "/charts.html",
     "/factions.html",
+    "/factions/league-of-votann.html",
+    "/factions/league-of-votann/painting.html",
     "/factions/tyranids.html",
-    "/factions/tyranids/datasheets.html",
+    "/factions/tyranids/painting.html",
     "/factions/tyranids/stratagems.html",
     "/factions/world-eaters.html",
+    "/factions/world-eaters/painting.html",
     "/factions/world-eaters/stratagems.html",
     "/index.html",
     "/keywords.html",
@@ -47,6 +50,7 @@
   "mustNotExist": [
     "/odds.html",
     "/roster.html",
-    "/assets/js/troubleshooting.js"
+    "/assets/js/troubleshooting.js",
+    "/factions/tyranids/datasheets.html"
   ]
 }

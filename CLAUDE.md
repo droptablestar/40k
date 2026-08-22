@@ -67,7 +67,7 @@ navLabel                  link text shown in the nav (required if navGroup is se
 navOrder                  sort position within navGroup, ascending (required if navGroup is set)
 sections                  [{ id, label }] anchors shown as sub-links under this page in the nav (optional)
 factionSlug               registry slug from _data/factions.js (factions pages only)
-pageKind                  detail / datasheets / stratagems / factions-index (factions pages only)
+pageKind                  detail / datasheets / stratagems / painting / factions-index (factions pages only)
 ```
 
 Page-specific CSS goes in `assets/css/{page}.css`, one file per page. Anything
@@ -87,7 +87,7 @@ registered as Nunjucks globals in `.eleventy.js` — that turn
 ```
 navGroupItems(all, group)         items with navGroup === group, sorted by navOrder
 isGroupActive(url, all, group)    true if the current page belongs to that group
-factionGroups(all, factions)      registry entries joined with their detail/datasheets/stratagems pages
+factionGroups(all, factions)      registry entries joined with their detail/datasheets/stratagems/painting pages
 factionsIndexUrl(all)             url of the one page with pageKind: factions-index
 isFactionsActive(url, all)        true on the factions index or any faction page
 ```
@@ -119,7 +119,8 @@ link into the Core Rules PDF (`keywords.html`, `turn-order.html`,
 `rules-changes.html`; imported `with context` for `site.coreRules`).
 
 `tip(label, body)` in `_includes/tip.njk` renders a tap-to-expand ability or
-weapon-tag explanation (`factions/tyranids/datasheets.html`).
+weapon-tag explanation (the datasheets section of each faction page, e.g.
+`pages/factions/tyranids.html`).
 
 `noteBlock()` in `_includes/note-block.njk` wraps a call block in an
 editorial-aside `<div>` — used where the body carries multi-paragraph prose
@@ -156,9 +157,11 @@ output that passed `npm run build`:
 rendered by macros rather than hand-authored per-page markup, validated at
 build time (`scripts/check-stratagems.mjs`, `scripts/check-datasheets.mjs`).
 Both scopes are narrow on purpose: stratagems only (not enhancements or
-secondary objectives, which carry no CP field) and the Tyranid Assault Brood
-datasheets. Adding an entry to either file is a data-only edit; the page
-template doesn't change.
+secondary objectives, which carry no CP field) and datasheets for the
+faction Combat Patrol boxes currently covered (Tyranids, League of Votann).
+Adding a unit is a data-only edit to `_data/datasheets.js`; the faction
+page's per-unit `{%- if unit.id == ... %}` block still needs a matching
+entry (see `pages/factions/tyranids.html` or `pages/factions/league-of-votann.html`).
 
 `_data/stratagems.js`: `{ id, factionSlug, group, name, cp, cpStatus, timing,
 summary, order }`. Uncertainty is structural, never a display string:
@@ -173,7 +176,7 @@ accessible.
 `{ name, body }` abilities), `order`. Narrative that doesn't reduce to a data
 field (an intro paragraph, a loadout note) is written directly in the page
 template between macro calls instead of being modeled — see the Tyrant Guard
-block in `factions/tyranids/datasheets.html`. `ref` values look up
+block in `pages/factions/tyranids.html`. `ref` values look up
 `_data/abilityTips.js`, a shared registry of ability/weapon-tag tip text
 (`{ id, label, body }`); definitions genuinely identical across units (e.g.
 "Synapse" for most units) are shared by id, definitions that differ by

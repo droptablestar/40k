@@ -42,6 +42,10 @@ const all = [
     factionSlug: "tyranids",
     pageKind: "stratagems",
   }),
+  page("/factions/tyranids/painting.html", {
+    factionSlug: "tyranids",
+    pageKind: "painting",
+  }),
   page("/factions/world-eaters.html", { factionSlug: "world-eaters", pageKind: "detail" }),
 ];
 
@@ -92,6 +96,7 @@ test("factionGroups() joins registry entries with their detail/datasheets/strata
       sections: [{ id: "identity", label: "Identity" }],
       datasheetsUrl: "/factions/tyranids/datasheets",
       stratagemsUrl: "/factions/tyranids/stratagems",
+      paintingUrl: "/factions/tyranids/painting",
     },
     {
       slug: "world-eaters",
@@ -101,6 +106,7 @@ test("factionGroups() joins registry entries with their detail/datasheets/strata
       sections: [],
       datasheetsUrl: null,
       stratagemsUrl: null,
+      paintingUrl: null,
     },
   ]);
 });

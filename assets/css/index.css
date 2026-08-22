@@ -280,6 +280,7 @@
    below plus a chip in the markup. */
 .shot-tyranids,
 .shot-world-eaters,
+.shot-votann,
 .shot-shelf{
   background:
     var(--shot-webp) center/cover no-repeat,
@@ -290,6 +291,7 @@
 
 .shot-tyranids{--shot-webp:url(/assets/img/tyranids.webp);--shot-jpg:url(/assets/img/tyranids.jpg);}
 .shot-world-eaters{--shot-webp:url(/assets/img/world-eaters.webp);--shot-jpg:url(/assets/img/world-eaters.jpg);}
+.shot-votann{--shot-webp:url(/assets/img/votann.webp);--shot-jpg:url(/assets/img/votann.jpg);}
 .shot-shelf{--shot-webp:url(/assets/img/shelf.webp);--shot-jpg:url(/assets/img/shelf.jpg);}
 
 .chip b{

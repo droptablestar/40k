@@ -841,7 +841,7 @@ a.card:hover::before{border-color:transparent var(--accent) transparent transpar
 
 .strat-list .strat-meta{
   font-family:var(--mono);
-  font-size:var(--fs-xs);
+  font-size:var(--fs-sm);
   font-variant-numeric:tabular-nums;
   letter-spacing:.02em;
   color:var(--bone-dim);
@@ -980,10 +980,10 @@ a.card:hover::before{border-color:transparent var(--accent) transparent transpar
   border:1px solid var(--line);
   color:var(--bone);
   font-family:var(--body);
-  font-size:var(--fs-md);
-  padding:12px 14px;
-  min-height:44px;
-  margin:24px 0 4px;
+  font-size:var(--fs-sm);
+  padding:9px 12px;
+  min-height:40px;
+  margin:24px 0;
 }
 
 .ref-search::placeholder{color:var(--bone-dim);}
@@ -996,6 +996,7 @@ a.card:hover::before{border-color:transparent var(--accent) transparent transpar
 .legend{
   display:flex;
   flex-wrap:wrap;
+  justify-content:space-between;
   gap:6px 16px;
   margin:20px 0 28px;
   padding:0;
@@ -1004,7 +1005,7 @@ a.card:hover::before{border-color:transparent var(--accent) transparent transpar
 
 .legend li{
   font-family:var(--mono);
-  font-size:var(--fs-2xs);
+  font-size:var(--fs-sm);
   color:var(--bone-dim);
 }
 
@@ -1072,6 +1073,10 @@ a.card:hover::before{border-color:transparent var(--accent) transparent transpar
 
 /* ---------- weapon profile table ---------- */
 
+/* One .wpn-table per unit, all its weapons in one <tbody> — never split
+   ranged/melee into separate tables. Column widths are auto-computed per
+   table from that table's own content, so two tables for one unit get
+   independently sized columns and the numbers stop lining up. */
 .wpn-table{width:100%;border-collapse:collapse;font-size:var(--fs-sm);margin:0 0 16px;}
 
 .wpn-table th{
