@@ -6,14 +6,15 @@ description: Combat Patrol - Tyranid Assault Brood - the box, the units, and a
       personal painting log.
 bodyClass: s-rules
 pageCss: css/faction.css
+pageJs: js/reference-filter.js
 factionSlug: tyranids
 pageKind: detail
 sections:
   - { id: identity, label: "Identity" }
-  - { id: painting, label: "Painting log" }
-  - { id: reference, label: "Quick reference" }
+  - { id: datasheets, label: "Datasheets" }
 ---
 {%- from "note-block.njk" import noteBlock -%}
+{%- from "datasheet-parts.njk" import unitName, statLine, keywordList, weaponTable, traitList -%}
 <a class="crumb" href="/factions">&larr; Factions</a>
 
 <header class="hero">
@@ -28,8 +29,7 @@ sections:
 
 <nav class="jump" aria-label="On this page">
   <a href="#identity">Identity</a>
-  <a href="#painting">Painting log</a>
-  <a href="#reference">Quick reference</a>
+  <a href="#datasheets">Datasheets</a>
 </nav>
 
 <section class="section" id="identity">
@@ -71,65 +71,116 @@ sections:
   </div>
 </section>
 
-<section class="section" id="painting">
-  <h2>Painting log</h2>
-  <p class="sub">What's actually painted, and what was used to paint it —
-    kept here so the next model matches the last one.</p>
+<section class="section" id="datasheets">
+  <h2>Datasheets</h2>
+  <p class="sub">Stats, weapons, and abilities for every unit in the box.
+    Type to filter.</p>
 
-  <ul class="paint-log">
-    <li>
-      <div><b>Parasite of Mortrex</b></div>
-      <div class="paints">— add colours here once painted</div>
-    </li>
-    <li>
-      <div><b>Tyrant Guard (x3)</b></div>
-      <div class="paints">— add colours here once painted</div>
-    </li>
-    <li>
-      <div><b>Biovore</b></div>
-      <div class="paints">— add colours here once painted</div>
-    </li>
-    <li>
-      <div><b>Genestealers (x10)</b></div>
-      <div class="paints">— add colours here once painted</div>
-    </li>
+  <input type="search" id="ref-search" class="ref-search"
+    placeholder="Filter by name, keyword, or ability&hellip;" aria-label="Filter datasheets">
+
+  <ul class="legend">
+    <li><b>M</b> move</li>
+    <li><b>T</b> toughness</li>
+    <li><b>Sv</b> save</li>
+    <li><b>W</b> wounds</li>
+    <li><b>Ld</b> leadership</li>
+    <li><b>OC</b> objective control</li>
+    <li><b>A</b> attacks</li>
+    <li><b>WS/BS</b> skill</li>
+    <li><b>S</b> strength</li>
+    <li><b>AP</b> armour pen.</li>
+    <li><b>D</b> damage</li>
   </ul>
 
-  {% call noteBlock() -%}
-    The kit also includes bits for a Pyrovore (instead of the Biovore),
-    Hive Guard (instead of Tyrant Guard), and Spore Mines — build options
-    from the wider Tyranids range. This Combat Patrol's own rules only use
-    Parasite of Mortrex, Genestealers, Biovore, and Tyrant Guard, so that's
-    what's tracked above; add a row here if you build and use one of the
-    alternates instead.
-  {%- endcall %}
+  <div class="strat-group" id="assault-brood">
+    <ul class="strat-list">
+      {%- for unit in datasheets %}
+      {%- if unit.id == "tyranids-parasite-of-mortrex" %}
+      <li>
+        <details>
+          <summary>
+            <span class="strat-name">{{ unitName(unit) }}</span>
+            {{ statLine(unit.stats) }}
+          </summary>
+          <div class="strat-body">
+            {{ keywordList(unit.keywords, abilityTips) }}
+            {{ weaponTable(unit.weapons, abilityTips) }}
+            {{ traitList(unit.traits) }}
+          </div>
+        </details>
+      </li>
+      {%- endif %}
+      {%- if unit.id == "tyranids-genestealers" %}
+      <li>
+        <details>
+          <summary>
+            <span class="strat-name">{{ unitName(unit) }}</span>
+            {{ statLine(unit.stats) }}
+          </summary>
+          <div class="strat-body">
+            {{ keywordList(unit.keywords, abilityTips) }}
+            {{ weaponTable(unit.weapons, abilityTips) }}
+            {{ traitList(unit.traits) }}
+          </div>
+        </details>
+      </li>
+      {%- endif %}
+      {%- if unit.id == "tyranids-biovore" %}
+      <li>
+        <details>
+          <summary>
+            <span class="strat-name">{{ unitName(unit) }}</span>
+            {{ statLine(unit.stats) }}
+          </summary>
+          <div class="strat-body">
+            {{ keywordList(unit.keywords, abilityTips) }}
+            {{ weaponTable(unit.weapons, abilityTips) }}
+            {{ traitList(unit.traits) }}
+          </div>
+        </details>
+      </li>
+      {%- endif %}
+      {%- if unit.id == "tyranids-tyrant-guard" %}
+      <li>
+        <details>
+          <summary>
+            <span class="strat-name">{{ unitName(unit) }}</span>
+            {{ statLine(unit.stats) }}
+          </summary>
+          <div class="strat-body">
+            {{ keywordList(unit.keywords, abilityTips) }}
+
+            <p>Your durable synapse bodyguards — high toughness and wounds
+              compared to the rest of the box. Each of the three models comes
+              with a different fixed melee loadout:</p>
+
+            {{ weaponTable(unit.weapons, abilityTips) }}
+          </div>
+        </details>
+      </li>
+      {%- endif %}
+      {%- endfor %}
+    </ul>
+  </div>
+
+  <p id="ref-empty" class="ref-empty" hidden>No datasheets match that search.</p>
 
   {% call noteBlock() -%}
-    <b>Photos aren't attached yet.</b> This site has no backend and no
-    accounts, so there's nowhere durable to put uploaded images yet — that
-    needs a storage decision (likely committing images into the repo) before
-    photos get added here. For now this section is a hand-edited log; add
-    rows directly in <code>factions/tyranids.html</code> as units get
-    painted.
+    Sourced from the Assault Brood Combat Patrol's own rules-card PDF. Weapon
+    numbers are reproduced as reference data (not rules text); ability names
+    are paraphrased. Check the card for anything exact.
   {%- endcall %}
-</section>
-
-<section class="section" id="reference">
-  <h2>Quick reference</h2>
-  <p class="sub">Datasheets and stratagems moved to their own pages, one tap
-    from here instead of buried down the page — searchable, and scoped to
-    Tyranids.</p>
 
   <div class="cards">
-    <a class="card" href="/factions/tyranids/datasheets">
-      <h3>Datasheets</h3>
-      <p>Stats, weapons, and abilities for Parasite of Mortrex, Genestealers,
-        Biovore, and Tyrant Guard — searchable.</p>
-    </a>
     <a class="card" href="/factions/tyranids/stratagems">
       <h3>Stratagems</h3>
       <p>The 3 stratagems, 2 enhancements, and 2 secondary objectives this
         Combat Patrol uses — searchable.</p>
+    </a>
+    <a class="card" href="/factions/tyranids/painting">
+      <h3>Painting log</h3>
+      <p>What's actually painted, and what was used to paint it.</p>
     </a>
   </div>
 </section>
