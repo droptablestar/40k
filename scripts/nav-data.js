@@ -67,6 +67,7 @@ function factionGroups(all, factions) {
       }
       const datasheets = pages.find((item) => item.data.pageKind === "datasheets");
       const stratagems = pages.find((item) => item.data.pageKind === "stratagems");
+      const painting = pages.find((item) => item.data.pageKind === "painting");
       return {
         slug: f.slug,
         name: f.name,
@@ -75,6 +76,7 @@ function factionGroups(all, factions) {
         sections: detail.data.sections || [],
         datasheetsUrl: datasheets ? stripHtml(datasheets.url) : null,
         stratagemsUrl: stratagems ? stripHtml(stratagems.url) : null,
+        paintingUrl: painting ? stripHtml(painting.url) : null,
       };
     });
 }
