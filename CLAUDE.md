@@ -48,7 +48,7 @@ permalink: /foo.html     explicit, so output filenames never drift from routes
                           (permalinks keep .html; links to the page do not —
                           write internal hrefs as /foo, extensionless)
 title / description      <title> and meta description
-bodyClass                s-painting or s-rules (sets the section accent)
+bodyClass                s-painting / s-rules / s-index (sets the section accent)
 pageCss                  path under assets/, e.g. css/painting.css
 pageJs                   path under assets/, e.g. js/tracker.js (optional)
 extraFooter               raw HTML appended to the shared footer (optional)
@@ -189,8 +189,11 @@ npm run build                # clean _site/, layout check, build, HTML/link/rout
 npm run check:source        # layout check on its own
 npm run test:unit             # tracker and validator unit tests (Node's test runner)
 npm run clean                 # remove _site/ without building
-npx @11ty/eleventy --serve  # local dev server with live reload
+npm run serve                 # clean, check source, local dev server with live reload
 ```
+
+`npm run test:ui` runs the full Playwright suite (see Browser tests below);
+`npm run test` composes `test:unit` and `test:ui`.
 
 `npm run build` always removes `_site/` first — Eleventy does not clean its
 own output, so a renamed or deleted page/asset otherwise keeps serving from a
@@ -318,7 +321,9 @@ colours in page-level CSS — add a token or use an existing one.
 ```
 
 Section accent is set by a body class: `s-painting` is violet, `s-rules` is
-gold. New sections either reuse one or add a class.
+gold, `s-index` is neutral bone (`index.html` only — see the design-rationale
+comment on `body.s-index` in `assets/style.css`). New sections either reuse
+one or add a class.
 
 Typefaces: Bricolage Grotesque for display, IBM Plex Sans for body, IBM Plex
 Mono for data, labels, and eyebrows. Loaded from Google Fonts. Ratios, counters,

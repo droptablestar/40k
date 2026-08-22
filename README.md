@@ -12,7 +12,7 @@ Live at `40k.middleearth.rocks` and `40k.droptablestar.workers.dev`.
 index.html                 Landing page, grouped by when you'd reach for a page
 painting.html               Painting guide: beginner track
 painting-reference.html     Painting guide: technique reference
-tracker.html                 Battle tracker: CP, VP, round, per-unit damage
+tracker.html                 Battle tracker: CP, VP, round, whose turn it is
 _includes/base.njk          Shared layout: head, nav, footer
 assets/style.css             Shared design tokens and components
 assets/css/{page}.css        Per-page CSS
@@ -30,7 +30,7 @@ Node and npm versions are pinned in `.nvmrc` and `package.json`.
 npm install
 npm run build                # clean _site/, layout check, build, HTML/link/route check
 npm run test:unit             # unit and regression tests
-npx @11ty/eleventy --serve  # local dev server with live reload
+npm run serve                 # clean, check source, local dev server with live reload
 ```
 
 CI (`.github/workflows/ci.yml`) runs the same build and test steps on every
@@ -96,7 +96,8 @@ Each page sets a section class on `<body>` (the `bodyClass` front matter field)
 which swaps the accent colour:
 
 - `s-painting` — violet
-- `s-rules` — brass
+- `s-rules` — gold
+- `s-index` — neutral bone (`index.html` only, the index to both halves)
 
 Add a new page by copying `painting.html`'s front matter block, changing
 `bodyClass`/`permalink`/`title`, and writing the body content — the header,
