@@ -69,4 +69,39 @@ module.exports = [
     label: "Twin-linked",
     body: "You may re-roll the Wound roll for this weapon's attacks.",
   },
+  {
+    id: "assault",
+    label: "Assault",
+    body: "Can shoot after making an Advance move, but only with weapons carrying this keyword.",
+  },
+  {
+    id: "anti-monster-vehicle-3",
+    label: "Anti-Monster/Vehicle 3+",
+    body: "Against Monsters or Vehicles, an unmodified wound roll of 3+ counts as a critical wound instead of needing a 6.",
+  },
+  {
+    id: "blast-votann",
+    label: "Blast",
+    body: "Gets extra attack dice for every 5 models (rounding down) in the target unit; can never target an engaged unit.",
+  },
+  {
+    id: "rapid-fire-3",
+    label: "Rapid Fire 3",
+    body: "Gets 3 extra attack dice if the target was within half range when targets were selected.",
+  },
+  {
+    id: "heavy-votann",
+    label: "Heavy",
+    body: "+1 to hit if the unit stayed still, didn't arrive this turn, and isn't engaged.",
+  },
+  {
+    id: "close-quarters",
+    label: "Close-Quarters",
+    body: "Can shoot while engaged, but only at the unit it's engaged with, and only with close-quarters weapons.",
+  },
+  {
+    id: "lethal-hits",
+    label: "Lethal Hits",
+    body: "A critical hit can be turned into an automatic wound instead — saves still apply, but it drops Devastating Wounds and anything else keyed off critical wounds.",
+  },
 ];

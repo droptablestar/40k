@@ -1,0 +1,213 @@
+---
+layout: base.njk
+permalink: /factions/league-of-votann.html
+title: "League of Votann — Bench & Table"
+description: Combat Patrol - Bane-Slayer's Bulwark - the box, the units, and
+      a personal painting log.
+bodyClass: s-rules
+pageCss: css/faction.css
+pageJs: js/reference-filter.js
+factionSlug: league-of-votann
+pageKind: detail
+sections:
+  - { id: identity, label: "Identity" }
+  - { id: datasheets, label: "Datasheets" }
+---
+{%- from "note-block.njk" import noteBlock -%}
+{%- from "datasheet-parts.njk" import unitName, statLine, keywordList, weaponTable, traitList -%}
+<a class="crumb" href="/factions">&larr; Factions</a>
+
+<header class="hero">
+  <p class="eyebrow">Before a game</p>
+  <h1>Combat Patrol: Bane-Slayer's Bulwark</h1>
+  <p>Scoped to what we're actually playing — the Bane-Slayer's Bulwark
+    Combat Patrol box, not the full League of Votann codex. Combat Patrol is
+    self-contained by design: a fixed 19-model roster, no detachment to
+    choose, and its own army-wide rule rather than a full codex.</p>
+</header>
+
+<nav class="jump" aria-label="On this page">
+  <a href="#identity">Identity</a>
+  <a href="#datasheets">Datasheets</a>
+</nav>
+
+<section class="section" id="identity">
+  <h2>What's in the box, and how it plays</h2>
+  <p class="sub">Not the full rules — just what this box feels like to face
+    and to field.</p>
+
+  <div class="cards">
+    <div class="card">
+      <h3>Prioritised Efficiency</h3>
+      <p>Every League of Votann unit switches between two abilities
+        depending on how many Yield Points (YP) you're holding: fewer than
+        7 and it has Hostile Acquisition, 7 or more and it has Fortify
+        Takeover. The switch happens at the end of every Command phase, so
+        the army's whole posture flips over the course of a game as YP
+        builds up or gets spent.</p>
+    </div>
+    <div class="card">
+      <h3>Hostile Acquisition</h3>
+      <p>The behind/early-game state. Attacks against an enemy unit near any
+        objective marker get +1 to hit, and you can re-roll Advance and
+        Charge rolls — this army wants to be moving up and grabbing ground
+        while it's short on YP.</p>
+    </div>
+    <div class="card">
+      <h3>Fortify Takeover</h3>
+      <p>The ahead/holding state, once YP hits 7. Attacks against any enemy
+        get +1 to hit as long as you're near an objective you control, and
+        units getting shot or fought by something stronger than them get
+        harder to wound — this army turns defensive once it's sitting on
+        points.</p>
+    </div>
+    <div class="card">
+      <h3>Yield Points</h3>
+      <p>The currency that drives the switch above. You gain 1 YP each
+        Command phase for holding an objective in your own deployment
+        zone, plus more from the second round onward for holding objectives
+        outside it and for controlling more objectives than your opponent.
+        Spending YP on other rules (elsewhere in the full codex) reduces the
+        total back down, which can flip a unit back to Hostile
+        Acquisition.</p>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="datasheets">
+  <h2>Datasheets</h2>
+  <p class="sub">Stats, weapons, and abilities for every unit in the box.
+    Type to filter.</p>
+
+  <input type="search" id="ref-search" class="ref-search"
+    placeholder="Filter by name, keyword, or ability&hellip;" aria-label="Filter datasheets">
+
+  <ul class="legend">
+    <li><b>M</b> move</li>
+    <li><b>T</b> toughness</li>
+    <li><b>Sv</b> save</li>
+    <li><b>W</b> wounds</li>
+    <li><b>Ld</b> leadership</li>
+    <li><b>OC</b> objective control</li>
+    <li><b>A</b> attacks</li>
+    <li><b>WS/BS</b> skill</li>
+    <li><b>S</b> strength</li>
+    <li><b>AP</b> armour pen.</li>
+    <li><b>D</b> damage</li>
+  </ul>
+
+  <div class="strat-group" id="bane-slayers-bulwark">
+    <ul class="strat-list">
+      {%- for unit in datasheets %}
+      {%- if unit.id == "league-of-votann-vynn-bane-slayer" %}
+      <li>
+        <details>
+          <summary>
+            <span class="strat-name">{{ unitName(unit) }}</span>
+            {{ statLine(unit.stats) }}
+          </summary>
+          <div class="strat-body">
+            {{ keywordList(unit.keywords, abilityTips) }}
+
+            <p>This army's Warlord. Fast-Firing Targeters gives this model's
+              attacks Assault, so it can advance and still shoot. Weavefield
+              Crest is the source of its invulnerable save.</p>
+
+            {{ weaponTable(unit.weapons, abilityTips) }}
+          </div>
+        </details>
+      </li>
+      {%- endif %}
+      {%- if unit.id == "league-of-votann-einhyr-hearthguard" %}
+      <li>
+        <details>
+          <summary>
+            <span class="strat-name">{{ unitName(unit) }}</span>
+            {{ statLine(unit.stats) }}
+          </summary>
+          <div class="strat-body">
+            {{ keywordList(unit.keywords, abilityTips) }}
+
+            <p>Decisive Destruction lets this unit re-roll a hit roll of 1
+              when its ranged attacks target the closest eligible enemy —
+              keep them shooting at whatever's nearest to get the most out of
+              it. Weavefield Crest is the source of its invulnerable save.
+              Vynn Bane-Slayer can lead this unit.</p>
+
+            {{ weaponTable(unit.weapons, abilityTips) }}
+          </div>
+        </details>
+      </li>
+      {%- endif %}
+      {%- if unit.id == "league-of-votann-hearthkyn-warriors" %}
+      <li>
+        <details>
+          <summary>
+            <span class="strat-name">{{ unitName(unit) }}</span>
+            {{ statLine(unit.stats) }}
+          </summary>
+          <div class="strat-body">
+            {{ keywordList(unit.keywords, abilityTips) }}
+
+            <p>Panspectral Scanning lets this unit re-roll a hit roll of 1 on
+              all its ranged attacks. Weavefield Crest is the source of its
+              invulnerable save. One model in the unit can be a Theyn, who
+              swaps the standard pistol and fists for the Theyn's own
+              weapons below.</p>
+
+            {{ weaponTable(unit.weapons, abilityTips) }}
+          </div>
+        </details>
+      </li>
+      {%- endif %}
+      {%- if unit.id == "league-of-votann-brokhyr-thunderkyn" %}
+      <li>
+        <details>
+          <summary>
+            <span class="strat-name">{{ unitName(unit) }}</span>
+            {{ statLine(unit.stats) }}
+          </summary>
+          <div class="strat-body">
+            <p>Breaching Fire: after this unit shoots, pick one enemy unit it
+              hit. For the rest of the phase, friendly League of Votann ranged
+              attacks against that unit ignore the target's cover.</p>
+
+            {{ weaponTable(unit.weapons, abilityTips) }}
+          </div>
+        </details>
+      </li>
+      {%- endif %}
+      {%- endfor %}
+    </ul>
+  </div>
+
+  <p id="ref-empty" class="ref-empty" hidden>No datasheets match that search.</p>
+
+  {% call noteBlock() -%}
+    Sourced from a working document, not the box's own rules-card PDF —
+    weapon numbers and named abilities are reproduced as reference data (not
+    rules text) and paraphrased where needed. A few things are unconfirmed
+    and worth checking against the card before a real game:
+    <b>Conversion</b>, an ability listed on the Brokhyr Thunderkyn's SP
+    conversion beamer, wasn't described in the source and isn't a standard
+    core-rules keyword — treat it as missing until it's sourced. The
+    Hearthkyn Warriors' armoured fists and plasma knife also had unclear
+    model assignment in the source (which models actually carry each) — both
+    are listed here as available to the unit generally; confirm against the
+    card.
+  {%- endcall %}
+
+  {% call noteBlock() -%}
+    <b>No stratagems section yet.</b> The source document for this box
+    covers army rules and datasheets only — no stratagems, enhancements, or
+    secondary objectives were included. Send those over and this becomes a
+    real reference instead of a placeholder.
+  {%- endcall %}
+
+  <div class="cards">
+    <a class="card" href="/factions/league-of-votann/painting">
+      <h3>Painting log</h3>
+      <p>What's actually painted, and what was used to paint it.</p>
+    </a>
+  </div>
+</section>
